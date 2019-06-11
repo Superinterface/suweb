@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/static/common.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#indexhead').load('/head.html',function(){loadUser();});
+		$('#indexfoot').load('/foot.html');
+	});
+</script>
+<title>登录</title>
+</head>
+<body style="overflow: hidden;">
+	<div id="indexhead"></div>
+	<div>
+		<div class="defaultfromdiv">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">用户名</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="inputUsername" name="loginName"
+							placeholder="用户名">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">密码</label>
+					<div class="col-sm-6">
+						<input type="password" class="form-control" id="inputPassword" name="loginPassword"
+							placeholder="密码">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-5 col-sm-10">
+						<button type="button" class="btn btn-default" onclick="login();">登录</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="drop" style="z-index: -100"></div>
+		<div class="wave mar" style="z-index: -100"></div>
+	</div>
+	<div id="indexfoot"></div>
+</body>
+</html>

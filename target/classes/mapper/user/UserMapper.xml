@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sujianan.dao.user.UserMapper">
+	<resultMap id="BaseResultMap" type="com.sujianan.bean.user.User">
+		<id column="ID" jdbcType="VARCHAR" property="id" />
+		<result column="LOGIN_NAME" jdbcType="VARCHAR"
+			property="loginName" />
+		<result column="LOGIN_PASSWORD" jdbcType="VARCHAR"
+			property="loginPassword" />
+		<result column="USERNAME" jdbcType="VARCHAR"
+			property="username" />
+		<result column="NET_NAME" jdbcType="VARCHAR" property="netName" />
+		<result column="GENDER" jdbcType="DECIMAL" property="gender" />
+		<result column="PHONE" jdbcType="VARCHAR" property="phone" />
+		<result column="EMAIL" jdbcType="VARCHAR" property="email" />
+		<result column="CREATETIME" jdbcType="TIMESTAMP"
+			property="createtime" />
+		<result column="LOGIN_TIME" jdbcType="TIMESTAMP"
+			property="loginTime" />
+		<result column="LOGIN_NUMBER" jdbcType="DECIMAL"
+			property="loginNumber" />
+		<result column="BEFORE_LOGIN_TIME" jdbcType="TIMESTAMP"
+			property="beforeLoginTime" />
+		<result column="OBJECT1" jdbcType="VARCHAR" property="object1" />
+		<result column="OBJECT2" jdbcType="VARCHAR" property="object2" />
+		<result column="OBJECT3" jdbcType="VARCHAR" property="object3" />
+		<result column="OBJECT4" jdbcType="VARCHAR" property="object4" />
+		<result column="OBJECT5" jdbcType="VARCHAR" property="object5" />
+		<result column="OBJECT6" jdbcType="VARCHAR" property="object6" />
+		<result column="OBJECT7" jdbcType="VARCHAR" property="object7" />
+		<result column="OBJECT8" jdbcType="VARCHAR" property="object8" />
+		<result column="OBJECT9" jdbcType="VARCHAR" property="object9" />
+		<result column="OBJECT10" jdbcType="VARCHAR"
+			property="object10" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, LOGIN_NAME, LOGIN_PASSWORD, USERNAME, NET_NAME, GENDER, PHONE, EMAIL,
+		CREATETIME,
+		LOGIN_TIME, LOGIN_NUMBER, BEFORE_LOGIN_TIME, OBJECT1, OBJECT2, OBJECT3, OBJECT4,
+		OBJECT5, OBJECT6, OBJECT7, OBJECT8, OBJECT9, OBJECT10
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.sujianan.bean.user.UserExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from T_USER
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_USER
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from T_USER
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.sujianan.bean.user.UserExample">
+		delete from T_USER
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.sujianan.bean.user.User">
+		insert into T_USER (ID, LOGIN_NAME, LOGIN_PASSWORD,
+		USERNAME, NET_NAME, GENDER,
+		PHONE, EMAIL, CREATETIME,
+		LOGIN_TIME, LOGIN_NUMBER, BEFORE_LOGIN_TIME,
+		OBJECT1, OBJECT2, OBJECT3,
+		OBJECT4, OBJECT5, OBJECT6,
+		OBJECT7, OBJECT8, OBJECT9,
+		OBJECT10)
+		values (sys_guid(), #{loginName,jdbcType=VARCHAR},
+		#{loginPassword,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR}, #{netName,jdbcType=VARCHAR}, #{gender,jdbcType=DECIMAL},
+		#{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{loginTime,jdbcType=TIMESTAMP}, #{loginNumber,jdbcType=DECIMAL},
+		#{beforeLoginTime,jdbcType=TIMESTAMP},
+		#{object1,jdbcType=VARCHAR}, #{object2,jdbcType=VARCHAR}, #{object3,jdbcType=VARCHAR},
+		#{object4,jdbcType=VARCHAR}, #{object5,jdbcType=VARCHAR},
+		#{object6,jdbcType=VARCHAR},
+		#{object7,jdbcType=VARCHAR}, #{object8,jdbcType=VARCHAR}, #{object9,jdbcType=VARCHAR},
+		#{object10,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.sujianan.bean.user.User">
+		insert into T_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			<if test="loginName != null">
+				LOGIN_NAME,
+			</if>
+			<if test="loginPassword != null">
+				LOGIN_PASSWORD,
+			</if>
+			<if test="username != null">
+				USERNAME,
+			</if>
+			<if test="netName != null">
+				NET_NAME,
+			</if>
+			<if test="gender != null">
+				GENDER,
+			</if>
+			<if test="phone != null">
+				PHONE,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="createtime != null">
+				CREATETIME,
+			</if>
+			<if test="loginTime != null">
+				LOGIN_TIME,
+			</if>
+			<if test="loginNumber != null">
+				LOGIN_NUMBER,
+			</if>
+			<if test="beforeLoginTime != null">
+				BEFORE_LOGIN_TIME,
+			</if>
+			<if test="object1 != null">
+				OBJECT1,
+			</if>
+			<if test="object2 != null">
+				OBJECT2,
+			</if>
+			<if test="object3 != null">
+				OBJECT3,
+			</if>
+			<if test="object4 != null">
+				OBJECT4,
+			</if>
+			<if test="object5 != null">
+				OBJECT5,
+			</if>
+			<if test="object6 != null">
+				OBJECT6,
+			</if>
+			<if test="object7 != null">
+				OBJECT7,
+			</if>
+			<if test="object8 != null">
+				OBJECT8,
+			</if>
+			<if test="object9 != null">
+				OBJECT9,
+			</if>
+			<if test="object10 != null">
+				OBJECT10,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			sys_guid(),
+			<if test="loginName != null">
+				#{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPassword != null">
+				#{loginPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="netName != null">
+				#{netName,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=DECIMAL},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginTime != null">
+				#{loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginNumber != null">
+				#{loginNumber,jdbcType=DECIMAL},
+			</if>
+			<if test="beforeLoginTime != null">
+				#{beforeLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="object1 != null">
+				#{object1,jdbcType=VARCHAR},
+			</if>
+			<if test="object2 != null">
+				#{object2,jdbcType=VARCHAR},
+			</if>
+			<if test="object3 != null">
+				#{object3,jdbcType=VARCHAR},
+			</if>
+			<if test="object4 != null">
+				#{object4,jdbcType=VARCHAR},
+			</if>
+			<if test="object5 != null">
+				#{object5,jdbcType=VARCHAR},
+			</if>
+			<if test="object6 != null">
+				#{object6,jdbcType=VARCHAR},
+			</if>
+			<if test="object7 != null">
+				#{object7,jdbcType=VARCHAR},
+			</if>
+			<if test="object8 != null">
+				#{object8,jdbcType=VARCHAR},
+			</if>
+			<if test="object9 != null">
+				#{object9,jdbcType=VARCHAR},
+			</if>
+			<if test="object10 != null">
+				#{object10,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.sujianan.bean.user.UserExample"
+		resultType="java.lang.Long">
+		select count(*) from T_USER
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update T_USER
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loginName != null">
+				LOGIN_NAME = #{record.loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loginPassword != null">
+				LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="record.username != null">
+				USERNAME = #{record.username,jdbcType=VARCHAR},
+			</if>
+			<if test="record.netName != null">
+				NET_NAME = #{record.netName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.gender != null">
+				GENDER = #{record.gender,jdbcType=DECIMAL},
+			</if>
+			<if test="record.phone != null">
+				PHONE = #{record.phone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.email != null">
+				EMAIL = #{record.email,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createtime != null">
+				CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.loginTime != null">
+				LOGIN_TIME = #{record.loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.loginNumber != null">
+				LOGIN_NUMBER = #{record.loginNumber,jdbcType=DECIMAL},
+			</if>
+			<if test="record.beforeLoginTime != null">
+				BEFORE_LOGIN_TIME = #{record.beforeLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.object1 != null">
+				OBJECT1 = #{record.object1,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object2 != null">
+				OBJECT2 = #{record.object2,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object3 != null">
+				OBJECT3 = #{record.object3,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object4 != null">
+				OBJECT4 = #{record.object4,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object5 != null">
+				OBJECT5 = #{record.object5,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object6 != null">
+				OBJECT6 = #{record.object6,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object7 != null">
+				OBJECT7 = #{record.object7,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object8 != null">
+				OBJECT8 = #{record.object8,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object9 != null">
+				OBJECT9 = #{record.object9,jdbcType=VARCHAR},
+			</if>
+			<if test="record.object10 != null">
+				OBJECT10 = #{record.object10,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update T_USER
+		set ID = #{record.id,jdbcType=VARCHAR},
+		LOGIN_NAME = #{record.loginName,jdbcType=VARCHAR},
+		LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+		USERNAME = #{record.username,jdbcType=VARCHAR},
+		NET_NAME = #{record.netName,jdbcType=VARCHAR},
+		GENDER = #{record.gender,jdbcType=DECIMAL},
+		PHONE = #{record.phone,jdbcType=VARCHAR},
+		EMAIL = #{record.email,jdbcType=VARCHAR},
+		CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+		LOGIN_TIME = #{record.loginTime,jdbcType=TIMESTAMP},
+		LOGIN_NUMBER = #{record.loginNumber,jdbcType=DECIMAL},
+		BEFORE_LOGIN_TIME = #{record.beforeLoginTime,jdbcType=TIMESTAMP},
+		OBJECT1 = #{record.object1,jdbcType=VARCHAR},
+		OBJECT2 = #{record.object2,jdbcType=VARCHAR},
+		OBJECT3 = #{record.object3,jdbcType=VARCHAR},
+		OBJECT4 = #{record.object4,jdbcType=VARCHAR},
+		OBJECT5 = #{record.object5,jdbcType=VARCHAR},
+		OBJECT6 = #{record.object6,jdbcType=VARCHAR},
+		OBJECT7 = #{record.object7,jdbcType=VARCHAR},
+		OBJECT8 = #{record.object8,jdbcType=VARCHAR},
+		OBJECT9 = #{record.object9,jdbcType=VARCHAR},
+		OBJECT10 = #{record.object10,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.sujianan.bean.user.User">
+		update T_USER
+		<set>
+			<if test="loginName != null">
+				LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPassword != null">
+				LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				USERNAME = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="netName != null">
+				NET_NAME = #{netName,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				GENDER = #{gender,jdbcType=DECIMAL},
+			</if>
+			<if test="phone != null">
+				PHONE = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginTime != null">
+				LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loginNumber != null">
+				LOGIN_NUMBER = #{loginNumber,jdbcType=DECIMAL},
+			</if>
+			<if test="beforeLoginTime != null">
+				BEFORE_LOGIN_TIME = #{beforeLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="object1 != null">
+				OBJECT1 = #{object1,jdbcType=VARCHAR},
+			</if>
+			<if test="object2 != null">
+				OBJECT2 = #{object2,jdbcType=VARCHAR},
+			</if>
+			<if test="object3 != null">
+				OBJECT3 = #{object3,jdbcType=VARCHAR},
+			</if>
+			<if test="object4 != null">
+				OBJECT4 = #{object4,jdbcType=VARCHAR},
+			</if>
+			<if test="object5 != null">
+				OBJECT5 = #{object5,jdbcType=VARCHAR},
+			</if>
+			<if test="object6 != null">
+				OBJECT6 = #{object6,jdbcType=VARCHAR},
+			</if>
+			<if test="object7 != null">
+				OBJECT7 = #{object7,jdbcType=VARCHAR},
+			</if>
+			<if test="object8 != null">
+				OBJECT8 = #{object8,jdbcType=VARCHAR},
+			</if>
+			<if test="object9 != null">
+				OBJECT9 = #{object9,jdbcType=VARCHAR},
+			</if>
+			<if test="object10 != null">
+				OBJECT10 = #{object10,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.sujianan.bean.user.User">
+		update T_USER
+		set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+		LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
+		USERNAME = #{username,jdbcType=VARCHAR},
+		NET_NAME = #{netName,jdbcType=VARCHAR},
+		GENDER = #{gender,jdbcType=DECIMAL},
+		PHONE = #{phone,jdbcType=VARCHAR},
+		EMAIL = #{email,jdbcType=VARCHAR},
+		CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+		LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+		LOGIN_NUMBER = #{loginNumber,jdbcType=DECIMAL},
+		BEFORE_LOGIN_TIME = #{beforeLoginTime,jdbcType=TIMESTAMP},
+		OBJECT1 = #{object1,jdbcType=VARCHAR},
+		OBJECT2 = #{object2,jdbcType=VARCHAR},
+		OBJECT3 = #{object3,jdbcType=VARCHAR},
+		OBJECT4 = #{object4,jdbcType=VARCHAR},
+		OBJECT5 = #{object5,jdbcType=VARCHAR},
+		OBJECT6 = #{object6,jdbcType=VARCHAR},
+		OBJECT7 = #{object7,jdbcType=VARCHAR},
+		OBJECT8 = #{object8,jdbcType=VARCHAR},
+		OBJECT9 = #{object9,jdbcType=VARCHAR},
+		OBJECT10 = #{object10,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 登录查询 User selectByLoginName(String login_name) -->
+	<select id="selectByLoginName" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_USER
+		where 1=1 and
+		LOGIN_NAME = #{login_name,jdbcType=VARCHAR}
+	</select>
+
+
+</mapper>

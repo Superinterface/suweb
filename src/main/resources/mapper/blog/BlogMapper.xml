@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sujianan.dao.blog.BlogMapper">
+	<resultMap id="BaseResultMap"
+		type="com.sujianan.bean.blog.Blog">
+		<id column="ID" jdbcType="VARCHAR" property="id" />
+		<result column="TYPE" jdbcType="VARCHAR" property="type" />
+		<result column="BLOG_TITLE" jdbcType="VARCHAR"
+			property="blogTitle" />
+		<result column="BLOG_URL" jdbcType="VARCHAR" property="blogUrl" />
+		<result column="BLOG_AUTHOR" jdbcType="VARCHAR"
+			property="blogAuthor" />
+		<result column="CREATE_USER" jdbcType="VARCHAR"
+			property="createUser" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP"
+			property="createTime" />
+		<result column="UPDATE_USER" jdbcType="VARCHAR"
+			property="updateUser" />
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP"
+			property="updateTime" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, TYPE, BLOG_TITLE, BLOG_URL, BLOG_AUTHOR, CREATE_USER,
+		CREATE_TIME,
+		UPDATE_USER,
+		UPDATE_TIME
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.sujianan.bean.blog.BlogExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from T_BLOG
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_BLOG
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from T_BLOG
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.sujianan.bean.blog.BlogExample">
+		delete from T_BLOG
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.sujianan.bean.blog.Blog">
+		insert into T_BLOG (ID, TYPE,
+		BLOG_TITLE,
+		BLOG_URL, BLOG_AUTHOR, CREATE_USER,
+		CREATE_TIME,
+		UPDATE_USER, UPDATE_TIME
+		)
+		values (sys_guid(),
+		#{type,jdbcType=VARCHAR},
+		#{blogTitle,jdbcType=VARCHAR},
+		#{blogUrl,jdbcType=VARCHAR}, #{blogAuthor,jdbcType=VARCHAR},
+		#{createUser,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateUser,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.sujianan.bean.blog.Blog">
+		insert into T_BLOG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="type != null">
+				TYPE,
+			</if>
+			<if test="blogTitle != null">
+				BLOG_TITLE,
+			</if>
+			<if test="blogUrl != null">
+				BLOG_URL,
+			</if>
+			<if test="blogAuthor != null">
+				BLOG_AUTHOR,
+			</if>
+			<if test="createUser != null">
+				CREATE_USER,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="blogTitle != null">
+				#{blogTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="blogUrl != null">
+				#{blogUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="blogAuthor != null">
+				#{blogAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.sujianan.bean.blog.BlogExample"
+		resultType="java.lang.Long">
+		select count(1) from T_BLOG
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update T_BLOG
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=VARCHAR},
+			</if>
+			<if test="record.type != null">
+				TYPE = #{record.type,jdbcType=VARCHAR},
+			</if>
+			<if test="record.blogTitle != null">
+				BLOG_TITLE = #{record.blogTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.blogUrl != null">
+				BLOG_URL = #{record.blogUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.blogAuthor != null">
+				BLOG_AUTHOR = #{record.blogAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createUser != null">
+				CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateUser != null">
+				UPDATE_USER = #{record.updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.updateTime != null">
+				UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update T_BLOG
+		set ID = #{record.id,jdbcType=VARCHAR},
+		TYPE =
+		#{record.type,jdbcType=VARCHAR},
+		BLOG_TITLE =
+		#{record.blogTitle,jdbcType=VARCHAR},
+		BLOG_URL =
+		#{record.blogUrl,jdbcType=VARCHAR},
+		BLOG_AUTHOR =
+		#{record.blogAuthor,jdbcType=VARCHAR},
+		CREATE_USER =
+		#{record.createUser,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{record.createTime,jdbcType=TIMESTAMP},
+		UPDATE_USER =
+		#{record.updateUser,jdbcType=VARCHAR},
+		UPDATE_TIME =
+		#{record.updateTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.sujianan.bean.blog.Blog">
+		update T_BLOG
+		<set>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="blogTitle != null">
+				BLOG_TITLE = #{blogTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="blogUrl != null">
+				BLOG_URL = #{blogUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="blogAuthor != null">
+				BLOG_AUTHOR = #{blogAuthor,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				CREATE_USER = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.sujianan.bean.blog.Blog">
+		update T_BLOG
+		set TYPE = #{type,jdbcType=VARCHAR},
+		BLOG_TITLE = #{blogTitle,jdbcType=VARCHAR},
+		BLOG_URL =
+		#{blogUrl,jdbcType=VARCHAR},
+		BLOG_AUTHOR =
+		#{blogAuthor,jdbcType=VARCHAR},
+		CREATE_USER =
+		#{createUser,jdbcType=VARCHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_USER =
+		#{updateUser,jdbcType=VARCHAR},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPageNo" resultMap="BaseResultMap"
+		parameterType="com.sujianan.util.Page">
+		select
+		<include refid="Base_Column_List"></include>
+		from (
+		select tu.net_name as BLOG_AUTHOR, 
+		tb.ID, tb.TYPE, tb.BLOG_TITLE, tb.BLOG_URL, tb.CREATE_USER,
+		tb.CREATE_TIME,
+		tb.UPDATE_USER,
+		tb.UPDATE_TIME, rownum rn
+		from T_BLOG tb left join t_user tu on tb.blog_author = tu.login_name where rownum <![CDATA[<=]]> #{pg.rownum}
+		<if test='type != null and !type.isEmpty() and type != "all" '>
+			and type = #{type} 
+		</if>
+		)
+		where rn <![CDATA[>]]> #{pg.rn}
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(1) from t_blog
+	</select>
+
+</mapper>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/static/common.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#indexhead').load('/head.html',function(){loadUser();});
+		$('#indexfoot').load('/foot.html');
+	});
+</script>
+<title>主页</title>
+</head>
+<body style="overflow: hidden;">
+	<div id="indexhead"></div>
+	<div id="indexbody">
+		<div id="appone">
+			<p>{{message}}</p>
+			<div class="drop" style="z-index: -100"></div>
+			<div class="wave mar" style="z-index: -100"></div>
+		</div>
+	</div>
+	<div id="indexfoot"></div>
+
+</body>
+<script type="text/javascript">
+	var vue = new Vue({
+		el : '#appone',
+		data : {
+			message : ''
+		},
+	});
+</script>
+</html>

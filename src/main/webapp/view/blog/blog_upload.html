@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/static/common.js"></script>
+<script type="text/javascript" src="/static/js/blog/blog_upload.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#indexhead').load('/head.html', function() {
+			loadUser();
+		});
+		$('#indexfoot').load('/foot.html');
+		getBlogTypeOne();
+	});
+</script>
+<title>blog upload</title>
+</head>
+<body style="overflow: hidden;">
+	<div id="indexhead"></div>
+	<div>
+		<div class="table-responsive default_head_padding">
+			<table class="table table-hover "
+				style="background-color: #ffffff;">
+				<thead id="blog_upload_thead">
+					<tr>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody id="blog_upload_tbady">
+					<tr>
+						<td colspan="1" rowspan="1"><label class="control-label">博客类别</label></td>
+						<td colspan="3" rowspan="1"><select id="blog_type_one" class="form-control" onchange="getBlogTypeTwo();"> </select></td>
+						<td colspan="2" rowspan="1"><select id="blog_type_two" class="form-control"> </select></td>
+					</tr>
+					<tr>
+						<td colspan="1" rowspan="1"><label class="control-label">文件选择</label></td>
+						<td colspan="5" rowspan="1"><input id="file" name="file" type="file" /><input id="token" name="token" type="hidden" /></td>
+					</tr>
+					<tr>
+						<td colspan="1" rowspan="1"><label class="control-label">文章标题</label></td>
+						<td colspan="5" rowspan="1"><input id="blog_title" name="blog_title" class="form-control" type="text" /></td>
+					</tr>
+				</tbody>
+				<tfoot id="blog_upload_tfoot">
+					<tr><td colspan="6" rowspan="1" align="center"><button type="button" class="btn btn-default" onclick="blogUpload();">上传</button></td></tr>
+				</tfoot>
+			</table>
+		</div>
+				<!-- 省市区二级联动下拉选 -->
+				<!-- <div class="form-group">
+					<label class="col-sm-3 control-label">地区选择</label>
+					<div class="input-group col-sm-8 ">
+						<span class="input-group-addon">省:</span> 
+						<select id="province" class="form-control" onchange="getCity();"> </select> 
+						<span class="input-group-addon">市:</span> 
+						<select id="city" class="form-control" onchange="getArea();"> </select>
+						<span class="input-group-addon">区县:</span>
+						<select id="area" class="form-control"> </select>
+					</div>
+				</div> -->
+	</div>
+	<div id="indexfoot"></div>
+</body>
+</html>
