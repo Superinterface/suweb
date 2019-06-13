@@ -24,6 +24,8 @@ public class RST {
 	public static final String USER_LOADUSER_NOLOGIN = "未登录";
 	public static final String USER_LOADUSER_INLOGIN = "未登录";
 	public static final String USER_LOGIN_SUCCESS = "登陆成功~";
+	public static final String USER_LOGIN_FAIL = "登陆失败";
+	public static final String USER_LOGIN_FAIL_CODE_ERROR = "登陆失败,验证码不正确~";
 	public static final String USER_LOGIN_FAIL_INPUT_ERROR = "登陆失败,账号或者密码填写错误,请检查后重试~";
 
 	public static final String USER_LOGOUT_SUCCESS = "注销成功";

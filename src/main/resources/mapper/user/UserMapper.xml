@@ -185,9 +185,7 @@
 			<if test="email != null">
 				EMAIL,
 			</if>
-			<if test="createtime != null">
 				CREATETIME,
-			</if>
 			<if test="loginTime != null">
 				LOGIN_TIME,
 			</if>
@@ -251,9 +249,7 @@
 			<if test="email != null">
 				#{email,jdbcType=VARCHAR},
 			</if>
-			<if test="createtime != null">
-				#{createtime,jdbcType=TIMESTAMP},
-			</if>
+				sysdate,
 			<if test="loginTime != null">
 				#{loginTime,jdbcType=TIMESTAMP},
 			</if>

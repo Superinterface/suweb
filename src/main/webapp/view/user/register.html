@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="/static/common.js"></script>
+<script type="text/javascript" src="/static/js/user/register.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#indexhead').load('/head.html', function() { loadUser(); });
@@ -22,8 +23,8 @@
 					<label class="col-sm-3 control-label" v-html="names.loginName"></label>
 					<div class="col-sm-5">
 						<input id="loginName" class="form-control" type="text"
-							placeholder="10位英文与数字，以英文开头"
-							onKeyUp="value = value.replace(/[^a-z0-9]|^[^a-z]/ig,'')"
+							placeholder="4位-10位英文与数字，以英文开头"
+							onKeyUp="value = value.replace(/[^a-z0-9]|^[^a-z]/ig,'');checkout('loginName');"
 							v-model="user.loginName">
 					</div>
 					<span class="mustFillIn">*</span> <span id="loginNameText"></span>
@@ -69,6 +70,7 @@
 								<option value="0">女</option>
 							</select>
 					</div>
+					<span class="mustFillIn">*</span>
 				</div>
 				<!-- phone  -->
 				<div class="form-group">
@@ -85,7 +87,7 @@
 					<label class="col-sm-3 control-label" v-html="names.email"></label>
 					<div class="col-sm-5">
 						<input id="email" class="form-control" type="text"
-							placeholder="例如:  asd@asd.com" onkeyup="checkout('email');"
+							placeholder="例如:  zhangsan@163.com" onkeyup="checkout('email');"
 							v-model="user.email">
 					</div>
 					<span class="mustFillIn">*</span>

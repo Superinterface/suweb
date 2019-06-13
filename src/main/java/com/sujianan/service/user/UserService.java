@@ -52,20 +52,29 @@ public class UserService {
 	}
 
 	public HttpResponse<Object> login(HttpServletRequest request, HttpServletResponse response, User user) {
-		boolean flag = user == null || "".equals(user.getLoginName()) || "".equals(user.getLoginPassword());
-		if (flag) {
+		
+		if(user == null || "".equals(user.getLoginName()) || "".equals(user.getLoginPassword()) || "".equals(user.getAuthCode()))
 			return new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_PARAM_ERROR, null);
-		} else {
-			User QueryUser = this.userMapper.selectByLoginName(user.getLoginName());
-			if (QueryUser != null && user.getLoginPassword().equals(QueryUser.getLoginPassword())) {
-				UtilService.removeSensitivityMessage(QueryUser);
-				HttpSession session = request.getSession();
-				session.setAttribute("user", QueryUser);
-				return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_LOGIN_SUCCESS, null);
-			} else {
-				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_LOGIN_FAIL_INPUT_ERROR, null);
+		
+			HttpSession session =  null;
+			User QueryUser = null;
+			try {
+				session = request.getSession();
+				String authCode = (String)session.getAttribute("authCode");
+				if(!user.getAuthCode().equalsIgnoreCase(authCode)) return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_LOGIN_FAIL_CODE_ERROR, null);
+				QueryUser = userMapper.selectByLoginName(user.getLoginName());
+				if (QueryUser != null && user.getLoginPassword().equals(QueryUser.getLoginPassword())) {
+					UtilService.removeSensitivityMessage(QueryUser);
+					session.setAttribute("user", QueryUser); 
+					return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_LOGIN_SUCCESS, null);
+				} else {
+					return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_LOGIN_FAIL_INPUT_ERROR, null);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_LOGIN_FAIL,null); 
 			}
-		}
+			
 	}
 
 	public HttpResponse<Object> logOut(HttpServletRequest request, HttpServletResponse response) {

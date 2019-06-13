@@ -50,6 +50,8 @@ public class User {
     private String object9;
 
     private String object10;
+    
+    private String authCode;
 
     public String getId() {
         return id;
@@ -242,4 +244,13 @@ public class User {
     public void setObject10(String object10) {
         this.object10 = object10 == null ? null : object10.trim();
     }
+
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
+	}
+    
 }
