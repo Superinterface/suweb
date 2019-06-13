@@ -132,7 +132,7 @@ function getBlogs(e) {
 function getBlogTypeCodeName() {
 	$.ajax({
 		type : "POST",
-		url : "/system/dataDictionary/getBlogDataLevel3.go",
+		url : "/system/datadictionary/getBlogDataLevel3.go",
 		data : '',
 		dataType : "json",
 		success : function(res) {

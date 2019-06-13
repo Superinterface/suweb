@@ -89,7 +89,7 @@ function getBlogTypeOne() {
 	oo.innerHTML = "";
 	$.ajax({
 		type : "POST",
-		url : "/system/dataDictionary/getDataByCode.go",
+		url : "/system/datadictionary/getDataByCode.go",
 		data : 'code=blog_type',
 		success : function(data) {
 		console.log(data);
@@ -121,7 +121,7 @@ function getBlogTypeTwo() {
 	oo.innerHTML = "";
 	$.ajax({
 		type : "POST",
-		url : "/system/dataDictionary/getDataByCode.go",
+		url : "/system/datadictionary/getDataByCode.go",
 		data : 'code=' + code.value,
 		dataType : "json",
 		success : function(data) {

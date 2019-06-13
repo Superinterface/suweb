@@ -16,7 +16,7 @@ import com.sujianan.service.system.BasicService;
  * @date	2019年6月13日
  */
 @Controller
-@RequestMapping("/system/")
+@RequestMapping("/system/basic/")
 public class BasicController {
 	
 	@Autowired

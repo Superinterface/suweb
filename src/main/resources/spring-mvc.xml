@@ -40,6 +40,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<!-- 获取客户端信息拦截器 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
+			
+			<mvc:exclude-mapping path="/system/basic/getAuthCode.go" />
+			
 			<bean class="com.sujianan.interceptor.GetClientMessage"></bean>
 		</mvc:interceptor>
 		

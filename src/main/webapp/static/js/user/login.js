@@ -21,5 +21,5 @@ function login() {
 
 //获取登录验证码
 function getAuthCode() {
-	$("#authCode").attr("src","/system/getAuthCode.go?random="+Math.random());
+	$("#authCode").attr("src","/system/basic/getAuthCode.go?random="+Math.random());
 }
