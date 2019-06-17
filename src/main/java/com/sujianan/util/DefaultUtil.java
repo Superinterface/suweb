@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 public class DefaultUtil {
 	
-	public static User getUserForSession(HttpServletRequest request) {
+	public static User getUserForRequest(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		User user = session.getAttribute("user") == null ? null : (User) session.getAttribute("user");
 		return user;

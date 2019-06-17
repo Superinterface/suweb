@@ -3,13 +3,15 @@ package com.sujianan.bean.user;
 import java.util.Date;
 
 public class User {
-    private String id;
+    private Integer id;
+    
+    private String AuthCode;
+
+    private String userCode;
 
     private String loginName;
 
     private String loginPassword;
-
-    private String username;
 
     private String netName;
 
@@ -50,15 +52,29 @@ public class User {
     private String object9;
 
     private String object10;
-    
-    private String authCode;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public String getAuthCode() {
+		return AuthCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		AuthCode = authCode;
+	}
+
+	public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode == null ? null : userCode.trim();
     }
 
     public String getLoginName() {
@@ -75,14 +91,6 @@ public class User {
 
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword == null ? null : loginPassword.trim();
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
     }
 
     public String getNetName() {
@@ -244,13 +252,4 @@ public class User {
     public void setObject10(String object10) {
         this.object10 = object10 == null ? null : object10.trim();
     }
-
-	public String getAuthCode() {
-		return authCode;
-	}
-
-	public void setAuthCode(String authCode) {
-		this.authCode = authCode;
-	}
-    
 }

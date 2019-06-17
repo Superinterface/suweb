@@ -23,7 +23,7 @@ public class ClientMessageService {
 		ClientRequestData crd = new ClientRequestData();
 		crd.setIpv4(IPUtil.getIpAddr(request));
 		crd.setMethod(request.getMethod());
-		crd.setUserId(u != null && !"".equals(u.getId()) ? u.getId() : null);
+		crd.setUserId(u == null ? "" : u.getId().toString());
 		crd.setRequestTime(new Date());
 		StringBuilder clientsb = new StringBuilder();
 		Enumeration e = request.getHeaderNames();

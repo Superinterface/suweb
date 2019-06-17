@@ -34,4 +34,6 @@ public class RST {
 
 	public static final String BLOG_UPLOAD_SUCCESS = "博客上传成功~";
 	public static final String BLOG_UPLOAD_ERROR = "博客上传失败~";
+		
+	
 }

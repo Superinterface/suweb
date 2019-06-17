@@ -1,5 +1,7 @@
 package com.sujianan.controller.util;
 
+import com.sujianan.bean.util.Bill;
+import com.sujianan.service.util.UtilService;
 import com.sujianan.util.HttpResponse;
 import com.sujianan.util.RST;
 
@@ -8,13 +10,43 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/util/")
+@RequestMapping("/util")
 public class UtilController {
+	
+	@Autowired
+	UtilService utilservice;
+	
+	/**
+	 * 	账单记录一笔数据控制器
+	 * @param request
+	 * @param response
+	 * @param bill
+	 * @return
+	 */
+	@RequestMapping("/account/commit")
+	@ResponseBody
+	public HttpResponse<Object> billCommit(HttpServletRequest request, HttpServletResponse response, Bill bill){
+		return utilservice.billCommit(request, bill);
+	}
+	
+	
+	/**
+	 * 	租金计算
+	 * @param money
+	 * @param rate
+	 * @param num
+	 * @return
+	 */
 	@RequestMapping("calculate/.go")
 	@ResponseBody
 	public HttpResponse<Object> calculate(String money, String rate, String num) {
@@ -33,13 +65,13 @@ public class UtilController {
 			BigDecimal Bnum = new BigDecimal(num);
 			int Inum = Integer.parseInt(num);
 
-			List<BigDecimal> rentList = new ArrayList();
+			List<BigDecimal> rentList = new ArrayList<BigDecimal>();
 
-			List<BigDecimal> interestList = new ArrayList();
+			List<BigDecimal> interestList = new ArrayList<BigDecimal>();
 
-			List<BigDecimal> principalList = new ArrayList();
+			List<BigDecimal> principalList = new ArrayList<BigDecimal>();
 
-			List<BigDecimal> NoRecoveryPrincipalList = new ArrayList();
+			List<BigDecimal> NoRecoveryPrincipalList = new ArrayList<BigDecimal>();
 
 			BigDecimal meiQiBenJin = Bmoney.divide(Bnum, 8, 4);
 			for (int i = 0; i < Inum; i++) {
@@ -64,13 +96,13 @@ public class UtilController {
 							((BigDecimal) principalList.get(i)).add((BigDecimal) interestList.get(i)).setScale(2, 4));
 				}
 			}
-			Map<String, List<BigDecimal>> map = new HashMap();
+			Map<String, List<BigDecimal>> map = new HashMap<String, List<BigDecimal>>();
 			map.put("rentList", rentList);
 			map.put("interestList", interestList);
 			map.put("principalList", principalList);
-			return new HttpResponse(1, "成功", map);
+			return new HttpResponse<Object>(1, "成功", map);
 		} catch (Exception e) {
 		}
-		return new HttpResponse(-1, "失败", null);
+		return new HttpResponse<Object>(-1, "失败", null);
 	}
 }

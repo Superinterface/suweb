@@ -108,8 +108,8 @@ function goIndex(){
 
 // 鼠标点击特效,借鉴自 https://blog.csdn.net/Blog_7Core_CN/article/details/83472358
 /* 鼠标点击特效 - 7Core.CN */
-var a_idx = 0;
-jQuery(document).ready(
+	var a_idx = 0;
+	jQuery(document).ready(
 		function($) {
 			$("html").click(
 					function(e) {
@@ -139,7 +139,7 @@ jQuery(document).ready(
 						});
 					});
 		});
-
+/* 解决ajax请求重定向问题 */
 $.ajaxSetup({
     complete : function(xhr, status) {
         // 拦截器实现超时跳转到登录页面
@@ -156,3 +156,15 @@ $.ajaxSetup({
         }
     }
 });
+
+/* bootstrap多个div显示*/
+
+$('#myTabs a').click(function(e) {
+	e.preventDefault()
+	$(this).tab('show')
+});
+/* $('#myTabs a[href="#profile"]').tab('show'); // Select tab by name
+$('#myTabs a:first').tab('show'); // Select first tab
+$('#myTabs a:last').tab('show'); // Select last tab
+$('#myTabs li:eq(2) a').tab('show'); // Select third tab (0-indexed) */
+

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sujianan.dao.user.UserMapper">
-	<resultMap id="BaseResultMap" type="com.sujianan.bean.user.User">
-		<id column="ID" jdbcType="VARCHAR" property="id" />
+	<resultMap id="BaseResultMap"
+		type="com.sujianan.bean.user.User">
+		<id column="ID" jdbcType="DECIMAL" property="id" />
+		<result column="USER_CODE" jdbcType="VARCHAR"
+			property="userCode" />
 		<result column="LOGIN_NAME" jdbcType="VARCHAR"
 			property="loginName" />
 		<result column="LOGIN_PASSWORD" jdbcType="VARCHAR"
 			property="loginPassword" />
-		<result column="USERNAME" jdbcType="VARCHAR"
-			property="username" />
 		<result column="NET_NAME" jdbcType="VARCHAR" property="netName" />
 		<result column="GENDER" jdbcType="DECIMAL" property="gender" />
 		<result column="PHONE" jdbcType="VARCHAR" property="phone" />
 		<result column="EMAIL" jdbcType="VARCHAR" property="email" />
+		<result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+		<result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
 		<result column="CREATETIME" jdbcType="TIMESTAMP"
 			property="createtime" />
 		<result column="LOGIN_TIME" jdbcType="TIMESTAMP"
@@ -98,10 +101,11 @@
 		</where>
 	</sql>
 	<sql id="Base_Column_List">
-		ID, LOGIN_NAME, LOGIN_PASSWORD, USERNAME, NET_NAME, GENDER, PHONE, EMAIL,
-		CREATETIME,
-		LOGIN_TIME, LOGIN_NUMBER, BEFORE_LOGIN_TIME, OBJECT1, OBJECT2, OBJECT3, OBJECT4,
-		OBJECT5, OBJECT6, OBJECT7, OBJECT8, OBJECT9, OBJECT10
+		ID, USER_CODE, LOGIN_NAME, LOGIN_PASSWORD, NET_NAME, GENDER, PHONE,
+		EMAIL, ADDRESS,
+		ID_CARD, CREATETIME, LOGIN_TIME, LOGIN_NUMBER, BEFORE_LOGIN_TIME, OBJECT1,
+		OBJECT2,
+		OBJECT3, OBJECT4, OBJECT5, OBJECT6, OBJECT7, OBJECT8, OBJECT9, OBJECT10
 	</sql>
 	<select id="selectByExample"
 		parameterType="com.sujianan.bean.user.UserExample"
@@ -119,16 +123,16 @@
 			order by ${orderByClause}
 		</if>
 	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
 		resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from T_USER
-		where ID = #{id,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=DECIMAL}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from T_USER
-		where ID = #{id,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=DECIMAL}
 	</delete>
 	<delete id="deleteByExample"
 		parameterType="com.sujianan.bean.user.UserExample">
@@ -138,25 +142,34 @@
 		</if>
 	</delete>
 	<insert id="insert" parameterType="com.sujianan.bean.user.User">
-		insert into T_USER (ID, LOGIN_NAME, LOGIN_PASSWORD,
-		USERNAME, NET_NAME, GENDER,
-		PHONE, EMAIL, CREATETIME,
+		insert into T_USER (ID,
+		USER_CODE
+		LOGIN_NAME, LOGIN_PASSWORD,
+		NET_NAME, GENDER,
+		PHONE, EMAIL,
+		CREATETIME,
 		LOGIN_TIME, LOGIN_NUMBER, BEFORE_LOGIN_TIME,
-		OBJECT1, OBJECT2, OBJECT3,
+		OBJECT1,
+		OBJECT2, OBJECT3,
 		OBJECT4, OBJECT5, OBJECT6,
 		OBJECT7, OBJECT8, OBJECT9,
 		OBJECT10)
-		values (sys_guid(), #{loginName,jdbcType=VARCHAR},
+		values (sequence_t_user_id.nextval, 
+		#{userCode,jdbcType=VARCHAR},
+		#{loginName,jdbcType=VARCHAR},
 		#{loginPassword,jdbcType=VARCHAR},
-		#{username,jdbcType=VARCHAR}, #{netName,jdbcType=VARCHAR}, #{gender,jdbcType=DECIMAL},
+		#{netName,jdbcType=VARCHAR}, #{gender,jdbcType=DECIMAL},
 		#{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
 		#{createtime,jdbcType=TIMESTAMP},
-		#{loginTime,jdbcType=TIMESTAMP}, #{loginNumber,jdbcType=DECIMAL},
+		#{loginTime,jdbcType=TIMESTAMP},
+		#{loginNumber,jdbcType=DECIMAL},
 		#{beforeLoginTime,jdbcType=TIMESTAMP},
-		#{object1,jdbcType=VARCHAR}, #{object2,jdbcType=VARCHAR}, #{object3,jdbcType=VARCHAR},
+		#{object1,jdbcType=VARCHAR},
+		#{object2,jdbcType=VARCHAR}, #{object3,jdbcType=VARCHAR},
 		#{object4,jdbcType=VARCHAR}, #{object5,jdbcType=VARCHAR},
 		#{object6,jdbcType=VARCHAR},
-		#{object7,jdbcType=VARCHAR}, #{object8,jdbcType=VARCHAR}, #{object9,jdbcType=VARCHAR},
+		#{object7,jdbcType=VARCHAR},
+		#{object8,jdbcType=VARCHAR}, #{object9,jdbcType=VARCHAR},
 		#{object10,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective"
@@ -164,14 +177,14 @@
 		insert into T_USER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID,
+			<if test="username != null">
+				USER_CODE,
+			</if>
 			<if test="loginName != null">
 				LOGIN_NAME,
 			</if>
 			<if test="loginPassword != null">
 				LOGIN_PASSWORD,
-			</if>
-			<if test="username != null">
-				USERNAME,
 			</if>
 			<if test="netName != null">
 				NET_NAME,
@@ -185,7 +198,7 @@
 			<if test="email != null">
 				EMAIL,
 			</if>
-				CREATETIME,
+			CREATETIME,
 			<if test="loginTime != null">
 				LOGIN_TIME,
 			</if>
@@ -227,15 +240,15 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			sys_guid(),
+			sequence_t_user_id.nextval,
+			<if test="userCode != null">
+				#{userCode,jdbcType=VARCHAR},
+			</if>
 			<if test="loginName != null">
 				#{loginName,jdbcType=VARCHAR},
 			</if>
 			<if test="loginPassword != null">
 				#{loginPassword,jdbcType=VARCHAR},
-			</if>
-			<if test="username != null">
-				#{username,jdbcType=VARCHAR},
 			</if>
 			<if test="netName != null">
 				#{netName,jdbcType=VARCHAR},
@@ -249,7 +262,7 @@
 			<if test="email != null">
 				#{email,jdbcType=VARCHAR},
 			</if>
-				sysdate,
+			sysdate,
 			<if test="loginTime != null">
 				#{loginTime,jdbcType=TIMESTAMP},
 			</if>
@@ -303,16 +316,17 @@
 		update T_USER
 		<set>
 			<if test="record.id != null">
-				ID = #{record.id,jdbcType=VARCHAR},
+				ID = #{record.id,jdbcType=DECIMAL},
 			</if>
 			<if test="record.loginName != null">
 				LOGIN_NAME = #{record.loginName,jdbcType=VARCHAR},
 			</if>
 			<if test="record.loginPassword != null">
-				LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
+				LOGIN_PASSWORD =
+				#{record.loginPassword,jdbcType=VARCHAR},
 			</if>
 			<if test="record.username != null">
-				USERNAME = #{record.username,jdbcType=VARCHAR},
+				USER_CODE = #{record.userCode,jdbcType=VARCHAR},
 			</if>
 			<if test="record.netName != null">
 				NET_NAME = #{record.netName,jdbcType=VARCHAR},
@@ -336,7 +350,8 @@
 				LOGIN_NUMBER = #{record.loginNumber,jdbcType=DECIMAL},
 			</if>
 			<if test="record.beforeLoginTime != null">
-				BEFORE_LOGIN_TIME = #{record.beforeLoginTime,jdbcType=TIMESTAMP},
+				BEFORE_LOGIN_TIME =
+				#{record.beforeLoginTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="record.object1 != null">
 				OBJECT1 = #{record.object1,jdbcType=VARCHAR},
@@ -375,28 +390,49 @@
 	</update>
 	<update id="updateByExample" parameterType="map">
 		update T_USER
-		set ID = #{record.id,jdbcType=VARCHAR},
-		LOGIN_NAME = #{record.loginName,jdbcType=VARCHAR},
-		LOGIN_PASSWORD = #{record.loginPassword,jdbcType=VARCHAR},
-		USERNAME = #{record.username,jdbcType=VARCHAR},
-		NET_NAME = #{record.netName,jdbcType=VARCHAR},
-		GENDER = #{record.gender,jdbcType=DECIMAL},
-		PHONE = #{record.phone,jdbcType=VARCHAR},
-		EMAIL = #{record.email,jdbcType=VARCHAR},
-		CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
-		LOGIN_TIME = #{record.loginTime,jdbcType=TIMESTAMP},
-		LOGIN_NUMBER = #{record.loginNumber,jdbcType=DECIMAL},
-		BEFORE_LOGIN_TIME = #{record.beforeLoginTime,jdbcType=TIMESTAMP},
-		OBJECT1 = #{record.object1,jdbcType=VARCHAR},
-		OBJECT2 = #{record.object2,jdbcType=VARCHAR},
-		OBJECT3 = #{record.object3,jdbcType=VARCHAR},
-		OBJECT4 = #{record.object4,jdbcType=VARCHAR},
-		OBJECT5 = #{record.object5,jdbcType=VARCHAR},
-		OBJECT6 = #{record.object6,jdbcType=VARCHAR},
-		OBJECT7 = #{record.object7,jdbcType=VARCHAR},
-		OBJECT8 = #{record.object8,jdbcType=VARCHAR},
-		OBJECT9 = #{record.object9,jdbcType=VARCHAR},
-		OBJECT10 = #{record.object10,jdbcType=VARCHAR}
+		set ID = #{record.id,jdbcType=DECIMAL},
+		LOGIN_NAME =
+		#{record.loginName,jdbcType=VARCHAR},
+		LOGIN_PASSWORD =
+		#{record.loginPassword,jdbcType=VARCHAR},
+		USER_CODE =
+		#{record.userCode,jdbcType=VARCHAR},
+		NET_NAME =
+		#{record.netName,jdbcType=VARCHAR},
+		GENDER =
+		#{record.gender,jdbcType=DECIMAL},
+		PHONE =
+		#{record.phone,jdbcType=VARCHAR},
+		EMAIL =
+		#{record.email,jdbcType=VARCHAR},
+		CREATETIME =
+		#{record.createtime,jdbcType=TIMESTAMP},
+		LOGIN_TIME =
+		#{record.loginTime,jdbcType=TIMESTAMP},
+		LOGIN_NUMBER =
+		#{record.loginNumber,jdbcType=DECIMAL},
+		BEFORE_LOGIN_TIME =
+		#{record.beforeLoginTime,jdbcType=TIMESTAMP},
+		OBJECT1 =
+		#{record.object1,jdbcType=VARCHAR},
+		OBJECT2 =
+		#{record.object2,jdbcType=VARCHAR},
+		OBJECT3 =
+		#{record.object3,jdbcType=VARCHAR},
+		OBJECT4 =
+		#{record.object4,jdbcType=VARCHAR},
+		OBJECT5 =
+		#{record.object5,jdbcType=VARCHAR},
+		OBJECT6 =
+		#{record.object6,jdbcType=VARCHAR},
+		OBJECT7 =
+		#{record.object7,jdbcType=VARCHAR},
+		OBJECT8 =
+		#{record.object8,jdbcType=VARCHAR},
+		OBJECT9 =
+		#{record.object9,jdbcType=VARCHAR},
+		OBJECT10 =
+		#{record.object10,jdbcType=VARCHAR}
 		<if test="_parameter != null">
 			<include refid="Update_By_Example_Where_Clause" />
 		</if>
@@ -412,7 +448,7 @@
 				LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
 			</if>
 			<if test="username != null">
-				USERNAME = #{username,jdbcType=VARCHAR},
+				USER_CODE = #{userCode,jdbcType=VARCHAR},
 			</if>
 			<if test="netName != null">
 				NET_NAME = #{netName,jdbcType=VARCHAR},
@@ -436,7 +472,8 @@
 				LOGIN_NUMBER = #{loginNumber,jdbcType=DECIMAL},
 			</if>
 			<if test="beforeLoginTime != null">
-				BEFORE_LOGIN_TIME = #{beforeLoginTime,jdbcType=TIMESTAMP},
+				BEFORE_LOGIN_TIME =
+				#{beforeLoginTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="object1 != null">
 				OBJECT1 = #{object1,jdbcType=VARCHAR},
@@ -469,33 +506,44 @@
 				OBJECT10 = #{object10,jdbcType=VARCHAR},
 			</if>
 		</set>
-		where ID = #{id,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=DECIMAL}
 	</update>
 	<update id="updateByPrimaryKey"
 		parameterType="com.sujianan.bean.user.User">
 		update T_USER
-		set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
-		LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
-		USERNAME = #{username,jdbcType=VARCHAR},
+		set LOGIN_NAME =
+		#{loginName,jdbcType=VARCHAR},
+		LOGIN_PASSWORD =
+		#{loginPassword,jdbcType=VARCHAR},
+		USER_CODE =
+		#{user_code,jdbcType=VARCHAR},
 		NET_NAME = #{netName,jdbcType=VARCHAR},
 		GENDER = #{gender,jdbcType=DECIMAL},
 		PHONE = #{phone,jdbcType=VARCHAR},
 		EMAIL = #{email,jdbcType=VARCHAR},
-		CREATETIME = #{createtime,jdbcType=TIMESTAMP},
-		LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
-		LOGIN_NUMBER = #{loginNumber,jdbcType=DECIMAL},
-		BEFORE_LOGIN_TIME = #{beforeLoginTime,jdbcType=TIMESTAMP},
-		OBJECT1 = #{object1,jdbcType=VARCHAR},
+		CREATETIME =
+		#{createtime,jdbcType=TIMESTAMP},
+		LOGIN_TIME =
+		#{loginTime,jdbcType=TIMESTAMP},
+		LOGIN_NUMBER =
+		#{loginNumber,jdbcType=DECIMAL},
+		BEFORE_LOGIN_TIME =
+		#{beforeLoginTime,jdbcType=TIMESTAMP},
+		OBJECT1 =
+		#{object1,jdbcType=VARCHAR},
 		OBJECT2 = #{object2,jdbcType=VARCHAR},
 		OBJECT3 = #{object3,jdbcType=VARCHAR},
-		OBJECT4 = #{object4,jdbcType=VARCHAR},
+		OBJECT4 =
+		#{object4,jdbcType=VARCHAR},
 		OBJECT5 = #{object5,jdbcType=VARCHAR},
 		OBJECT6 = #{object6,jdbcType=VARCHAR},
-		OBJECT7 = #{object7,jdbcType=VARCHAR},
+		OBJECT7 =
+		#{object7,jdbcType=VARCHAR},
 		OBJECT8 = #{object8,jdbcType=VARCHAR},
 		OBJECT9 = #{object9,jdbcType=VARCHAR},
-		OBJECT10 = #{object10,jdbcType=VARCHAR}
-		where ID = #{id,jdbcType=VARCHAR}
+		OBJECT10 =
+		#{object10,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=DECIMAL}
 	</update>
 
 	<!-- 登录查询 User selectByLoginName(String login_name) -->

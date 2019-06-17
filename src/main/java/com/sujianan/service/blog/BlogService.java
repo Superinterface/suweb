@@ -59,7 +59,7 @@ public class BlogService {
 		InputStream in = null;
 		FileOutputStream out = null;
 
-		HttpResponse var22;
+		HttpResponse<Object> var22;
 		try {
 			List<FileItem> items = upload.parseRequest(request);
 			Iterator var16 = items.iterator();
@@ -92,7 +92,7 @@ public class BlogService {
 				out.write(buffer, 0, len);
 			}
 
-			User u = DefaultUtil.getUserForSession(request);
+			User u = DefaultUtil.getUserForRequest(request);
 			u = u == null ? new User() : u;
 			if (u.getLoginName() == null) {
 				u.setLoginName("佚名");
