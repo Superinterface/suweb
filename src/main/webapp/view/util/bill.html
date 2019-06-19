@@ -3,42 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="/static/common.js"></script>
-<script type="text/javascript" src="/static/js/util/account_book.js"></script>
+<script type="text/javascript" src="/static/js/util/bill.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#indexhead').load('/head.html', function() {
-			loadUser();
+			loadUser();findAccountHistoryList();
 		});
 		$('#indexfoot').load('/foot.html');
 	});
 </script>
-<title>我的帐本</title>
+<title>账本</title>
 </head>
 <body>
 	<div id="indexhead"></div>
 	<div>
 		<div>
-			<div
-				style="width: 95%; height: 30em; margin-top: 10%; margin-left: 2%; border: solid red 1px; position: relative;">
-				<div class=""
-					style="width: 10%; height: 100%; background-color: #fff; border: solid red 1px;">
+			<div style="width: 95%; height: 30em; margin-top: 10%; margin-left: 2%; position: relative; border: solid 1px #0c7fe2">
+				<div style="width: 10%; height: 100%; background-color: #fff; ">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs nav-stacked" role="tablist">
 						<li role="presentation" class="active"><a href="#show1"
 							class="glyphicon glyphicon-book" aria-controls="home" role="tab"
-							data-toggle="tab">历史账单</a></li>
+							data-toggle="tab" onclick="findAccountHistoryList();">历史账单</a></li>
 						<li role="presentation"><a href="#show2"
 							class="glyphicon glyphicon-pencil" aria-controls="profile"
 							role="tab" data-toggle="tab">记一笔</a></li>
 						<li role="presentation"><a href="#show3"
+							class="glyphicon glyphicon-signal"
 							aria-controls="messages" role="tab" data-toggle="tab">报表</a></li>
 						<li role="presentation"><a href="#show4"
 							aria-controls="settings" role="tab" data-toggle="tab">设置</a></li>
 					</ul>
 				</div>
+				
 				<div class="tab-content"
-					style="position: absolute; left: 10%; top: 0px; right: 0%; bottom: 0px; border: solid red 1px;">
-					<div role="tabpanel" class="tab-pane active" id="show1">第一个div</div>
+					style="position: absolute; left: 10%; top: 2%; right: 0%; bottom: 0px; ">
+					<!-- 账单历史list -->
+					<div role="tabpanel" class="tab-pane active" id="show1">
+						<table class="table table-hover table-striped">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>收支类型</th>
+									<th>原因类型</th>
+									<th>金额(人民币/元)</th>
+									<th>时间</th>
+									<th>备注</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="bill_tbody">
+							</tbody>
+							<tfoot id="bill_tfoot">
+							</tfoot>
+						</table>
+					</div>
+
 					<!-- 记一笔div -->
 					<div role="tabpanel" class="tab-pane" id="show2">
 						<form class="form-horizontal">
@@ -46,8 +66,8 @@
 								<label class="col-sm-4 control-label">收支类型</label>
 								<div class="col-sm-2">
 									<select id="budget_type" class="form-control">
-										<option value="input">收入</option>
-										<option value="output" selected>支出</option>
+										<option value="budget_type_1">收入</option>
+										<option value="budget_type_2" selected>支出</option>
 									</select>
 								</div>
 							</div>
@@ -56,21 +76,21 @@
 								<label class="col-sm-4 control-label">原因类型</label>
 								<div class="col-sm-2">
 									<select id="reason_type" class="form-control">
-										<option value="-1" selected>请选择</option>
 										<option value="reason_type_0">工资奖金</option>
-										<option value="reason_type_1">吃喝玩乐旅行</option>
+										<option value="reason_type_1">吃喝玩乐</option>
 										<option value="reason_type_2">出行通信</option>
 										<option value="reason_type_3">人情世故</option>
 										<option value="reason_type_4">借钱还钱</option>
 										<option value="reason_type_5">投资</option>
 										<option value="reason_type_6">医疗健身</option>
-										<option value="reason_type_other">其他</option>
+										<option value="reason_type_7">教育培训</option>
+										<option value="reason_type_other" selected>其他</option>
 									</select>
 								</div>
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-4 control-label">金额</label>
+								<label class="col-sm-4 control-label">金额(人民币/元)</label>
 								<div class="col-sm-4">
 									<input id="money" class="form-control" type="number">
 								</div>
@@ -92,7 +112,8 @@
 							</br> </br> </br> </br> </br>
 							<div class="form-group">
 								<div class="col-sm-10" align="center">
-									<a id="commit" type="button" class="btn btn-default" onclick="commit();" value="提交" >提交</a>
+									<a id="commit" type="button" class="btn btn-default"
+										onclick="commit();" value="提交">提交</a>
 								</div>
 							</div>
 						</form>

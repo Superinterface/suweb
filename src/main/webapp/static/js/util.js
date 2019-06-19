@@ -1,6 +1,4 @@
-/*
- * 显示loading遮罩层
- */
+// 显示loading遮罩层
 function loading() {
     var mask_bg = document.createElement("div");
     mask_bg.id = "mask_bg";
@@ -28,21 +26,17 @@ function loading() {
     mask_msg.innerText = "正在执行,请稍后...";
     mask_bg.appendChild(mask_msg);
 }
-/*
- * 关闭遮罩层
- */
+// 关闭遮罩层
 function loaded() {
     var mask_bg = document.getElementById("mask_bg");
     if (mask_bg != null)
         mask_bg.parentNode.removeChild(mask_bg);
 }
-
 // 时间戳转换时间字符串
 function timeToString(time = +new Date()){
 	    var date = new Date(time + 8 * 3600 * 1000); // 增加8小时
 	    return date.toJSON().substr(0, 19).replace('T', ' ');
 }
-
 // 加载用户信息
 function loadUser(){
 	$.ajax({
@@ -61,7 +55,6 @@ function loadUser(){
 		}
 	});
 }
-
 // 通用提示消息modal
 function showmessage(message) {
 	var defaultMessageModel = document.getElementById("defaultMessageModel");
@@ -73,7 +66,6 @@ function showmessage(message) {
 	}); 
 	$('#defaultMessageModel').modal('show');
 }
-
 // 注销
 function logout(){
 	

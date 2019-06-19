@@ -92,7 +92,6 @@ function getBlogTypeOne() {
 		url : "/system/datadictionary/getDataByCode.go",
 		data : 'code=blog_type',
 		success : function(data) {
-		console.log(data);
 			if (data.status == 1) {
 				var dd = data.obj;
 				var op1 = document.createElement("option");

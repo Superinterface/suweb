@@ -1,7 +1,9 @@
 package com.sujianan.controller.util;
 
+import com.sujianan.bean.user.User;
 import com.sujianan.bean.util.Bill;
 import com.sujianan.service.util.UtilService;
+import com.sujianan.util.DefaultUtil;
 import com.sujianan.util.HttpResponse;
 import com.sujianan.util.RST;
 
@@ -19,6 +21,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * 工具控制器
+ * @author	github: SuperInteface
+ * @date	2019年6月18日
+ */
 @Controller
 @RequestMapping("/util")
 public class UtilController {
@@ -33,12 +40,51 @@ public class UtilController {
 	 * @param bill
 	 * @return
 	 */
-	@RequestMapping("/account/commit")
+	@RequestMapping("/bill/commit")
 	@ResponseBody
 	public HttpResponse<Object> billCommit(HttpServletRequest request, HttpServletResponse response, Bill bill){
 		return utilservice.billCommit(request, bill);
 	}
 	
+	/**
+	 *	查询用户所有记录的账单数据
+	 * @param request
+	 * @param response
+	 * @param bill
+	 * @return
+	 */
+	@RequestMapping("/bill/findBillList")
+	@ResponseBody
+	public HttpResponse<Object> findAccountHistoryList(HttpServletRequest request, HttpServletResponse response, Bill bill){
+		User u = DefaultUtil.getUserForRequest(request);
+		return utilservice.findAccountHistoryListByUserAndBill(u, bill);
+	}
+	
+	/**
+	 * 	按照id更新账单中的记录
+	 * @param request
+	 * @param response
+	 * @param bill
+	 * @return
+	 */
+	@RequestMapping("/bill/updateBillForId")
+	@ResponseBody
+	public HttpResponse<Object> updateBillForId(HttpServletRequest request, HttpServletResponse response, Bill bill){
+		return utilservice.updateBillForId(request, bill);
+	}
+	
+	/**
+	 *	删除账单一条记录,按照id
+	 * @param request
+	 * @param response
+	 * @param bill
+	 * @return
+	 */
+	@RequestMapping("/bill/deleteBillForId")
+	@ResponseBody
+	public HttpResponse<Object> deleteBillForId(HttpServletRequest request, HttpServletResponse response, Integer id){
+		return utilservice.deleteBillForId(request, id);
+	}
 	
 	/**
 	 * 	租金计算

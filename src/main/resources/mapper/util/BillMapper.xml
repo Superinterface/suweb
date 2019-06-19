@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sujianan.dao.util.BillMapper">
   <resultMap id="BaseResultMap" type="com.sujianan.bean.util.Bill">
-    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <id column="ID" jdbcType="DECIMAL" property="id" />
     <result column="USERID" jdbcType="DECIMAL" property="userid" />
     <result column="BUDGET_TYPE" jdbcType="VARCHAR" property="budgetType" />
     <result column="REASON_TYPE" jdbcType="VARCHAR" property="reasonType" />
@@ -87,6 +87,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_BILL
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from T_BILL
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.sujianan.bean.util.BillExample">
     delete from T_BILL
     <if test="_parameter != null">
@@ -100,7 +110,7 @@
       )
     values (sequence_t_bill_id.nextval, #{userid,jdbcType=DECIMAL}, #{budgetType,jdbcType=VARCHAR}, 
       #{reasonType,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{eventTime,jdbcType=TIMESTAMP}, 
-      #{comments,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=DECIMAL}
+      #{comments,jdbcType=VARCHAR}, sysdate, #{createUser,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.sujianan.bean.util.Bill">
@@ -125,15 +135,15 @@
       <if test="comments != null">
         COMMENTS,
       </if>
-      <if test="createTime != null">
         CREATE_TIME,
-      </if>
       <if test="createUser != null">
         CREATE_USER,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      sequence_t_bill_id.nextval,
+      <if test="id != null">
+        sequence_t_bill_id.nextval,
+      </if>
       <if test="userid != null">
         #{userid,jdbcType=DECIMAL},
       </if>
@@ -152,9 +162,7 @@
       <if test="comments != null">
         #{comments,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
+      sysdate,
       <if test="createUser != null">
         #{createUser,jdbcType=DECIMAL},
       </if>
@@ -216,4 +224,66 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sujianan.bean.util.Bill">
+    update T_BILL
+    <set>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=DECIMAL},
+      </if>
+      <if test="budgetType != null">
+        BUDGET_TYPE = #{budgetType,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonType != null">
+        REASON_TYPE = #{reasonType,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        MONEY = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="eventTime != null">
+        EVENT_TIME = #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comments != null">
+        COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sujianan.bean.util.Bill">
+    update T_BILL
+    set USERID = #{userid,jdbcType=DECIMAL},
+      BUDGET_TYPE = #{budgetType,jdbcType=VARCHAR},
+      REASON_TYPE = #{reasonType,jdbcType=VARCHAR},
+      MONEY = #{money,jdbcType=DECIMAL},
+      EVENT_TIME = #{eventTime,jdbcType=TIMESTAMP},
+      COMMENTS = #{comments,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+	<!-- 根据用户id查询关联的账单历史list -->
+	<select id="selectListByUserIDAndBill" resultType="com.sujianan.bean.util.Bill" parameterType="map">
+		select 
+		tb.ID, tb.USERID, tdd1.data_name AS BUDGET_TYPE, tdd2.data_name AS REASON_TYPE, tb.MONEY, tb.EVENT_TIME, tb.COMMENTS, tb.CREATE_TIME, tb.CREATE_USER
+		from t_bill tb
+		left join t_data_dictionary tdd1 on tb.budget_type = tdd1.data_code 
+		left join t_data_dictionary tdd2 on tb.reason_type = tdd2.data_code 
+		<where>
+			USERID = #{id, jdbcType=INTEGER}
+			<if test=' bill != null and bill.budgetType != null '>
+				and budget_type = #{bill.budgetType, jdbcType=VARCHAR}
+			</if>
+			<if test=' bill != null and bill.reasonType != null '>
+				and reason_type = #{bill.reasonType, jdbcType=VARCHAR}
+			</if>
+			
+		</where>
+	</select>
+
 </mapper>

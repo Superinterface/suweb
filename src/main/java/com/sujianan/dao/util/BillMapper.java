@@ -10,13 +10,24 @@ public interface BillMapper {
 
     int deleteByExample(BillExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(Bill record);
 
     int insertSelective(Bill record);
 
     List<Bill> selectByExample(BillExample example);
 
+    Bill selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") Bill record, @Param("example") BillExample example);
 
     int updateByExample(@Param("record") Bill record, @Param("example") BillExample example);
+
+    int updateByPrimaryKeySelective(Bill record);
+
+    int updateByPrimaryKey(Bill record);
+    
+	List<Bill> selectListByUserIDAndBill(@Param("id") Integer id, @Param("bill") Bill bill);
+    
 }

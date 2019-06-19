@@ -23,13 +23,13 @@ import org.springframework.stereotype.Service;
 public class BasicService {
 
 	/* 宽度 */
-	private static final int WIDTH = 100;
+	private static final int WIDTH = 140;
 	/* 高度 */
-	private static final int HEIGHT = 20;
+	private static final int HEIGHT = 30;
 	/* 生成验证码的个数 */
-	private static final int COUNT = 4;
+	private static final int COUNT = 6;
 	/* 干扰线条数 */
-	private static final int LINE_ROW = 6;
+	private static final int LINE_ROW = 4;
 	/* 输出的基本码表，如果使用中文，则使用utf-8的码表，类似 \ue234 ，而且应该使用常用字，避免出现偏僻字 */
 	private static final char[] BASECODE = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
 			'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -43,11 +43,8 @@ public class BasicService {
 		HttpSession session = null;
 		ByteArrayOutputStream  out = null;
 		OutputStream resout = null;
-		byte [] by = null;
 		try {
 			session = request.getSession();
-			request.getCookies();
-//			out = response.getOutputStream();
 			out = new ByteArrayOutputStream ();
 			this.random = new Random();
 			this.img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);

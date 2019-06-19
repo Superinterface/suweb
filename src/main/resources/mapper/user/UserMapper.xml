@@ -177,7 +177,7 @@
 		insert into T_USER
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID,
-			<if test="username != null">
+			<if test="userCode != null">
 				USER_CODE,
 			</if>
 			<if test="loginName != null">
@@ -325,7 +325,7 @@
 				LOGIN_PASSWORD =
 				#{record.loginPassword,jdbcType=VARCHAR},
 			</if>
-			<if test="record.username != null">
+			<if test="record.userCode != null">
 				USER_CODE = #{record.userCode,jdbcType=VARCHAR},
 			</if>
 			<if test="record.netName != null">
@@ -447,7 +447,7 @@
 			<if test="loginPassword != null">
 				LOGIN_PASSWORD = #{loginPassword,jdbcType=VARCHAR},
 			</if>
-			<if test="username != null">
+			<if test="userCode != null">
 				USER_CODE = #{userCode,jdbcType=VARCHAR},
 			</if>
 			<if test="netName != null">

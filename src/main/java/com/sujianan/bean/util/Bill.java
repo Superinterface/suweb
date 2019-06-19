@@ -1,5 +1,6 @@
 package com.sujianan.bean.util;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,7 +14,8 @@ public class Bill {
 
     private String reasonType;
 
-    private Double money;
+    private BigDecimal money;
+    
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date eventTime;
 
@@ -55,11 +57,11 @@ public class Bill {
         this.reasonType = reasonType == null ? null : reasonType.trim();
     }
 
-    public Double getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(Double money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 

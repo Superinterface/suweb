@@ -1,17 +1,28 @@
 package com.sujianan.util;
 
 public class RST {
-
+	
+	// 通用成功码
 	public static final int CODE_SUCCESS = 1;
+	// 通用失败码
 	public static final int CODE_ERROR = -1;
+	// 通用参数填写错误码
 	public static final int CODE_ERROR_PARAM = -2;
-
+	
+	// 通用成功文字
 	public static final String TEXT_SUCCESS = "成功";
+	// 通用失败文字
 	public static final String TEXT_ERROR = "失败";
+	// 通用参数填写错误文字
 	public static final String TEXT_PARAM_ERROR = "参数填写错误,请检查后重试.";
-
+	// 通用服务器故障文字
 	public static final String SERVICE_ERROR = "操作失败,服务器故障,请稍后重试,如果多次尝试仍未解决,请联系网站管理员~";
-
+	// 通用未登录
+	public static final String NO_LOGIN = "未登录";
+	// 通用无权限
+	public static final String NO_POWER = "无权限";
+	
+	
 	public static final String USER_REGISTER_SUCCESS = "注册成功~";
 	public static final String USER_REGISTER_FAIL = "注册失败";
 	public static final String USER_REGISTER_FAIL_DEFAULT = "注册失败,请检查您填写的数据以及填写规则,稍后再试~";

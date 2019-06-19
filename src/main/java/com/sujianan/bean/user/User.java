@@ -12,6 +12,8 @@ public class User {
     private String loginName;
 
     private String loginPassword;
+    
+    private String loginPasswordAffirm;
 
     private String netName;
 
@@ -93,7 +95,15 @@ public class User {
         this.loginPassword = loginPassword == null ? null : loginPassword.trim();
     }
 
-    public String getNetName() {
+    public String getLoginPasswordAffirm() {
+		return loginPasswordAffirm;
+	}
+
+	public void setLoginPasswordAffirm(String loginPasswordAffirm) {
+		this.loginPasswordAffirm = loginPasswordAffirm;
+	}
+
+	public String getNetName() {
         return netName;
     }
 

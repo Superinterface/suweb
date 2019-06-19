@@ -18,36 +18,34 @@ public class UserService {
 	UserMapper userMapper;
 
 	public HttpResponse<Object> register(User user) {
-		if (user != null && !"".equals(user.getLoginName()) && !"".equals(user.getLoginPassword())
-				&& !"".equals(user.getLoginPassword()) && !"".equals(user.getNetName()) && user.getGender() != null
-				&& !"".equals(user.getEmail())) {
-			if (user.getLoginName().length() <= 10 && user.getLoginName().matches("^[a-zA-Z][a-zA-Z0-9]{0,9}$")) {
-				User u = this.userMapper.selectByLoginName(user.getLoginName());
-				if (u != null && !"".equals(u.getLoginName())) {
-					return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_LOGINNAME_EXIST_ERROR, null);
-				} else if (user.getLoginPassword().matches("^.{8,16}$") && user.getLoginPassword().matches("^.{8,16}$")
-						&& user.getLoginPassword().equals(user.getLoginPassword())) {
-					if (!user.getNetName().matches("^.{1,16}$")) {
-						return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_NETNAME_ERROR, null);
-					} else if (!user.getEmail().matches("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\\.[a-zA-Z]+$")) {
-						return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_EMAIL_ERROR, null);
-					} else {
-						try {
-							System.err.println(this.userMapper.insertSelective(user));
-							return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_REGISTER_SUCCESS, null);
-						} catch (Exception var4) {
-							var4.printStackTrace();
-							return new HttpResponse<Object>(RST.CODE_ERROR, RST.SERVICE_ERROR, null);
-						}
-					}
-				} else {
-					return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_LOGINPAASSWORD_ERROR, null);
-				}
-			} else {
-				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_LOGINNAME_ERROR, null);
-			}
-		} else {
+		
+		if ( !(user != null && !"".equals(user.getLoginName()) && !"".equals(user.getLoginPassword()) && 
+			 !"".equals(user.getLoginPassword()) && !"".equals(user.getNetName()) && 
+			 user.getGender() != null && !"".equals(user.getEmail())) )
 			return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL, null);
+
+		if (user.getLoginName().length() > 10 || !user.getLoginName().matches("^[a-zA-Z][a-zA-Z0-9]{0,9}$")) 
+			return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_LOGINNAME_ERROR, null);
+		
+		try {
+			User u = this.userMapper.selectByLoginName(user.getLoginName());
+		
+			if (u != null && !"".equals(u.getLoginName()))
+				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_LOGINNAME_EXIST_ERROR, null);
+			
+			if (!user.getLoginPassword().matches("^.{8,16}$") || !user.getLoginPassword().equals(user.getLoginPasswordAffirm()))
+				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_LOGINPAASSWORD_ERROR, null);
+			
+			if (!user.getNetName().matches("^.{1,16}$"))
+				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_NETNAME_ERROR, null);
+			if (!user.getEmail().matches("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\\.[a-zA-Z]+$"))
+				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_EMAIL_ERROR, null);
+		
+			userMapper.insertSelective(user);
+			return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_REGISTER_SUCCESS, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new HttpResponse<Object>(RST.CODE_ERROR, RST.SERVICE_ERROR, null);
 		}
 	}
 

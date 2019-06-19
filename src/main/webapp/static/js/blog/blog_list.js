@@ -46,7 +46,7 @@ function getBlogs(e) {
 						pagesize = page.pageSize;
 						totalcount = page.totalCount;
 
-						var bodyz = document.getElementById("blog_tbady");
+						var bodyz = document.getElementById("blog_tbody");
 						bodyz.innerHTML = "";
 						var footz = document.getElementById("blog_tfoot");
 						footz.innerHTML = "";
