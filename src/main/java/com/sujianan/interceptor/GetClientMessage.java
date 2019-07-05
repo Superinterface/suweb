@@ -1,7 +1,6 @@
 package com.sujianan.interceptor;
 
 import com.sujianan.service.client.ClientMessageService;
-import java.io.PrintStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,7 @@ public class GetClientMessage implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("=====save client request data for database action=====");
 		this.clientmessageservice.saveClientMessage(request);
-		System.out.println("=====save client request data for database over=====");
 		return true;
 	}
 }

@@ -105,11 +105,11 @@ function goIndex(){
 		function($) {
 			$("html").click(
 					function(e) {
-						/*
-						 * var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等",
-						 * "公正", "法治", "爱国", "敬业", "诚信", "友善");
-						 */
-						var a = new Array("♥");
+						
+						  var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等",
+						  "公正", "法治", "爱国", "敬业", "诚信", "友善");
+						 
+//						var a = new Array("♥");
 						var $i = $("<span/>").text(a[a_idx]);
 						a_idx = (a_idx + 1) % a.length;
 						var x = e.pageX, y = e.pageY;
@@ -119,7 +119,7 @@ function goIndex(){
 							"left" : x,
 							"position" : "absolute",
 							"font-weight" : "bold",
-							"font-size" : "2em",
+							"font-size" : "1em",
 							"color" : "#ff6651"
 						});
 						$("body").append($i);

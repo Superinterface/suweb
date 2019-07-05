@@ -5,6 +5,7 @@ import com.sujianan.bean.user.User;
 import com.sujianan.dao.client.ClientRequestDataMapper;
 import com.sujianan.util.IPUtil;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,11 @@ public class ClientMessageService {
 	public void saveClientMessage(HttpServletRequest request) throws UnknownHostException {
 		HttpSession session = request.getSession();
 		User u = (User) session.getAttribute("user");
+		String ipv4 = IPUtil.getIpAddr(request);
+		// 查询半小时内该ipv4的访问记录是否存在
+		ClientRequestData crdHis = clientrequestdatamapper.selectByIPV4(ipv4, new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+		if (crdHis != null)
+			return;
 		ClientRequestData crd = new ClientRequestData();
 		crd.setIpv4(IPUtil.getIpAddr(request));
 		crd.setMethod(request.getMethod());
@@ -36,6 +42,8 @@ public class ClientMessageService {
 		}
 
 		crd.setUserAgent(clientsb.substring(0, clientsb.length() - 3));
+		System.out.println("=====save client request data for database action=====");
 		this.clientrequestdatamapper.insert(crd);
+		System.out.println("=====save client request data for database over=====");
 	}
 }

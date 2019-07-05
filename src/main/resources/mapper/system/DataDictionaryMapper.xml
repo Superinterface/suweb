@@ -141,12 +141,8 @@
 		parameterType="com.sujianan.bean.system.DataDictionary">
 		insert into T_DATA_DICTIONARY
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
 				ID,
-			</if>
-			<if test="pid != null">
 				PID,
-			</if>
 			<if test="dataCode != null">
 				DATA_CODE,
 			</if>
@@ -170,12 +166,8 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=DECIMAL},
-			</if>
-			<if test="pid != null">
+				sequence_t_data_dictionary_id.nextval,
 				#{pid,jdbcType=DECIMAL},
-			</if>
 			<if test="dataCode != null">
 				#{dataCode,jdbcType=VARCHAR},
 			</if>
@@ -325,10 +317,30 @@
     		and pid IN ( select id from t_data_dictionary where pid = ( select id from t_data_dictionary where data_code = 'blog_type' ) )
 	</select>
 
+	<!-- 递归数据字典表,start with 根id为1 -->
+	<select id="selectDataTreeByStartWithConnect" resultType="com.sujianan.bean.system.DataDictionary">
+		select 
+		<include refid="Base_Column_List"></include>
+		from t_data_dictionary 
+		start with id = 1 
+		connect by prior id = pid 
+	</select>
 
+	<!-- 根据id查询对应的一条数据字典数据 -->
+	<select id="findDataById" parameterType="java.lang.Integer" resultType="com.sujianan.bean.system.DataDictionary">
+		select 
+		<include refid="Base_Column_List"></include>
+		from t_data_dictionary 
+		where id = #{id, jdbcType=INTEGER}
+	</select>
 
-
-
+	<!-- 根据pid查询数据 -->
+	<select id="selectByPid" resultType="com.sujianan.bean.system.DataDictionary" parameterType="java.lang.Integer">
+		select  
+		<include refid="Base_Column_List"></include>
+		from t_data_dictionary 
+		where pid = #{pid, jdbcType=INTEGER} 
+	</select>
 
 
 

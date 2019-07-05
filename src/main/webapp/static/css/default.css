@@ -25,9 +25,11 @@ body {
 	/* background-color: #5479ff; */
 	background-color: #f5f5f5;
 }
-.mar{
+
+.mar {
 	margin: 175px auto;
 }
+
 .drop {
 	position: relative;
 	width: 20px;
@@ -41,9 +43,9 @@ body {
 	-moz-animation-name: drip;
 	-webkit-animation-name: drip;
 	animation-name: drip;
-	-moz-animation-timing-function: cubic-bezier(1,0,.91,.19);
-	-webkit-animation-timing-function: cubic-bezier(1,0,.91,.19);
-	animation-timing-function: cubic-bezier(1,0,.91,.19);
+	-moz-animation-timing-function: cubic-bezier(1, 0, .91, .19);
+	-webkit-animation-timing-function: cubic-bezier(1, 0, .91, .19);
+	animation-timing-function: cubic-bezier(1, 0, .91, .19);
 	-moz-animation-duration: 3s;
 	-webkit-animation-duration: 3s;
 	animation-duration: 3s;
@@ -59,7 +61,7 @@ body {
 	height: 0;
 	border-left: 10px solid transparent;
 	border-right: 10px solid transparent;
-	border-bottom: 30px solid rgba(0,0,0,1);
+	border-bottom: 30px solid rgba(0, 0, 0, 1);
 	top: -22px;
 }
 
@@ -70,9 +72,9 @@ body {
 	width: 2px;
 	height: 1px;
 	border: #000 7px solid;
-	-moz-border-radius: 300px / 150px;
-	-webkit-border-radius: 300px / 150px;
-	border-radius: 300px / 150px;
+	-moz-border-radius: 300px/150px;
+	-webkit-border-radius: 300px/150px;
+	border-radius: 300px/150px;
 	-moz-animation-name: ripple;
 	-webkit-animation-name: ripple;
 	animation-name: ripple;
@@ -96,9 +98,9 @@ body {
 	width: 2px;
 	height: 1px;
 	border: #000 5px solid;
-	-moz-border-radius: 300px / 150px;
-	-webkit-border-radius: 300px / 150px;
-	border-radius: 300px / 150px;
+	-moz-border-radius: 300px/150px;
+	-webkit-border-radius: 300px/150px;
+	border-radius: 300px/150px;
 	-moz-animation-name: ripple-2;
 	-webkit-animation-name: ripple-2;
 	animation-name: ripple-2;
@@ -110,55 +112,150 @@ body {
 	animation-iteration-count: infinite;
 }
 
-@keyframes ripple {
-    from {
-      opacity: 1;
-    }
-    to {
-      width: 600px;
-      height: 300px;
-      border-width: 1px;
-      top: -100px;
-      opacity: 0;
-    }
+@
+keyframes ripple {from { opacity:1;
+	
 }
 
-@keyframes ripple-2 {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-  100% {
-    width: 200px;
-    height: 100px;
-    border-width: 1px;
-    top: 100px;
-    left: 200px;
-  }
+to {
+	width: 600px;
+	height: 300px;
+	border-width: 1px;
+	top: -100px;
+	opacity: 0;
 }
 
-@keyframes drip {
-    to {
-      top: 190px;
-    }
+}
+@
+keyframes ripple-2 { 0% {
+	opacity: 1;
+}
+
+50%
+{
+opacity
+
+
+:
+
+ 
+
+0;
+}
+100%
+{
+width
+
+
+:
+
+ 
+
+200
+px
+
+
+;
+height
+
+
+:
+
+ 
+
+100
+px
+
+
+;
+border-width
+
+
+:
+
+ 
+
+1
+px
+
+
+;
+top
+
+
+:
+
+ 
+
+100
+px
+
+
+;
+left
+
+
+:
+
+ 
+
+200
+px
+
+
+;
+}
+}
+@
+keyframes drip {to { top:190px;
+	
+}
+
 }
 /*  */
-.defaultfromdiv{
-	position: fixed;left: 15%;top: 15%;width: 70%;height:400px;
+.defaultfromdiv {
+	position: fixed;
+	left: 15%;
+	top: 15%;
+	width: 70%;
+	height: 400px;
 }
 /* 红色*号必填样式 */
-.mustFillIn{
-	color:red;
+.mustFillIn {
+	color: red;
 	font-family: 'Serif';
 	font-size: 1.4em;
 }
 /* 默认跟head的距离 */
-.default_head_padding{
+.default_head_padding {
 	padding-top: 10%;
 	padding-left: 5%;
 	padding-right: 10%;
 	padding-bottom: 20%;
-	width : 100%;
+	width: 100%;
+}
+
+/*	账本div样式	*/
+.bigDiv {
+	width: 95%;
+	height: 30em;
+	margin-top: 10%;
+	margin-left: 2%;
+	position: relative;
+	border: 0;
+	box-shadow: 8px -8px 10px 1px #c0c0c0;
+}
+
+.bigDiv_leftDiv {
+	width: 20%;
+	height: 100%;
+	background-color: #fff;
+}
+
+.bigDiv_rightDiv {
+	position: absolute;
+	left: 20%;
+	top: 2%;
+	right: 0%;
+	bottom: 0px;
 }

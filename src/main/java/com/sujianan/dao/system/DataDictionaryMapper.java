@@ -31,5 +31,13 @@ public interface DataDictionaryMapper {
 	List<DataDictionary> selectByCode(String code);
 	// 博客列表下拉选,查询级别data_level为3的所有博客数据字典code, name
 	List<DataDictionary> selectBlogDataLevel3CodeName();
+
+	List<DataDictionary> selectByDataDictionary();
+	// 树型查询 id = pid
+	List<DataDictionary> selectDataTreeByStartWithConnect();
+
+	DataDictionary findDataById(Integer id);
+	// 查找pid为参数id的所有数据
+	List<DataDictionary> selectByPid(Integer pid);
 	
 }

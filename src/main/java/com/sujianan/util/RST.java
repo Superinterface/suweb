@@ -1,5 +1,10 @@
 package com.sujianan.util;
 
+/**
+ *	response of status and text
+ * @author	github: SuperInteface
+ * @date	2019年7月4日
+ */
 public class RST {
 	
 	// 通用成功码
@@ -33,7 +38,7 @@ public class RST {
 	public static final String USER_REGISTER_FAIL_EMAIL_ERROR = "注册失败,邮箱填写不符合规范,请修改后重试~";
 
 	public static final String USER_LOADUSER_NOLOGIN = "未登录";
-	public static final String USER_LOADUSER_INLOGIN = "未登录";
+	public static final String USER_LOADUSER_INLOGIN = "已登录";
 	public static final String USER_LOGIN_SUCCESS = "登陆成功~";
 	public static final String USER_LOGIN_FAIL = "登陆失败";
 	public static final String USER_LOGIN_FAIL_CODE_ERROR = "登陆失败,验证码不正确~";
@@ -45,6 +50,8 @@ public class RST {
 
 	public static final String BLOG_UPLOAD_SUCCESS = "博客上传成功~";
 	public static final String BLOG_UPLOAD_ERROR = "博客上传失败~";
+	
+	public static final String SYSTEM_DATA_DICTIONARY_HAVE_CHILDREN = "当前id下的数据字典还有子节点, 故不能删除.";
 		
 	
 }

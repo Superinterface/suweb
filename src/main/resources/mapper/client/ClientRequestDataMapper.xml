@@ -240,4 +240,18 @@
       REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+	<!-- 查询半小时内目标ipv4的访问记录是否存在 -->
+	<select id="selectByIPV4" parameterType="java.lang.String" resultType="com.sujianan.bean.client.ClientRequestData">
+		select 
+		<include refid="Base_Column_List"></include>
+		from t_client_request_data 
+		where rownum =1 
+		and request_time >= to_date(#{systemdate, jdbcType=INTEGER}, 'yyyy-MM-dd hh24:mi:ss') - interval '30' MINUTE(2) 
+		and ipv4 = #{ipv4, jdbcType=VARCHAR}
+	</select>
+
+
+
+
 </mapper>

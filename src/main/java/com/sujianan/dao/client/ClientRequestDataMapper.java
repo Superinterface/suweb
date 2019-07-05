@@ -27,4 +27,6 @@ public interface ClientRequestDataMapper {
     int updateByPrimaryKeySelective(ClientRequestData record);
 
     int updateByPrimaryKey(ClientRequestData record);
+    // 查询目标ipv4记录是否存在,条件为-半小时内
+	ClientRequestData selectByIPV4(@Param("ipv4") String ipv4, @Param("systemdate") String systemdate);
 }

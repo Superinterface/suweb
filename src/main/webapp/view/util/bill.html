@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="/static/common.js"></script>
 <script type="text/javascript" src="/static/js/util/bill.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/util/bill.css" />
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#indexhead').load('/head.html', function() {
-			loadUser();findAccountHistoryList();
+			loadUser();
+			findAccountHistoryList();
 		});
 		$('#indexfoot').load('/foot.html');
 	});
@@ -18,9 +20,8 @@
 	<div id="indexhead"></div>
 	<div>
 		<div>
-			<div style="width: 95%; height: 30em; margin-top: 10%; margin-left: 2%; position: relative; border: solid 1px #0c7fe2">
-				<div style="width: 10%; height: 100%; background-color: #fff; ">
-					<!-- Nav tabs -->
+			<div class="bigDiv">
+				<div class="bigDiv_leftDiv">
 					<ul class="nav nav-tabs nav-stacked" role="tablist">
 						<li role="presentation" class="active"><a href="#show1"
 							class="glyphicon glyphicon-book" aria-controls="home" role="tab"
@@ -29,15 +30,14 @@
 							class="glyphicon glyphicon-pencil" aria-controls="profile"
 							role="tab" data-toggle="tab">记一笔</a></li>
 						<li role="presentation"><a href="#show3"
-							class="glyphicon glyphicon-signal"
-							aria-controls="messages" role="tab" data-toggle="tab">报表</a></li>
+							class="glyphicon glyphicon-signal" aria-controls="messages"
+							role="tab" data-toggle="tab">报表</a></li>
 						<li role="presentation"><a href="#show4"
 							aria-controls="settings" role="tab" data-toggle="tab">设置</a></li>
 					</ul>
 				</div>
-				
-				<div class="tab-content"
-					style="position: absolute; left: 10%; top: 2%; right: 0%; bottom: 0px; ">
+
+				<div class="tab-content bigDiv_rightDiv">
 					<!-- 账单历史list -->
 					<div role="tabpanel" class="tab-pane active" id="show1">
 						<table class="table table-hover table-striped">
@@ -118,8 +118,8 @@
 							</div>
 						</form>
 					</div>
-					<div role="tabpanel" class="tab-pane" id="show3">第3个切换111111111111111</div>
-					<div role="tabpanel" class="tab-pane" id="show4">第4个切换111111111111111</div>
+					<div role="tabpanel" class="tab-pane" id="show3">报表</div>
+					<div role="tabpanel" class="tab-pane" id="show4">设置</div>
 				</div>
 			</div>
 		</div>

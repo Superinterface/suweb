@@ -40,33 +40,47 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<!-- 获取客户端信息拦截器 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			
-			<mvc:exclude-mapping path="/system/basic/getAuthCode.go" />
-			
 			<bean class="com.sujianan.interceptor.GetClientMessage"></bean>
 		</mvc:interceptor>
 		
 		<!-- 登录状态拦截器 -->
-		<mvc:interceptor>
-			<!-- <mvc:mapping>拦截的请求路径 -->
+		<!-- <mvc:interceptor>
+			<mvc:mapping>拦截的请求路径
+			<mvc:mapping path="/**" />
 			<mvc:mapping path="/user/*" />
+			<mvc:mapping path="/blog/*" />
+			
+			<mvc:exclude-mapping> 不拦截的请求路径
+			<mvc:exclude-mapping path="/user/login.go" />
+			<mvc:exclude-mapping path="/user/register.go" />
+			<mvc:exclude-mapping path="/user/loadUser.go" />
+			<mvc:exclude-mapping path="/user/checkUsername.go" />
+			
+			<mvc:exclude-mapping path="/system/basic/getAuthCode.go" />
+			<mvc:exclude-mapping path="/system/datadictionary/getBlogDataLevel3.go" />
+			
+			<mvc:exclude-mapping path="/blog/getBlog.go" />
+			
+			<bean class="com.sujianan.interceptor.CheckLoginInterceptor"></bean>
+		</mvc:interceptor> -->
+		
+		<!-- 权限检查拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			
 			<!-- <mvc:exclude-mapping> 不拦截的请求路径 -->
 			<mvc:exclude-mapping path="/user/login.go" />
 			<mvc:exclude-mapping path="/user/register.go" />
 			<mvc:exclude-mapping path="/user/loadUser.go" />
 			<mvc:exclude-mapping path="/user/checkUsername.go" />
-			<bean class="com.sujianan.interceptor.CheckLoginInterceptor"></bean>
-		</mvc:interceptor>
-		
-		<mvc:interceptor>
-			<!-- <mvc:mapping>拦截的请求路径 -->
-			<mvc:mapping path="/blog/*" />
-			<!-- <mvc:exclude-mapping> 不拦截的请求路径 -->
+			
+			<mvc:exclude-mapping path="/system/basic/getAuthCode.go" />
+			<mvc:exclude-mapping path="/system/datadictionary/getBlogDataLevel3.go" />
+			
 			<mvc:exclude-mapping path="/blog/getBlog.go" />
-			<bean class="com.sujianan.interceptor.CheckLoginInterceptor"></bean>
+			
+			<bean class="com.sujianan.interceptor.PowerInterceptor"></bean>
 		</mvc:interceptor>
-		
-		<!-- 权限检查拦截器 -->
 		<!-- 事务日志拦截器 -->
 	</mvc:interceptors>
 
