@@ -49,8 +49,10 @@ public class BlogService {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(512000);
 		ServletFileUpload upload = new ServletFileUpload(factory);
+		// 设置上传文件最大大小
 		upload.setSizeMax(10485760L);
 		String pa = request.getSession().getServletContext().getRealPath("/").replace("\\", "/") + "view/blog";
+		
 		String blogTitle = null;
 		String fileName = null;
 		String code1 = "";
