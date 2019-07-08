@@ -43,7 +43,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			<bean class="com.sujianan.interceptor.GetClientMessage"></bean>
 		</mvc:interceptor>
 		
-		<!-- 登录状态拦截器 -->
+		<!-- 登录状态拦截器 已合并至权限检查拦截器中 2019-07-05 -->
 		<!-- <mvc:interceptor>
 			<mvc:mapping>拦截的请求路径
 			<mvc:mapping path="/**" />
