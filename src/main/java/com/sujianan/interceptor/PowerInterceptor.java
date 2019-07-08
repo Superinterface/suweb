@@ -17,7 +17,6 @@ import com.sujianan.util.DefaultUtil;
 public class PowerInterceptor implements HandlerInterceptor {
 
 	// 在进入前端控制器之前
-	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		/*
@@ -40,14 +39,12 @@ public class PowerInterceptor implements HandlerInterceptor {
 		}
 	}
 
-	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
 	}
 
 	// 进入前端控制器之后
-	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/static/common.js"></script>
+<script type="text/javascript"
+	src="/static/js/system/dictionaryConfig.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#indexhead').load('/head.html', function() {
+			loadUser();
+		});
+		$('#indexfoot').load('/foot.html');
+	});
+</script>
+<title>用户角色菜单权限配置</title>
+</head>
+<body>
+	<div id="indexhead"></div>
+	<div></div>
+	<div id="indexfoot"></div>
+</body>
+</html>
