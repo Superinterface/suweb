@@ -9,7 +9,7 @@ function loadUserDate(){
 		url : "/user/loadUser.go",
 		data : '',
 		dataType : "json",
-		success : function(data) {debugger;
+		success : function(data) {
 			if(data.status == 1){
 				createTime.value	= timeToString(new Date(data.obj.createtime));
 				loginName.value		= data.obj.loginName;
