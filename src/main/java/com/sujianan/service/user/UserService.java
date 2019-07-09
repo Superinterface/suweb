@@ -40,7 +40,7 @@ public class UserService {
 				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_NETNAME_ERROR, null);
 			if (!user.getEmail().matches("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\\.[a-zA-Z]+$"))
 				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_EMAIL_ERROR, null);
-		
+			user.setUserCode(user.getLoginName());
 			userMapper.insertSelective(user);
 			return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_REGISTER_SUCCESS, null);
 		} catch (Exception e) {
