@@ -556,5 +556,33 @@
 		LOGIN_NAME = #{login_name,jdbcType=VARCHAR}
 	</select>
 
-
+	<!-- 修改密码 -->
+	<update id="updatePassword" parameterType="com.sujianan.bean.user.User">
+		update t_user set login_password = #{user.loginPassword, jdbcType=VARCHAR} where id = #{user.id, jdbcType=INTEGER}
+	</update>
+	
+	<!-- 修改基本信息 -->
+	<update id="updateUserBySessionUserAndPageData" parameterType="com.sujianan.bean.user.User">
+		update t_user
+		set 
+		<if test=" netName != null ">
+			net_name = #{netName, jdbcType=VARCHAR},
+		</if>
+		<if test=" gender != null ">
+			gender = #{gender, jdbcType=INTEGER},
+		</if>
+		<if test=" email != null ">
+			email = #{email, jdbcType=VARCHAR},
+		</if>
+		<if test=" phone != null ">
+			phone = #{phone, jdbcType=VARCHAR},
+		</if>
+		<if test=" address != null ">
+			address = #{address, jdbcType=VARCHAR}
+		</if>
+		
+		where id = #{id, jdbcType=INTEGER}
+	</update>
+	
+	
 </mapper>

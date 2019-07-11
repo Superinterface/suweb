@@ -2,15 +2,19 @@
 var jsondata = "";
 var tree;
 var util;
+var $;
+var element;
 
 // 选择的数据字典信息
 var _code;
 var _name;
 var _id = -1;
 
-layui.use([ 'tree', 'util' ], function() {
+layui.use([ 'tree','element', 'util' ], function() {
 	tree = layui.tree;
+	element = layui.element;
 	util = layui.util;
+	$ = layui.jquery;
 	// 按钮事件
 	util.event('lay-click', {
 		commitAddDictionary : function() {
@@ -119,10 +123,6 @@ layui.use([ 'tree', 'util' ], function() {
 			
 		}
 	});
-});
-
-layui.use('element', function() {
-	var $ = layui.jquery, element = layui.element; // Tab的切换功能，切换事件监听等，需要依赖element模块
 });
 
 /* 加载数据字典数据 */

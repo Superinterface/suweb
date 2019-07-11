@@ -29,4 +29,10 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
 	User selectByLoginName(String loginName);
+
+	int updatePassword(@Param("user") User user);
+	// 更新用户基本信息, 页面数据 where session中user的id
+	int updateUserBySessionUserAndPageData(User user);
+	
+	
 }

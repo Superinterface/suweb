@@ -81,6 +81,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			
 			<bean class="com.sujianan.interceptor.PowerInterceptor"></bean>
 		</mvc:interceptor>
+		
 		<!-- 事务日志拦截器 -->
 	</mvc:interceptors>
 

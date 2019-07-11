@@ -1,3 +1,11 @@
+layui.use([ 'layer', 'element', 'util' ], function() {
+	var form = layui.form;
+	// Tab的切换功能，切换事件监听等，需要依赖element模块
+	var $ = layui.jquery;
+	var element = layui.element;
+	var util = layui.util;
+});
+
 // 默认第一页
 var pageno = 1;
 // 默认一页显示10行数据 10,25,50,100,
@@ -19,15 +27,14 @@ function changePageData(param) {
 
 // 获取数据,页面载入后执行
 function getBlogs(e) {
-	
-	loading();
+	var indexs = layer.load(0);
 	var dat = {
 		pageNo : pageno,
 		pageSize : pagesize,
 		type : e != undefined ? "string" == typeof e ? e : '' : ''
 	};
 	var params = [];
-	for ( var key in dat) {
+	for (var key in dat) {
 		params.push(key + '=' + dat[key]);
 	}
 	var postData = params.join('&');
@@ -122,8 +129,8 @@ function getBlogs(e) {
 							tr.appendChild(td_1);
 							bodyz.appendChild(tr);
 						}
-						loaded();
 					}
+					layer.close(indexs);
 				}
 			});
 }

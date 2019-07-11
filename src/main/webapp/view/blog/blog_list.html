@@ -4,33 +4,20 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="/static/common.js"></script>
 <script type="text/javascript" src="/static/js/blog/blog_list.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#indexhead').load('/head.html', function() { loadUser(); });
-		$('#indexfoot').load('/foot.html');
-		// 加载blog数据
-		getBlogs();
-		getBlogTypeCodeName();
-	});
-</script>
-<link rel="stylesheet" type="text/css" href="/static/css/blog/blog_list.css" />
 <title>blog list</title>
 </head>
 <body>
 	<div id="indexhead"></div>
 	<div>
 		<div class="table-responsive default_head_padding">
-			<table class="table table-hover table-striped" style="background-color : #ffffff;">
+			<table class="table table-hover table-striped"
+				style="background-color: #ffffff;">
 				<tr>
-					<td>
-						<span>检索条件</span>
-						<span class="glyphicon glyphicon-search"></span>
+					<td><span>检索条件</span> <span class="glyphicon glyphicon-search"></span>
 					</td>
-					<td class="retrieval_style">
-						<span>类型</span>
-						<span class="glyphicon glyphicon-list"></span>
-						<select id="blog_type" onchange="getBlogs(this.value);"></select>
-					</td>
+					<td class="retrieval_style"><span>类型</span> <span
+						class="glyphicon glyphicon-list"></span> <select id="blog_type"
+						onchange="getBlogs(this.value);"></select></td>
 					<!-- <td>
 						<span>作者</span>
 						<span class="glyphicon glyphicon-user"></span>
@@ -41,7 +28,8 @@
 					<td></td>
 				</tr>
 			</table>
-			<table class="table table-hover table-striped" style="background-color : #ffffff;">
+			<table class="table table-hover table-striped"
+				style="background-color: #ffffff;">
 				<thead>
 					<tr>
 						<th>序号</th>
@@ -61,4 +49,15 @@
 	</div>
 	<div id="indexfoot"></div>
 </body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#indexhead').load('/head.html', function() {
+			loadUser();
+		});
+		$('#indexfoot').load('/foot.html');
+		// 加载blog数据
+		getBlogs();
+		getBlogTypeCodeName();
+	});
+</script>
 </html>

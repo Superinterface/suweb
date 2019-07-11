@@ -43,4 +43,20 @@ public class UserController {
 	public HttpResponse<Object> loadUser(HttpServletRequest request, HttpServletResponse response) {
 		return userService.loadUser(request, response);
 	}
+	
+	// 修改密码
+	@RequestMapping("updateUserPassowrd.go")
+	@ResponseBody
+	public HttpResponse<Object> updateUserPassowrd(HttpServletRequest request, HttpServletResponse response, User user){
+		return userService.updateUserPassowrd(request, user);
+	}
+	
+	// 修改用户基本信息
+	@RequestMapping("updateUserData.go")
+	@ResponseBody
+	public HttpResponse<Object> updateUserData(HttpServletRequest request, HttpServletResponse response, User user){
+		return userService.updateUserData(request, user);
+	}
+	
+	
 }

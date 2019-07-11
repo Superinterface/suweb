@@ -3,6 +3,7 @@ package com.sujianan.service.user;
 import com.sujianan.bean.user.User;
 import com.sujianan.dao.user.UserMapper;
 import com.sujianan.service.util.UtilService;
+import com.sujianan.util.DefaultUtil;
 import com.sujianan.util.HttpResponse;
 import com.sujianan.util.RST;
 
@@ -90,5 +91,51 @@ public class UserService {
 		} else {
 			return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_LOADUSER_NOLOGIN, null);
 		}
+	}
+
+	public HttpResponse<Object> updateUserPassowrd(HttpServletRequest request, User user) {
+
+		if(user == null || user.getOldPassword() == null || user.getLoginPassword() == null || user.getLoginPasswordAffirm() == null || 
+			"".equals(user.getLoginPassword().trim()) || "".equals(user.getLoginPasswordAffirm().trim()) || 
+			"".equals(user.getOldPassword()) || !user.getLoginPassword().trim().equals(user.getLoginPasswordAffirm().trim()))
+			return new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_PARAM_ERROR, null);
+		boolean flag = false;
+		try {
+			User sessionUser = DefaultUtil.getUserForRequest(request);
+			sessionUser.setLoginPassword(user.getLoginPassword());
+			// 检验oldPassword是否输入正确
+			User old = userMapper.selectByPrimaryKey(sessionUser.getId());
+			if(!user.getOldPassword().trim().equals(old.getLoginPassword())) return new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_REPASSWORD_OLDPASSWORD_ERROR, null); 
+			int row = userMapper.updatePassword(sessionUser);
+			flag = row > 0 ? true : false;
+			HttpSession session = request.getSession();
+			session.removeAttribute("user");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag ? new HttpResponse<Object>(RST.CODE_REPASSWORD_SUCCESS, RST.TEXT_REPASSWORD_SUCCESS, null) : new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_ERROR, null);
+	}
+
+	public HttpResponse<Object> updateUserData(HttpServletRequest request, User user) {
+		if(null == user || "".equals(user.getNetName().trim()) || null == user.getGender() || user.getGender()>1 || user.getGender()<0)
+			return new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_PARAM_ERROR, null);
+		boolean flag = false;
+		User newUser = null;
+		try {
+			User sessionUser = DefaultUtil.getUserForRequest(request);
+			user.setId(sessionUser.getId());
+			int row = userMapper.updateUserBySessionUserAndPageData(user);
+			if(row == 1) {
+				flag = true;
+				newUser = userMapper.selectByPrimaryKey(user.getId());
+				HttpSession session = request.getSession();
+				session.setAttribute("user", newUser);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return flag ? new HttpResponse<Object>(RST.CODE_SUCCESS, RST.TEXT_SUCCESS, newUser) : new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_ERROR, null);
 	}
 }

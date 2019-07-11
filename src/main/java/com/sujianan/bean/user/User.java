@@ -10,10 +10,12 @@ public class User {
     private String userCode;
 
     private String loginName;
-
+    // 登陆密码
     private String loginPassword;
-    
+    // 注册,修改密码或其他需要重复密码的场景时,二次确认密码
     private String loginPasswordAffirm;
+    // 旧密码
+    private String oldPassword;
 
     private String netName;
 
@@ -101,6 +103,14 @@ public class User {
 
 	public void setLoginPasswordAffirm(String loginPasswordAffirm) {
 		this.loginPasswordAffirm = loginPasswordAffirm;
+	}
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
 	}
 
 	public String getNetName() {

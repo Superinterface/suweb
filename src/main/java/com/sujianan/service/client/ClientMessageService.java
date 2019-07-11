@@ -23,7 +23,7 @@ public class ClientMessageService {
 		User u = (User) session.getAttribute("user");
 		String ipv4 = IPUtil.getIpAddr(request);
 		// 查询半小时内该ipv4的访问记录是否存在
-		ClientRequestData crdHis = clientrequestdatamapper.selectByIPV4(ipv4, new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+		ClientRequestData crdHis = clientrequestdatamapper.selectByIPV4(ipv4, new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), Math.random()*1000000);
 		if (crdHis != null)
 			return;
 		ClientRequestData crd = new ClientRequestData();

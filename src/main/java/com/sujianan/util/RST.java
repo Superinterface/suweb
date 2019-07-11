@@ -14,6 +14,13 @@ public class RST {
 	// 通用参数填写错误码
 	public static final int CODE_ERROR_PARAM = -2;
 	
+	// 修改密码成功后,重定向到登录页状态码
+	public static final int CODE_REPASSWORD_SUCCESS = 302;
+	// 修改密码成功,显示文字
+	public static final String TEXT_REPASSWORD_SUCCESS = "修改密码成功,请重新登录.";
+	// 修改密码,旧密码输入错误
+	public static final String TEXT_REPASSWORD_OLDPASSWORD_ERROR = "旧密码输入错误.";
+	
 	// 通用成功文字
 	public static final String TEXT_SUCCESS = "成功";
 	// 通用失败文字
