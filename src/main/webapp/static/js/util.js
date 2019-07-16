@@ -51,8 +51,8 @@ function logout(){
 		data : '',
 		dataType : "json",
 		success : function(response) {
+			layer.msg(response.message);
 			if(response.status == 1){
-				layer.msg(response.message);
 				goIndex();
 			}
 		},
