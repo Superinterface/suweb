@@ -4,6 +4,8 @@ layui.use([ 'layer', 'element', 'util' ], function() {
 	var $ = layui.jquery;
 	var element = layui.element;
 	var util = layui.util;
+	getBlogs();
+	getBlogTypeCodeName();
 });
 
 // 默认第一页
