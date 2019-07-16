@@ -120,6 +120,7 @@ layui.use([ 'layer', 'tree', 'element', 'util' ], function() {
 
 		}
 	});
+	loadMenuTree();
 });
 
 /* 加载数据字典数据 */
