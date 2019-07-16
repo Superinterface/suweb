@@ -10,7 +10,7 @@ var _code;
 var _name;
 var _id = -1;
 
-layui.use([ 'tree','element', 'util' ], function() {
+layui.use([ 'layer', 'tree', 'element', 'util' ], function() {
 	tree = layui.tree;
 	element = layui.element;
 	util = layui.util;
@@ -100,10 +100,7 @@ layui.use([ 'tree','element', 'util' ], function() {
 					data : 'id=' + _id,
 					dataType : 'json',
 					success : function(response) {
-						layer.msg(response.message, {
-							time : 5000, // 20s后自动关闭
-							btn : [ '确定', '关闭' ]
-						});
+						layer.msg(response.message);
 						// 如果成功删除数据,则重载数据字典数据,清空填写框内的数据
 						if (response.status == 1) {
 							clearData();
@@ -117,10 +114,10 @@ layui.use([ 'tree','element', 'util' ], function() {
 					}
 				});
 				layer.close(index);
-			},function(index){
+			}, function(index) {
 				layer.close(indexs);
 			});
-			
+
 		}
 	});
 });
@@ -129,19 +126,23 @@ layui.use([ 'tree','element', 'util' ], function() {
 function loadMenuTree() {
 	$.ajax({
 		type : 'post',
-		url : '/system/datadictionary/getMenuTree?A' + new Date(),
+		url : '/system/datadictionary/getDictionaryTree.go?A' + new Date(),
 		data : '',
 		dataType : 'json',
 		success : function(response) {
+//			console.log(response);
 			jsondata = JSON.parse(response.obj);
 			jsondata.id = "DataDictionary";
 			showtree();
 		},
 		error : function(response) {
 			console.log(response);
+			if (response.status == 302 && response.responseText == 'noPower'){
+				layer.msg("没有权限");
+				goIndex();
+			}
 		}
 	});
-
 }
 
 // 加载树

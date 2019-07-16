@@ -2,6 +2,7 @@ package com.sujianan.service.user;
 
 import com.sujianan.bean.user.User;
 import com.sujianan.dao.user.UserMapper;
+import com.sujianan.dao.user.UserRoleMapper;
 import com.sujianan.service.util.UtilService;
 import com.sujianan.util.DefaultUtil;
 import com.sujianan.util.HttpResponse;
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
 	@Autowired
 	UserMapper userMapper;
+	@Autowired
+	UserRoleMapper userrolemapper;
 
 	public HttpResponse<Object> register(User user) {
+		boolean flag = false;
 		
 		if ( !(user != null && !"".equals(user.getLoginName()) && !"".equals(user.getLoginPassword()) && 
 			 !"".equals(user.getLoginPassword()) && !"".equals(user.getNetName()) && 
@@ -41,13 +45,16 @@ public class UserService {
 				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_NETNAME_ERROR, null);
 			if (!user.getEmail().matches("^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+\\.[a-zA-Z]+$"))
 				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_REGISTER_FAIL_EMAIL_ERROR, null);
+			
 			user.setUserCode(user.getLoginName());
-			userMapper.insertSelective(user);
-			return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_REGISTER_SUCCESS, null);
+			int row1 = userMapper.insertSelective(user);
+			User newUser = userMapper.selectByLoginName(user.getLoginName());
+			int row2 = userrolemapper.insertIntoForCreateUser(newUser);
+			flag = (row1>=1&&row2>=1) ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new HttpResponse<Object>(RST.CODE_ERROR, RST.SERVICE_ERROR, null);
 		}
+		return flag ? new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_REGISTER_SUCCESS, null) : new HttpResponse<Object>(RST.CODE_ERROR, RST.SERVICE_ERROR, null);
 	}
 
 	public HttpResponse<Object> login(HttpServletRequest request, HttpServletResponse response, User user) {
@@ -77,9 +84,17 @@ public class UserService {
 	}
 
 	public HttpResponse<Object> logOut(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		session.removeAttribute("user");
-		return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_LOGOUT_SUCCESS, null);
+		boolean flag = false;
+		try {
+			if(DefaultUtil.getUserForRequest(request) == null)
+				return new HttpResponse<Object>(RST.CODE_ERROR, RST.USER_LOGOUT_FAIL_NOLOGIN, null);
+			HttpSession session = request.getSession();
+			session.removeAttribute("user");
+			flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag ? new HttpResponse<Object>(RST.CODE_SUCCESS, RST.USER_LOGOUT_SUCCESS, null) : new HttpResponse<Object>();
 	}
 
 	public HttpResponse<Object> loadUser(HttpServletRequest request, HttpServletResponse response) {

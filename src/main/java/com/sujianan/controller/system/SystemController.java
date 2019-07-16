@@ -55,81 +55,60 @@ public class SystemController {
 		basicService.createAuthCodeImg(request, response);
 	}
 	
-	/**
-	 * 查询指定code下的所有子数据字典
-	 * @param code
-	 * @return
-	 */
+	// 查询指定code下的所有子数据字典
 	@RequestMapping("datadictionary/getDataByCode.go")
 	@ResponseBody
 	public HttpResponse<Object> getDataByCode(String code) {
 		return datadictionaryservice.getDataByCode(code);
 	}
 	
-	/**
-	 *	根据id查询数据字典数据
-	 * @param id
-	 * @return
-	 */
+	// 根据id查询数据字典数据
 	@RequestMapping("datadictionary/findDataById.go")
 	@ResponseBody
 	public HttpResponse<Object> findDataById(Integer id){
 		return datadictionaryservice.findDataById(id);
 	}
 	
-	/**
-	 *	添加一条信息数据字典
-	 * @param request
-	 * @param response
-	 * @param dd
-	 * @return
-	 */
+	// 添加一条信息数据字典
 	@RequestMapping("datadictionary/addDictionary.go")
 	@ResponseBody
 	public HttpResponse<Object> addDictionary(HttpServletRequest request, HttpServletResponse response, DataDictionary dd){
 		return datadictionaryservice.addDictionary(request, dd);
 	}
 	
-	/**
-	 * 按照id删除一条数据字典数据
-	 * @param request
-	 * @param response
-	 * @param id
-	 * @return
-	 */
+	// 按照id删除一条数据字典数据
 	@RequestMapping("datadictionary/deleteDictionary.go")
 	@ResponseBody
 	public HttpResponse<Object> deleteDictionaryById(HttpServletRequest request, HttpServletResponse response, Integer id){
 		return datadictionaryservice.deleteDictionaryById(id);
 	}
 	
-	/**
-	 * 更新一条数据字典
-	 * @param request
-	 * @param response
-	 * @param dd
-	 * @return
-	 */
+	// 更新一条数据字典
 	@RequestMapping("datadictionary/updateDictionary.go")
 	@ResponseBody
 	public HttpResponse<Object> updateDictionary(HttpServletRequest request, HttpServletResponse response, DataDictionary dd){
 		return datadictionaryservice.updateDictionary(request, dd);
 	}
 	
-	/**
-	 * 查询博客数据字典,且级别为3
-	 * @return
-	 */
+	// 查询博客数据字典,且级别为3
 	@RequestMapping("datadictionary/getBlogDataLevel3.go")
 	@ResponseBody
 	public HttpResponse<Object> getBlogDataLevel3(){
 		return datadictionaryservice.getBlogDataLevel3();
 	}
 	
-	@RequestMapping("datadictionary/getMenuTree")
+	// 获取数据字典树(按照layui tree 进行封装数据)
+	@RequestMapping("datadictionary/getDictionaryTree.go")
 	@ResponseBody
-	public HttpResponse<Object> getMenuTree(){
-		return datadictionaryservice.getMenuTree();
+	public HttpResponse<Object> getDictionaryTree(){
+		return datadictionaryservice.getDictionaryTree();
+	}
+	
+	// 按照权限获取菜单
+	@RequestMapping("basic/getMenuTreeForPower.go")
+	@ResponseBody
+	public HttpResponse<Object> getMenuTreeForPower(){
+		return null;
 	}
 	
 	

@@ -115,7 +115,7 @@ function register(){
 		data : postData,
 		dataType : "json",
 		success : function(data) {
-			showmessage(data.message);
+			layer.msg(data.message);
 			if(data.status == 1){
 				goIndex();
 			}

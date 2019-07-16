@@ -1,12 +1,17 @@
 package com.sujianan.interceptor;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sujianan.bean.user.User;
+import com.sujianan.service.system.PowerService;
 import com.sujianan.util.DefaultUtil;
 
 /**
@@ -15,6 +20,9 @@ import com.sujianan.util.DefaultUtil;
  * @date	2019年7月5日
  */
 public class PowerInterceptor implements HandlerInterceptor {
+	
+	@Autowired
+	PowerService powerservice ;
 
 	// 在进入前端控制器之前
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -24,18 +32,19 @@ public class PowerInterceptor implements HandlerInterceptor {
 		 */
 		User user = DefaultUtil.getUserForRequest(request);
 		if (user == null) {
-			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) { // ajax请求
-				response.setHeader("REDIRECT", "REDIRECT");
-
-				response.setHeader("CONTENTPATH", request.getContextPath() + "/view/user/login.html");
-				response.setStatus(302);
-			} else { // 非ajax请求
-				response.sendRedirect(request.getContextPath() + "/view/user/login.html");
-			}
+			setStatusAndText(request, response);
 			return false;
 			
 		} else { // 校验权限
-			return true;
+			System.out.println("==========校验权限==========");
+			String controllerPath = request.getRequestURI();
+			controllerPath = (controllerPath == null || "".equals(controllerPath)) ? request.getServletPath() : controllerPath;
+			System.out.println(controllerPath);
+			boolean powerFlag = powerservice.findControllerPowerForSessionUser(request, response, controllerPath);
+			if(!powerFlag)
+				setStatusAndText(request, response);
+			System.out.println("==========校验完毕==========");
+			return powerFlag;
 		}
 	}
 
@@ -49,5 +58,18 @@ public class PowerInterceptor implements HandlerInterceptor {
 			throws Exception {
 
 	}
+	
+	public void setStatusAndText(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) { // ajax请求
+			response.setHeader("REDIRECT", "REDIRECT");
+
+			response.setHeader("CONTENTPATH", request.getContextPath() + "/view/user/login.html");
+			response.setStatus(302);
+		} else { // 非ajax请求
+			response.sendRedirect(request.getContextPath() + "/view/user/login.html");
+		}
+		response.getOutputStream().write("noPower".getBytes("utf-8"));
+	}
+	
 
 }

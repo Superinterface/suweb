@@ -1,3 +1,15 @@
+var element;
+var util;
+var $;
+
+layui.use(['layer','element', 'util'], function() {
+	element = layui.element;
+	util = layui.util;
+	$ = layui.jquery;
+});
+
+
+
 var login_status = false;
 // 时间戳转换时间字符串
 function timeToString(time = +new Date()){
@@ -13,13 +25,13 @@ function loadUser(){
 		data : '',
 		dataType : "json",
 		success : function(data) {
-			var rightTopUserName = document.getElementById("rightTopUserName");
+			var rightTopUserName = document.getElementById("");
 			if(data.status == 1){
-				rightTopUserName.innerHTML = "欢迎 : " + data.obj.loginName;
-				rightTopUserName.href = "/view/user/personal_information.html";
+				$("#rightTopUserName").html("欢迎 : " + data.obj.loginName);
+				$("#rightTopUserName").attr('href','/view/user/personal_information.html');
 				login_status = true;
 			}else{
-				rightTopUserName.innerHTML = "您还未登录,请先登录";
+				$("#rightTopUserName").html("您还未登录,请先登录");
 			}
 		}
 	});
@@ -32,19 +44,24 @@ function logout(){
 	if (nextFlag == false){
 		return ;
 	}
-	var rightTopUserName = document.getElementById("rightTopUserName");
-	if(!login_status) {
-		layer.msg("您还未登录,请先登录.");
-		return ;
-	}
+	
 	$.ajax({
 		type : "POST",
 		url : "/user/logout.go",
 		data : '',
 		dataType : "json",
-		success : function(data) {
-			showmessage(data.message);
-			goIndex();
+		success : function(response) {
+			if(response.status == 1){
+				layer.msg(response.message);
+				goIndex();
+			}
+		},
+		error:function(response){
+			console.log(response);
+			if(response.status == 302 && response.responseText == 'noPower'){
+				layer.msg("没有权限");
+				goIndex();
+			}
 		}
 	});
 	

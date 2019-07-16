@@ -16,12 +16,15 @@ public class BlogController {
 	@Autowired
 	BlogService blogservice;
 
+	// 获取博客数据(分页)
 	@RequestMapping("getBlog.go")
 	@ResponseBody
-	public HttpResponse<Object> getBlog(HttpServletRequest request, HttpServletResponse response, Page page, String type) {
+	public HttpResponse<Object> getBlog(HttpServletRequest request, HttpServletResponse response, Page page,
+			String type) {
 		return blogservice.getBlogForPage(page, type);
 	}
 
+	// 博客上传
 	@RequestMapping("blogUpload.go")
 	@ResponseBody
 	public HttpResponse<Object> blogUpload(HttpServletRequest request, HttpServletResponse response) {

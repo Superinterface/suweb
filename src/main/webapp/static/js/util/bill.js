@@ -24,13 +24,13 @@ function commit() {
 	var comments = document.getElementById("comments");
 	$.ajax({
 		type : "POST",
-		url : "/util/bill/commit",
+		url : "/util/bill/commit.go",
 		data : 'budgetType=' + budget_type.value + '&reasonType='
 				+ reason_type.value + '&money=' + money + '&eventTime='
 				+ event_time.value + '&comments=' + comments.value,
 		dataType : "json",
 		success : function(data) {
-			showmessage(data.message);
+			layer.msg(data.message);
 			if (data.status == 1) {
 				budget_type.value = "budget_type_2";
 				reason_type.value = "reason_type_other";
@@ -48,39 +48,35 @@ function findAccountHistoryList() {
 	loading();
 	$.ajax({
 		type : "POST",
-		url : "/util/bill/findBillList",
+		url : "/util/bill/findBillList.go",
 		data : '',
 		dataType : "json",
 		success : function(data) {
 			var tbody = document.getElementById("bill_tbody");
 			tbody.innerHTML = "";
-			if (data.status == 1) {
-				var list = data.obj;
-				if (list != undefined && list.length > 0) {
-					var tfoot = document.getElementById("bill_tfoot");
-					var str = "";
-					for (var i = 0; i < list.length; i++) {
-						str += "<tr>";
-						str += "<td>" + (i + 1) + "</td>"; // 序号
-						str += "<td>" + list[i].budgetType + "</td>"; // 收支类型
-						str += "<td>" + list[i].reasonType + "</td>"; // 原因类型
-						str += "<td>" + list[i].money + "</td>"; // 金额
-						str += "<td>"
-								+ timeToString(list[i].eventTime)
-										.substring(0, 11) + "</td>";// 事件时间
-						str += "<td>" + list[i].comments + "</td>"; // 备注
-						str += "<td>"; // 操作
-						str += "<button class='btn btn-default' onclick='updateBillForId("
-								+ list[i].id + ")'>修改</button>";
-						str += "<button class='btn btn-default' onclick='deleteBillForId("
-								+ list[i].id + ")'>删除</button>";
-						str += "</td>";
-					}
-					tbody.innerHTML = str;
-				}
-			} else if (data.status == -1) {
-				showmessage(data.message);
+		if (data.status == 1) {
+			var list = data.obj;
+			if (list != undefined && list.length > 0) {
+				var tfoot = document.getElementById("bill_tfoot");
+				var str = "";
+			for (var i = 0; i < list.length; i++) {
+				str += "<tr>";
+				str += "<td>" + (i + 1) + "</td>"; // 序号
+				str += "<td>" + list[i].budgetType + "</td>"; // 收支类型
+				str += "<td>" + list[i].reasonType + "</td>"; // 原因类型
+				str += "<td>" + list[i].money + "</td>"; // 金额
+				str += "<td>" + timeToString(list[i].eventTime) .substring(0, 11) + "</td>";// 事件时间
+				str += "<td>" + list[i].comments + "</td>"; // 备注
+				str += "<td>"; // 操作
+				str += "<button class='btn btn-default' onclick='updateBillForId(" + list[i].id + ")'>修改</button>";
+				str += "<button class='btn btn-default' onclick='deleteBillForId(" + list[i].id + ")'>删除</button>";
+				str += "</td>";
 			}
+				tbody.innerHTML = str;
+			}
+		} else if (data.status == -1) {
+			layer.msg(data.message);
+		}
 			loaded();
 		}
 	});
@@ -89,14 +85,11 @@ function findAccountHistoryList() {
 function updateBillForId(id) {
 	
 	// 改变html dom对象增加提交按钮,待用户修改完成,点击提交按钮,发送请求提交修改
-	
-	
 	return ;
 	var id  ;
-	
 	$.ajax({
 		type : "POST",
-		url : "/util/bill/updateBillForId",
+		url : "/util/bill/updateBillForId.go",
 		data : '',
 		dataType : "json",
 		success : function(data) {
@@ -107,17 +100,15 @@ function updateBillForId(id) {
 }
 // 删除一笔数据
 function deleteBillForId(id) {
-	
 	if(window.confirm("确定删除该条数据吗?")){
 		$.ajax({
 			type : "POST",
-			url : "/util/bill/deleteBillForId",
+			url : "/util/bill/deleteBillForId.go",
 			data : 'id=' + id ,
 			dataType : "json",
-			success : function(data) {debugger;
-				
+			success : function(data) {
 				if(data.status == 1) {
-					showmessage(data.message);
+					layer.msg(data.message);
 					findAccountHistoryList();
 				}
 			}

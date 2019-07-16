@@ -35,7 +35,7 @@ public class DataDictionaryService {
 		return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.TEXT_SUCCESS, ddlist);
 	}
 
-	public HttpResponse<Object> getMenuTree() {
+	public HttpResponse<Object> getDictionaryTree() {
 		// 查询数据
 		boolean flag = false;
 		List<DataDictionary> dataList = null;

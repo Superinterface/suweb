@@ -72,6 +72,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			<mvc:exclude-mapping path="/user/login.go" />
 			<mvc:exclude-mapping path="/user/register.go" />
 			<mvc:exclude-mapping path="/user/loadUser.go" />
+			<mvc:exclude-mapping path="/user/logout.go" />
 			<mvc:exclude-mapping path="/user/checkUsername.go" />
 			
 			<mvc:exclude-mapping path="/system/basic/getAuthCode.go" />
