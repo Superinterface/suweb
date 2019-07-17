@@ -32,4 +32,6 @@ public interface BlogMapper extends Mapper {
 	int updateByPrimaryKey(Blog record);
 
 	List<Blog> selectByPageNo(@Param("pg") Page page,@Param("type") String type);
+
+	List<Blog> selectByBlog(Blog blog);
 }

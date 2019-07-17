@@ -1,5 +1,6 @@
 package com.sujianan.service.blog;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sujianan.bean.blog.Blog;
 import com.sujianan.bean.user.User;
 import com.sujianan.dao.blog.BlogMapper;
@@ -122,5 +123,19 @@ public class BlogService {
 		}
 
 		return var22;
+	}
+
+	// 查询博客列表从博客条件
+	public HttpResponse<Object> getblogDataForBlogExample(Blog blog) {
+		
+		List<Blog> blogDataList = null;
+		try {
+			blogDataList = blogmapper.selectByBlog(blog);
+			String returndata = new ObjectMapper().writeValueAsString(blogDataList);
+			return new HttpResponse<Object>(RST.CODE_SUCCESS, RST.TEXT_SUCCESS, returndata);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_ERROR, null);
 	}
 }

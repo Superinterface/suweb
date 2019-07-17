@@ -34,7 +34,6 @@ public class PowerInterceptor implements HandlerInterceptor {
 		if (user == null) {
 			setStatusAndText(request, response);
 			return false;
-			
 		} else { // 校验权限
 			System.out.println("==========校验权限==========");
 			String controllerPath = request.getRequestURI();

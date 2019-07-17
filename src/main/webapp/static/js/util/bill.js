@@ -45,7 +45,7 @@ function commit() {
 
 // 查询当前用户历史账单
 function findAccountHistoryList() {
-	loading();
+	var indexs = layer.load(0);
 	$.ajax({
 		type : "POST",
 		url : "/util/bill/findBillList.go",
@@ -77,8 +77,11 @@ function findAccountHistoryList() {
 		} else if (data.status == -1) {
 			layer.msg(data.message);
 		}
-			loaded();
+		layer.close(indexs);
 		}
+	,error : function (response){
+		layer.close(indexs);
+	}
 	});
 }
 // 修改一笔数据

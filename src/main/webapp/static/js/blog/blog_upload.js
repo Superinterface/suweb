@@ -158,14 +158,14 @@ function blogUpload() {
 		processData : false,
 		success : function(response) {
 			// 根据返回结果指定界面操作
-			showmessage(response.message);
+			layer.msg(response.message);
 			$("#blog_type_one").val("");
 			$("#blog_type_two").val("");
 			$("#blog_title").val("");
 			document.getElementById("file").value = "";
 		},
 		error : function() {
-			showmessage("上传失败！");
+			layer.msg("上传失败！");
 		}
 	});
 }

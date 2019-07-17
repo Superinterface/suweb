@@ -28,23 +28,7 @@
 					<td></td>
 				</tr>
 			</table>
-			<table class="table table-hover table-striped"
-				style="background-color: #ffffff;">
-				<thead>
-					<tr>
-						<th>序号</th>
-						<th>标题</th>
-						<th>类型</th>
-						<th>作者</th>
-						<th>时间</th>
-						<th>热度</th>
-					</tr>
-				</thead>
-				<tbody id="blog_tbody">
-				</tbody>
-				<tfoot id="blog_tfoot">
-				</tfoot>
-			</table>
+			<table class="layui-hide" id="blog_list"></table>
 		</div>
 	</div>
 	<div id="indexfoot"></div>
@@ -56,5 +40,10 @@
 		});
 		$('#indexfoot').load('/foot.html');
 	});
+</script>
+<script type="text/html" id="barDemo">
+<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 </html>

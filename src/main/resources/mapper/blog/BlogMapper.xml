@@ -341,4 +341,15 @@
 		select count(1) from t_blog
 	</select>
 
+	<!-- selectByBlog -->
+	<select id="selectByBlog" parameterType="com.sujianan.bean.blog.Blog" resultType="com.sujianan.bean.blog.Blog">
+		select 
+		<include refid="Base_Column_List"></include>
+		from t_blog
+		where 1=1 
+		<if test=" type != null ">
+			and type = #{type, jdbcType=VARCHAR}
+		</if>
+		
+	</select>
 </mapper>

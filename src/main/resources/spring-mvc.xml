@@ -79,6 +79,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			<mvc:exclude-mapping path="/system/datadictionary/getBlogDataLevel3.go" />
 			
 			<mvc:exclude-mapping path="/blog/getBlog.go" />
+			<mvc:exclude-mapping path="/blog/getBlogData.go" />
 			
 			<bean class="com.sujianan.interceptor.PowerInterceptor"></bean>
 		</mvc:interceptor>

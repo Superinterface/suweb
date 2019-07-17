@@ -1,5 +1,6 @@
 package com.sujianan.controller.blog;
 
+import com.sujianan.bean.blog.Blog;
 import com.sujianan.service.blog.BlogService;
 import com.sujianan.util.HttpResponse;
 import com.sujianan.util.Page;
@@ -22,6 +23,13 @@ public class BlogController {
 	public HttpResponse<Object> getBlog(HttpServletRequest request, HttpServletResponse response, Page page,
 			String type) {
 		return blogservice.getBlogForPage(page, type);
+	}
+	
+	// 获取博客list(返回数据类型为layui的table所需json格式)
+	@RequestMapping("getBlogData.go")
+	@ResponseBody
+	public HttpResponse<Object> getBlogData(HttpServletRequest request, HttpServletResponse response, Blog blog){
+		return blogservice.getblogDataForBlogExample(blog);
 	}
 
 	// 博客上传
