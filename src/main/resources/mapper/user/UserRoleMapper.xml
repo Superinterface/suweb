@@ -199,6 +199,7 @@
 	</update>
 
 	<!-- insertIntoForCreateUser -->
+	<!-- 创建新用户时,同时自动添加的角色 -->
 	<insert id="insertIntoForCreateUser" parameterType="com.sujianan.bean.user.UserRole" >
 		insert into t_user_role values(
 			sequence_t_user_role_id.nextval,
@@ -206,6 +207,35 @@
 			5
 		)
 	</insert>
-
+	<!-- selectMenuByNoLogin -->
+	<!-- 没有登录的状态下查询的菜单 -->
+	<select id="selectMenuByNoLogin" resultType="com.sujianan.bean.system.Menu">
+		select id, pid, menuCode, menuName, menuType, menuPath, menuFunction
+		from (	select 
+					tm.id as id, tm.pid as pid, tm.menu_code as menuCode, tm.menu_name as menuName, 
+					tm.menu_type as menuType, tm.menu_path as menuPath, tm.menu_function as menuFunction 
+				from t_role_menu trm 
+				inner join t_menu tm on trm.menu_id = tm.id 
+				where trm.role_id = -1 and #{time, jdbcType=BIGINT} = #{time, jdbcType=BIGINT}
+			  )
+		start with id = 1
+		connect by prior id = pid
+	</select>
+	<!-- selectMenuByUserId -->
+	<!-- 登录的状态下查询的菜单,按照user id -->
+	<select id="selectMenuByUserId" resultType="com.sujianan.bean.system.Menu" >
+		select id, pid, menuCode, menuName, menuType, menuPath, menuFunction
+		from (	select 
+					tm.id as id, tm.pid as pid, tm.menu_code as menuCode, tm.menu_name as menuName, 
+					tm.menu_type as menuType, tm.menu_path as menuPath, tm.menu_function as menuFunction 
+				from t_user_role tur 
+				inner join t_role_menu trm on tur.role_id = trm.role_id 
+				inner join t_menu tm on trm.menu_id = tm.id 
+				where tur.user_id = #{id, jdbcType=INTEGER}
+				and #{time, jdbcType=BIGINT} = #{time, jdbcType=BIGINT}
+			  )
+		start with id = 1
+		connect by prior id = pid
+	</select>
 
 </mapper>

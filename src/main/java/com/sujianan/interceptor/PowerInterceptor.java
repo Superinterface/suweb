@@ -32,7 +32,7 @@ public class PowerInterceptor implements HandlerInterceptor {
 		 */
 		User user = DefaultUtil.getUserForRequest(request);
 		if (user == null) {
-			setStatusAndText(request, response);
+			NoLoginSetStatusAndText(request, response);
 			return false;
 		} else { // 校验权限
 			System.out.println("==========校验权限==========");
@@ -41,7 +41,7 @@ public class PowerInterceptor implements HandlerInterceptor {
 			System.out.println(controllerPath);
 			boolean powerFlag = powerservice.findControllerPowerForSessionUser(request, response, controllerPath);
 			if(!powerFlag)
-				setStatusAndText(request, response);
+				NoLoginSetStatusAndText(request, response);
 			System.out.println("==========校验完毕==========");
 			return powerFlag;
 		}
@@ -58,7 +58,7 @@ public class PowerInterceptor implements HandlerInterceptor {
 
 	}
 	
-	public void setStatusAndText(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void NoLoginSetStatusAndText(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) { // ajax请求
 			response.setHeader("REDIRECT", "REDIRECT");
 

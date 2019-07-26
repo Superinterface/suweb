@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sujianan.bean.system.DataDictionary;
 import com.sujianan.bean.system.District;
 import com.sujianan.service.system.AddressService;
+import com.sujianan.service.system.AuthCodeService;
 import com.sujianan.service.system.BasicService;
 import com.sujianan.service.system.DataDictionaryService;
 import com.sujianan.util.HttpResponse;
@@ -23,10 +24,13 @@ public class SystemController {
 	AddressService addressservice;
 	
 	@Autowired
-	BasicService basicService;
+	AuthCodeService authcodeservice;
 	
 	@Autowired
 	DataDictionaryService datadictionaryservice;
+	
+	@Autowired
+	BasicService basicservice;
 
 	@RequestMapping("address/getProvince.go")
 	@ResponseBody
@@ -50,9 +54,10 @@ public class SystemController {
 		return addressservice.getDistrict(dis);
 	}
 	
+	// 获取验证码
 	@RequestMapping("basic/getAuthCode.go")
 	public void getAuthCode(HttpServletRequest request, HttpServletResponse response) {
-		basicService.createAuthCodeImg(request, response);
+		authcodeservice.createAuthCodeImg(request, response);
 	}
 	
 	// 查询指定code下的所有子数据字典
@@ -104,12 +109,18 @@ public class SystemController {
 		return datadictionaryservice.getDictionaryTree();
 	}
 	
-	// 按照权限获取菜单
+	// 按照权限获取当前角色的菜单(菜单展示)
 	@RequestMapping("basic/getMenuTreeForPower.go")
 	@ResponseBody
-	public HttpResponse<Object> getMenuTreeForPower(){
-		return null;
+	public HttpResponse<Object> getMenuTreeForPower(HttpServletRequest request, HttpServletResponse response){
+		return basicservice.findMenuForUserRolePower(request, response);
 	}
 	
+	// 获取所有人员角色菜单权限配置信息
+	@RequestMapping("basic/getUserRoleMenuPower.go")
+	@ResponseBody
+	public HttpResponse<Object> getUserRoleMenuPower(HttpServletRequest request, HttpServletResponse response){
+		return basicservice.finUserRoleMenuPower(request, response);
+	}
 	
 }

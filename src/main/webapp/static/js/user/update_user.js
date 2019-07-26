@@ -1,65 +1,55 @@
-var form;
-var $;
-var element;
-var util;
+// 提交基本信息修改
+function commitUpdateUserData() {debugger;
 
-layui.use([ 'layer', 'form', 'element', 'util' ], function() {
-	form = layui.form;
-	// Tab的切换功能，切换事件监听等，需要依赖element模块
-	$ = layui.jquery;
-	element = layui.element;
-	util = layui.util;
-	// 自定义属性事件
-	util.event('lay-click', {
-		// 提交基本信息修改
-		commitUpdateUserData : function() {
+	var netNameVal	= $("#net_name").val();
+	var genderVal	= $("#gender").val();
+	var phoneVal	= $("#phone").val();
+	var emailVal	= $("#email").val();
+	var addressVal	= $("#address").val();
 
-			$.ajax({
-				type : "POST",
-				url : "/user/updateUserData.go",
-				data : "netName=" + $("#net_name").val() + "&gender="
-						+ $("#gender").val() + "&phone=" + $("#phone").val()
-						+ "&email=" + $("#email").val() + "&address="
-						+ $("#address").val(),
-				dataType : "json",
-				success : function(data) {
-					layer.msg(data.message);
-					if (data.status == 1)
-						$("input").val("");
-				}
-			});
-
-		},
-		// 提交密码修改
-		commitpasswordUpdate : function() {
-
-			$.ajax({
-				type : "POST",
-				url : "/user/updateUserPassowrd.go",
-				data : 'oldPassword=' + $("#oldPassword").val()
-						+ '&loginPassword=' + $('#loginPassword').val()
-						+ '&loginPasswordAffirm='
-						+ $('#loginPasswordAffirm').val(),
-				dataType : "json",
-				success : function(data) {
-					layer.msg(data.message);
-					if (data.status == 302)
-						goIndex();
-				}
-			});
-
+	$.ajax({
+		type : "POST",
+		url : "/user/updateUserData.go",
+		data : "netName=" + netNameVal + "&gender=" + genderVal + "&phone="
+				+ phoneVal + "&email=" + emailVal + "&address=" + addressVal,
+		dataType : "json",
+		success : function(data) {debugger;
+			layer.msg(data.message);
+			if (data.status == 1)
+				$("input").val("");
 		}
 	});
-	loadUser();
-	loadUserData();
-});
+
+}
+// 提交密码修改
+function commitpasswordUpdate() {debugger;
+	$.ajax({
+		type : "POST",
+		url : "/user/updateUserPassowrd.go",
+		data : 'oldPassword=' + $("#oldPassword").val() + '&loginPassword='
+				+ $('#loginPassword').val() + '&loginPasswordAffirm='
+				+ $('#loginPasswordAffirm').val(),
+		dataType : "json",
+		success : function(data) {debugger;
+			layer.msg(data.message);
+			if (data.status == 302)
+				goIndex();
+		},
+		error : function (xhr,status,error){
+			debugger;
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		}
+	});
+}
 
 // 加载用户基本信息
 function loadUserData() {
 	var _form = form;
 	$.ajax({
 		type : "POST",
-		url : "/user/loadUser.go?time="+new Date(),
+		url : "/user/loadUser.go?time=" + new Date(),
 		data : '',
 		dataType : "json",
 		success : function(data) {
@@ -76,6 +66,12 @@ function loadUserData() {
 				$("#create_time").val(timeToString(obj.createtime));
 			}
 			_form.render('select');
+		},
+		error : function (xhr,status,error){
+			debugger;
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
 		}
 	});
 }

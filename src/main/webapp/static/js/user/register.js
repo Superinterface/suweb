@@ -1,3 +1,4 @@
+
 // 注册js校验
 function checkout(dom){
 	var dominput = document.getElementById(dom).value.trim();
@@ -53,47 +54,41 @@ function checkout(dom){
 		}
 	}
 	
-	domText.className = picFlag ? "glyphicon glyphicon-ok" : "glyphicon glyphicon-remove";
+	domText.className = picFlag ? "layui-icon layui-icon-ok" : "layui-icon layui-icon-close";
 	
 }
 
 // 注册
-function register(){
-	var login_name = document.getElementById("loginName").value.trim();
-	var login_password = document.getElementById("loginPassword").value.trim();
-	var login_password_affirm = document.getElementById("loginPasswordAffirm").value.trim();
-	var net_name = document.getElementById("netName").value.trim();
-	var gender_ = document.getElementById("gender").value.trim();
-	var phone_ = document.getElementById("phone").value.trim();
-	var email_ = document.getElementById("email").value.trim();
-	var text = '';
+function register(){debugger;
+	var login_name = $("#loginName").val().trim();
+	var login_password = $("#loginPassword").val().trim();
+	var login_password_affirm = $("#loginPasswordAffirm").val().trim();
+	var net_name = $("#netName").val().trim();
+	var gender_ = $("#gender").val();
+	var phone_ = $("#phone").val().trim();
+	var email_ = $("#email").val().trim();
+	
 	if(login_name.length > 10 || login_name.length == 0) {
-		// text = "用户名长度不正确,请重新输入~";
+		layer.msg("登录名不符合规范");
 		return ;
 	}
 	if(login_password.length < 8 || login_password.length >16) {
-		// text = "密码长度不正确,请重新输入~";
+		layer.msg("密码不符合规范");
 		return ;
 	}
-	if(login_password != login_password_affirm) {
-		// text = "两次输入的密码不一致请校验后重新输入~";
+	if(login_password != login_password_affirm){
+		layer.msg("两次输入密码不一致");
 		return ;
 	}
 	if(net_name.length>10 || net_name.length==0) {
-		// text = "网名长度不正确,请重新输入~";
+		layer.msg("网名不符合规范");
 		return;
 	}
-
-	/*if(phone_.length!=11) { 
-		// text = "手机输入不正确,请重新输入~";
-		return ; 
-	}*/
-	 
 	if(email_.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) == -1) {
-		// text = "邮箱输入不正确,请重新输入~";
+		layer.msg("邮箱不符合规范");
 		return ;
 	}
-	if(text!='') showmessage(text);
+	
 	var dat = {
 			loginName : login_name,
 			loginPassword : login_password,
@@ -114,7 +109,7 @@ function register(){
 		url : "/user/register.go",
 		data : postData,
 		dataType : "json",
-		success : function(data) {
+		success : function(data) {debugger;
 			layer.msg(data.message);
 			if(data.status == 1){
 				goIndex();

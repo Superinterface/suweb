@@ -1,127 +1,74 @@
 // 树的数据
 var jsondata = "";
 var tree;
-var util;
-var $;
-var element;
 
 // 选择的数据字典信息
 var _code;
 var _name;
 var _id = -1;
 
-layui.use([ 'layer', 'tree', 'element', 'util' ], function() {
+layui.use([ 'tree'], function() {
 	tree = layui.tree;
-	element = layui.element;
-	util = layui.util;
-	$ = layui.jquery;
-	// 按钮事件
-	util.event('lay-click', {
-		commitAddDictionary : function() {
-			if (_id == -1) {
-				layer.msg('未选择任何数据', {
-					time : 8000,
-					btn : [ '好~', '我知道了!' ]
-				});
-				return;
-			}
-			var pid = _id;
-			var dataCode = $("#new_code").val();
-			var dataName = $("#new_name").val();
-			var indexs = layer.load(0);
-			$.ajax({
-				type : 'post',
-				url : '/system/datadictionary/addDictionary.go',
-				data : 'pid=' + pid + "&dataCode=" + dataCode + "&dataName="
-						+ dataName,
-				dataType : 'json',
-				success : function(response) {
-
-					layer.msg(response.message, {
-						time : 5000, // 20s后自动关闭
-						btn : [ '确定', '关闭' ]
-					});
-
-					// 如果成功新增,则重载数据字典数据,清空填写框内的数据
-					if (response.status == 1) {
-						clearData();
-						loadMenuTree();
-					}
-					layer.close(indexs);
-				},
-				error : function(response) {
-					console.log(response);
-					layer.close(indexs);
-				}
-			});
-
-		},
-		commitUpdateDictionary : function() {
-			var dataCode = $("#update_code").val();
-			var dataName = $("#update_name").val();
-			var indexs = layer.load(0);
-			$.ajax({
-				type : 'post',
-				url : '/system/datadictionary/updateDictionary.go',
-				data : 'id=' + _id + "&dataCode=" + dataCode + "&dataName="
-						+ dataName,
-				dataType : 'json',
-				success : function(response) {
-
-					layer.msg(response.message, {
-						time : 5000, // 20s后自动关闭
-						btn : [ '确定', '关闭' ]
-					});
-
-					// 如果成功修改,则重载数据字典数据,清空填写框内的数据
-					if (response.status == 1) {
-						clearData();
-						loadMenuTree();
-					}
-					layer.close(indexs);
-				},
-				error : function(response) {
-					console.log(response);
-					layer.close(indexs);
-				}
-			});
-		},
-		commitDeleteDictionary : function() {
-			var indexs = layer.load(0);
-			layer.confirm('确定要删除吗？', {
-				btn : [ '确定', '取消' ], // 按钮
-				shade : false
-			// 显示遮罩
-			}, function(index) {
-				// 提交表单的代码，需要你自己写，然后用 layer.close 关闭就可以了，取消可以省略
-				$.ajax({
-					type : 'post',
-					url : '/system/datadictionary/deleteDictionary.go',
-					data : 'id=' + _id,
-					dataType : 'json',
-					success : function(response) {
-						layer.msg(response.message);
-						// 如果成功删除数据,则重载数据字典数据,清空填写框内的数据
-						if (response.status == 1) {
-							clearData();
-							loadMenuTree();
-						}
-						layer.close(indexs);
-					},
-					error : function(response) {
-						console.log(response);
-						layer.close(indexs);
-					}
-				});
-				layer.close(index);
-			}, function(index) {
-				layer.close(indexs);
-			});
-
-		}
-	});
 	loadMenuTree();
 });
+
+// 提交新增/修改/删除数据字典方法
+function commitAddOrUpdateOrDeleteDictionary (type) {debugger;
+	
+	if(type == undefined) return;
+	if (_id == -1) { layer.msg('未选择任何数据,请选中一条数据重试!'); return; }
+	
+	// 遮罩
+	var indexs = layer.load(0);
+	
+	var pid = _id;
+	
+	var dataCode = '';
+	var dataName = '';
+	var twoUrl = '';
+	var dataes = '';
+	
+	if(type == 'insert'){
+		dataCode = $("#new_code").val();
+		dataName = $("#new_name").val();
+		twoUrl = 'addDictionary.go';
+		dataes = 'pid=' + pid + "&dataCode=" + dataCode + "&dataName=" + dataName;
+	}else if(type == 'update'){
+		dataCode = $("#update_code").val();
+		dataName = $("#update_name").val();
+		twoUrl = 'updateDictionary.go';
+		dataes = 'id=' + _id + "&dataCode=" + dataCode + "&dataName=" + dataName;
+	}else if(type == 'delete'){
+		twoUrl = 'deleteDictionary.go';
+		dataes = 'id=' + _id;
+		if(!confirm('确定要删除吗？')) {
+			layer.close(indexs);
+			return ;
+		}
+		
+	}
+	
+	$.ajax({
+		type : 'post',
+		url : '/system/datadictionary/' + twoUrl,
+		data : dataes,
+		dataType : 'json',
+		success : function(response) {
+			layer.msg(response.message);
+			// 如果成功新增,则重载数据字典数据,清空填写框内的数据
+			if (response.status == 1) {
+				clearData();
+				loadMenuTree();
+			}
+			layer.close(indexs);
+		},
+		error : function(response) {
+			console.log(response);
+			layer.close(indexs);
+		}
+	});
+
+}
 
 /* 加载数据字典数据 */
 function loadMenuTree() {
@@ -148,7 +95,8 @@ function loadMenuTree() {
 
 // 加载树
 function showtree() {
-
+	
+	// layui方法, 加载树的数据, 进行渲染.
 	inst1 = tree.render(jsondata);
 
 	var add_code = $("#add_code");

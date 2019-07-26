@@ -10,8 +10,12 @@ public class Menu {
     private String menuCode;
 
     private String menuName;
+    
+    private String menuType;
 
     private String menuPath;
+    
+    private String menuFunction;
 
     private Integer createUser;
 
@@ -49,7 +53,15 @@ public class Menu {
         return menuName;
     }
 
-    public void setMenuName(String menuName) {
+    public String getMenuType() {
+		return menuType;
+	}
+
+	public void setMenuType(String menuType) {
+		this.menuType = menuType;
+	}
+
+	public void setMenuName(String menuName) {
         this.menuName = menuName == null ? null : menuName.trim();
     }
 
@@ -61,7 +73,15 @@ public class Menu {
         this.menuPath = menuPath == null ? null : menuPath.trim();
     }
 
-    public Integer getCreateUser() {
+    public String getMenuFunction() {
+		return menuFunction;
+	}
+
+	public void setMenuFunction(String menuFunction) {
+		this.menuFunction = menuFunction;
+	}
+
+	public Integer getCreateUser() {
         return createUser;
     }
 

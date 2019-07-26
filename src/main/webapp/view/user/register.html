@@ -6,102 +6,172 @@
 <script type="text/javascript" src="/static/js/user/register.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#indexhead').load('/head.html', function() {
-			loadUser();
-		});
-		$('#indexfoot').load('/foot.html');
+		getMenuTreeLoadDom();
+		form.render('select');
 	});
 </script>
 <title>注册</title>
 </head>
-<body style="overflow: hidden;">
-	<div id="indexhead"></div>
-	<div>
-		<div id="app_register" class="defaultfromdiv ">
-			<form class="form-horizontal">
-				<!-- pre-scrollable滚动条 -->
-				<!-- 用户名(登录名) -->
-				<div class="form-group">
-					<label class="col-sm-3 control-label">用户名(登录名)</label>
-					<div class="col-sm-5">
-						<input id="loginName" class="form-control" type="text"
-							placeholder="4位-10位英文与数字，以英文开头"
-							onKeyUp="value = value.replace(/[^a-z0-9]|^[^a-z]/ig,'');checkout('loginName');">
-					</div>
-					<span class="mustFillIn">*</span> <span id="loginNameText"></span>
-				</div>
-				<!-- 密码 -->
-				<div class="form-group">
-					<label class="col-sm-3 control-label">密码</label>
-					<div class="col-sm-5">
-						<input id="loginPassword" class="form-control" type="text"
-							placeholder="8-16位,英文数字字符任意组合"
-							onkeyup="checkout('loginPassword');">
-					</div>
-					<span class="mustFillIn">*</span> <span id="loginPasswordText"></span>
-				</div>
-				<!-- 确认密码 -->
-				<div class="form-group">
-					<label class="col-sm-3 control-label">确认密码</label>
-					<div class="col-sm-5">
-						<input id="loginPasswordAffirm" class="form-control" type="text"
-							placeholder="8-16位,英文数字字符任意组合"
-							onkeyup="checkout('loginPasswordAffirm');">
-					</div>
-					<span class="mustFillIn">*</span> <span
-						id="loginPasswordAffirmText"></span>
-				</div>
-				<!-- netName -->
-				<div class="form-group">
-					<label class="col-sm-3 control-label">网名</label>
-					<div class="col-sm-5">
-						<input id="netName" class="form-control" type="text"
-							placeholder="1-16位" onkeyup="checkout('netName');">
-					</div>
-					<span class="mustFillIn">*</span><span id="netNameText"></span>
-				</div>
-				<!-- gender  -->
-				<div class="form-group">
-					<label class="col-sm-3 control-label">性别</label>
-					<div class="col-sm-5">
-						<select id="gender" class="form-control">
-							<option value="1">男</option>
-							<option value="0">女</option>
-						</select>
-					</div>
-					<span class="mustFillIn">*</span>
-				</div>
-				<!-- phone  -->
-				<div class="form-group">
-					<label class="col-sm-3 control-label">电话</label>
-					<div class="col-sm-5">
-						<input id="phone" class="form-control" type="text"
-							placeholder="11位" onkeyup="checkout('phone');">
-					</div>
-					<span id="phoneText"></span>
-				</div>
-				<!-- email  -->
-				<div class="form-group">
-					<label class="col-sm-3 control-label">邮箱</label>
-					<div class="col-sm-5">
-						<input id="email" class="form-control" type="text"
-							placeholder="例如:  zhangsan@163.com" onkeyup="checkout('email');">
-					</div>
-					<span class="mustFillIn">*</span> <span id="emailText"></span>
-				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-5 col-sm-10">
-						<button type="button" class="btn btn-default"
-							onclick="register();">注册</button>
-					</div>
-				</div>
-
-			</form>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo">
+				<i class="layui-icon layui-icon-home" style="font-size: 20px; color: #1E9FFF;"></i>
+				<a href='/'>sujianan.cn</a>
+			</div>
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item">
+					<button type="button" class="layui-btn layui-btn-sm layui-btn-radius" onclick="showMenuOrHide();">菜单隐藏/显示</button>
+				</li>
+			</ul>
+			<ul class="layui-nav layui-layout-right" id="menu_top_right_ul">
+			</ul>
 		</div>
-		<!-- <div class="drop" style="z-index: -100"></div>
-		<div class="wave mar" style="z-index: -100"></div> -->
+		<div class="layui-side layui-bg-black layui-bg-black2" id="menu_left">
+			<div class="layui-side-scroll layui-bg-black2">
+				<ul class='layui-nav layui-nav-tree layui-bg-black2' lay-filter='' id="menu_left_nav_ul">
+				</ul>
+			</div>
+		</div>
+		<!-- 内容主体区域 -->
+		<div class="layui-body">
+			<div style="padding: 15px;">
+				<form class="layui-form layui-form-pane" action="#">
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">用户名</label>
+								<div class="layui-input-block">
+									<input type="text" id="loginName" autocomplete="off" class="layui-input"
+									placeholder="请输入4位-10位英文与数字，以英文开头" 
+									lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？"
+									onKeyUp="value = value.replace(/[^a-z0-9]|^[^a-z]/ig,'');checkout('loginName');">
+								</div>
+							</div>
+						</div>
+						<div class="layui-col-xs1 layui-col-md1">
+							<span class="mustFillIn">*</span> 
+							<i id="loginNameText" style="font-size: 14px;"></i>
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">密码</label>
+								<div class="layui-input-block">
+									<input type="text" id="loginPassword" lay-verify="required"
+										lay-reqtext="密码也是必填项，同样不能为空!" autocomplete="off"
+										class="layui-input" placeholder="8-16位,英文数字字符任意组合"
+										onkeyup="checkout('loginPassword');">
+								</div>
+							</div>
+						</div>
+						<div class="layui-col-xs1 layui-col-md1">
+							<span class="mustFillIn">*</span> <i id="loginPasswordText" style="font-size: 14px;"></i>
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">确认密码</label>
+								<div class="layui-input-block">
+									<input type="text" id="loginPasswordAffirm"
+										lay-verify="required" lay-reqtext="密码也是必填项，同样不能为空!"
+										autocomplete="off" class="layui-input"
+										placeholder="8-16位,英文数字字符任意组合"
+										onkeyup="checkout('loginPasswordAffirm');">
+								</div>
+							</div>
+						</div>
+						<div class="layui-col-xs1 layui-col-md1">
+							<span class="mustFillIn">*</span> 
+							<span id="loginPasswordAffirmText" style="font-size: 14px;"></span>
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">网名</label>
+								<div class="layui-input-block">
+									<input type="text" id="netName" lay-verify="required"
+										lay-reqtext="人在江湖,你总得有个名儿吧." autocomplete="off"
+										class="layui-input" placeholder="1-16位"
+										onkeyup="checkout('netName');">
+								</div>
+							</div>
+						</div>
+						<div class="layui-col-xs1 layui-col-md1">
+							<span class="mustFillIn">*</span>
+							<span id="netNameText" style="font-size: 14px;"></span>
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item" pane="">
+								<label class="layui-form-label">性别</label>
+								<div class="layui-input-block">
+									<select id="gender">
+										<option value="-1">请选择性别</option>
+										<option value="1">男</option>
+										<option value="0">女</option>
+									</select>
+								</div>
+
+							</div>
+						</div>
+						<div class="layui-col-xs1 layui-col-md1">
+							<span class="mustFillIn">*</span>
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">电话</label>
+								<div class="layui-input-block">
+									<input type="text" id="phone" class="layui-input" placeholder="11位" onkeyup="checkout('phone');">
+								</div>
+							</div>
+						</div>
+						<div class="layui-col-xs1 layui-col-md1">
+							<span class="mustFillIn">*</span> 
+							<span id="phoneText" style="font-size: 14px;"></span>
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">邮箱</label>
+								<div class="layui-input-block">
+									<input type="text" id="email" class="layui-input"
+										placeholder="例如:  zhangsan@163.com"
+										onkeyup="checkout('email');">
+								</div>
+							</div>
+						</div>
+						<div class="layui-col-xs1 layui-col-md1">
+							<span class="mustFillIn">*</span> 
+							<span id="emailText" style="font-size: 14px;"></span>
+						</div>
+					</div>
+
+				</form>
+				<div class="layui-row">
+					<div class="layui-col-xs1 layui-col-xs-offset6 layui-col-md1 layui-col-md-offset6">
+						<button class="layui-btn layui-btn-normal layui-btn-radius" onclick="register();">注册</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 底部固定区域 -->
+		<div class="layui-footer">
+			<p style="text-align: center;">Copyright ©2019 sujianan.cn All Rights Reserved.</p>
+		</div>
 	</div>
-	<div id="indexfoot"></div>
 </body>
 </html>

@@ -1,12 +1,9 @@
 // blog数据
 var datas = new Array();
-var form;
-var $;
-var element;
-var util;
 var table;
 
-layui.use([ 'layer', 'element', 'util', 'table' ], function() {
+debugger;
+layui.use([ 'layer', 'element', 'util', 'table' ], function() {debugger;
 	form = layui.form;
 	// Tab的切换功能，切换事件监听等，需要依赖element模块
 	$ = layui.jquery;
@@ -37,6 +34,7 @@ layui.use([ 'layer', 'element', 'util', 'table' ], function() {
 	    });
 	  }
 	});
+	element.render('nav');
 	getBlogData();
 });
 

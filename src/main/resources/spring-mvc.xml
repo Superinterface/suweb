@@ -77,6 +77,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			
 			<mvc:exclude-mapping path="/system/basic/getAuthCode.go" />
 			<mvc:exclude-mapping path="/system/datadictionary/getBlogDataLevel3.go" />
+			<mvc:exclude-mapping path="/system/basic/getMenuTreeForPower.go" />
 			
 			<mvc:exclude-mapping path="/blog/getBlog.go" />
 			<mvc:exclude-mapping path="/blog/getBlogData.go" />

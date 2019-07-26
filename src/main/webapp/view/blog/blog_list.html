@@ -4,43 +4,58 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="/static/common.js"></script>
 <script type="text/javascript" src="/static/js/blog/blog_list.js"></script>
-<title>blog list</title>
-</head>
-<body>
-	<div id="indexhead"></div>
-	<div>
-		<div class="table-responsive default_head_padding">
-			<table class="table table-hover table-striped"
-				style="background-color: #ffffff;">
-				<tr>
-					<td><span>检索条件</span> <span class="glyphicon glyphicon-search"></span>
-					</td>
-					<td class="retrieval_style"><span>类型</span> <span
-						class="glyphicon glyphicon-list"></span> <select id="blog_type"
-						onchange="getBlogs(this.value);"></select></td>
-					<!-- <td>
-						<span>作者</span>
-						<span class="glyphicon glyphicon-user"></span>
-						<select id="blog_author" onchange="getBlogs(this.value);"></select>
-					</td> -->
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-			<table class="layui-hide" id="blog_list"></table>
-		</div>
-	</div>
-	<div id="indexfoot"></div>
-</body>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#indexhead').load('/head.html', function() {
-			loadUser();
-		});
-		$('#indexfoot').load('/foot.html');
+		getMenuTreeLoadDom();
 	});
 </script>
+<title>博客列表</title>
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo">
+				<i class="layui-icon layui-icon-home" style="font-size: 20px; color: #1E9FFF;"></i>
+				<a href='/'>sujianan.cn</a>
+			</div>
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item">
+					<button type="button" class="layui-btn layui-btn-sm layui-btn-radius" onclick="showMenuOrHide();">菜单隐藏/显示</button>
+				</li>
+			</ul>
+			<ul class="layui-nav layui-layout-right" id="menu_top_right_ul">
+			</ul>
+		</div>
+		<div class="layui-side layui-bg-black layui-bg-black2" id="menu_left">
+			<div class="layui-side-scroll layui-bg-black2">
+				<ul class='layui-nav layui-nav-tree layui-bg-black2' lay-filter='' id="menu_left_nav_ul">
+				</ul>
+			</div>
+		</div>
+		<!-- 内容主体区域 -->
+		<div class="layui-body">
+			<div style="padding: 15px;">
+				<table class="table table-hover table-striped" style="background-color: #ffffff;">
+					<tr>
+						<td>
+							<span>检索条件</span> <span class="glyphicon glyphicon-search"></span>
+						</td>
+						<td class="retrieval_style">
+							<span>类型</span>
+							<span class="glyphicon glyphicon-list"></span> 
+							<select id="blog_type" onchange="getBlogs(this.value);"></select>
+						</td>
+					</tr>
+				</table>
+				<table class="layui-hide" id="blog_list"></table>
+			</div>
+		</div>
+		<!-- 底部固定区域 -->
+		<div class="layui-footer">
+			<p style="text-align: center;">Copyright ©2019 sujianan.cn All Rights Reserved.</p>
+		</div>
+	</div>
+</body>
 <script type="text/html" id="barDemo">
 <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>

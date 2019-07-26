@@ -7,20 +7,36 @@
 <link rel="stylesheet" type="text/css" href="/static/css/util/bill.css" />
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#indexhead').load('/head.html', function() {
-			loadUser();
-			findAccountHistoryList();
-		});
-		$('#indexfoot').load('/foot.html');
+		getMenuTreeLoadDom();
 	});
 </script>
 <title>账本</title>
 </head>
-<body>
-	<div id="indexhead"></div>
-	<div>
-		<div>
-			<div class="bigDiv">
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo">
+				<i class="layui-icon layui-icon-home" style="font-size: 20px; color: #1E9FFF;"></i>
+				<a href='/'>sujianan.cn</a>
+			</div>
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item">
+					<button type="button" class="layui-btn layui-btn-sm layui-btn-radius" onclick="showMenuOrHide();">菜单隐藏/显示</button>
+				</li>
+			</ul>
+			<ul class="layui-nav layui-layout-right" id="menu_top_right_ul">
+			</ul>
+		</div>
+		<div class="layui-side layui-bg-black layui-bg-black2" id="menu_left">
+			<div class="layui-side-scroll layui-bg-black2">
+				<ul class='layui-nav layui-nav-tree layui-bg-black2' lay-filter='' id="menu_left_nav_ul">
+				</ul>
+			</div>
+		</div>
+		<!-- 内容主体区域 -->
+		<div class="layui-body">
+			<div style="padding: 15px;">
+				<div class="bigDiv">
 				<div class="bigDiv_leftDiv">
 					<ul class="nav nav-tabs nav-stacked" role="tablist">
 						<li role="presentation" class="active"><a href="#show1"
@@ -122,8 +138,12 @@
 					<div role="tabpanel" class="tab-pane" id="show4">设置</div>
 				</div>
 			</div>
+			</div>
+		</div>
+		<!-- 底部固定区域 -->
+		<div class="layui-footer">
+			<p style="text-align: center;">Copyright ©2019 sujianan.cn All Rights Reserved.</p>
 		</div>
 	</div>
-	<div id="indexfoot"></div>
 </body>
 </html>

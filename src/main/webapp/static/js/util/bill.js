@@ -5,6 +5,10 @@ var pagesize = 10;
 // 页数
 var totalcount = 1;
 
+layui.use(['element','layer'],function(){
+	findAccountHistoryList();
+});
+
 // 上一页,下一页,页码数,触发方法
 function changePageData(param) {
 	if ("string" == typeof param && "up" == param)

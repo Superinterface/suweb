@@ -1,276 +1,331 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sujianan.dao.system.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.sujianan.bean.system.Menu">
-    <id column="ID" jdbcType="DECIMAL" property="id" />
-    <result column="PID" jdbcType="DECIMAL" property="pid" />
-    <result column="MENU_CODE" jdbcType="VARCHAR" property="menuCode" />
-    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
-    <result column="MENU_PATH" jdbcType="VARCHAR" property="menuPath" />
-    <result column="CREATE_USER" jdbcType="DECIMAL" property="createUser" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="UPDATE_USER" jdbcType="DECIMAL" property="updateUser" />
-    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    ID, PID, MENU_CODE, MENU_NAME, MENU_PATH, CREATE_USER, CREATE_TIME, UPDATE_USER, 
-    UPDATE_TIME
-  </sql>
-  <select id="selectByExample" parameterType="com.sujianan.bean.system.MenuExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from T_MENU
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from T_MENU
-    where ID = #{id,jdbcType=DECIMAL}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from T_MENU
-    where ID = #{id,jdbcType=DECIMAL}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.sujianan.bean.system.MenuExample">
-    delete from T_MENU
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.sujianan.bean.system.Menu">
-    insert into T_MENU (ID, PID, MENU_CODE, 
-      MENU_NAME, MENU_PATH, CREATE_USER, 
-      CREATE_TIME, UPDATE_USER, UPDATE_TIME
-      )
-    values (#{id,jdbcType=DECIMAL}, #{pid,jdbcType=DECIMAL}, #{menuCode,jdbcType=VARCHAR}, 
-      #{menuName,jdbcType=VARCHAR}, #{menuPath,jdbcType=VARCHAR}, #{createUser,jdbcType=DECIMAL}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.sujianan.bean.system.Menu">
-    insert into T_MENU
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="pid != null">
-        PID,
-      </if>
-      <if test="menuCode != null">
-        MENU_CODE,
-      </if>
-      <if test="menuName != null">
-        MENU_NAME,
-      </if>
-      <if test="menuPath != null">
-        MENU_PATH,
-      </if>
-      <if test="createUser != null">
-        CREATE_USER,
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME,
-      </if>
-      <if test="updateUser != null">
-        UPDATE_USER,
-      </if>
-      <if test="updateTime != null">
-        UPDATE_TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=DECIMAL},
-      </if>
-      <if test="pid != null">
-        #{pid,jdbcType=DECIMAL},
-      </if>
-      <if test="menuCode != null">
-        #{menuCode,jdbcType=VARCHAR},
-      </if>
-      <if test="menuName != null">
-        #{menuName,jdbcType=VARCHAR},
-      </if>
-      <if test="menuPath != null">
-        #{menuPath,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null">
-        #{createUser,jdbcType=DECIMAL},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUser != null">
-        #{updateUser,jdbcType=DECIMAL},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.sujianan.bean.system.MenuExample" resultType="java.lang.Long">
-    select count(*) from T_MENU
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update T_MENU
-    <set>
-      <if test="record.id != null">
-        ID = #{record.id,jdbcType=DECIMAL},
-      </if>
-      <if test="record.pid != null">
-        PID = #{record.pid,jdbcType=DECIMAL},
-      </if>
-      <if test="record.menuCode != null">
-        MENU_CODE = #{record.menuCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuName != null">
-        MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.menuPath != null">
-        MENU_PATH = #{record.menuPath,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createUser != null">
-        CREATE_USER = #{record.createUser,jdbcType=DECIMAL},
-      </if>
-      <if test="record.createTime != null">
-        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateUser != null">
-        UPDATE_USER = #{record.updateUser,jdbcType=DECIMAL},
-      </if>
-      <if test="record.updateTime != null">
-        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update T_MENU
-    set ID = #{record.id,jdbcType=DECIMAL},
-      PID = #{record.pid,jdbcType=DECIMAL},
-      MENU_CODE = #{record.menuCode,jdbcType=VARCHAR},
-      MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
-      MENU_PATH = #{record.menuPath,jdbcType=VARCHAR},
-      CREATE_USER = #{record.createUser,jdbcType=DECIMAL},
-      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
-      UPDATE_USER = #{record.updateUser,jdbcType=DECIMAL},
-      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.sujianan.bean.system.Menu">
-    update T_MENU
-    <set>
-      <if test="pid != null">
-        PID = #{pid,jdbcType=DECIMAL},
-      </if>
-      <if test="menuCode != null">
-        MENU_CODE = #{menuCode,jdbcType=VARCHAR},
-      </if>
-      <if test="menuName != null">
-        MENU_NAME = #{menuName,jdbcType=VARCHAR},
-      </if>
-      <if test="menuPath != null">
-        MENU_PATH = #{menuPath,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null">
-        CREATE_USER = #{createUser,jdbcType=DECIMAL},
-      </if>
-      <if test="createTime != null">
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUser != null">
-        UPDATE_USER = #{updateUser,jdbcType=DECIMAL},
-      </if>
-      <if test="updateTime != null">
-        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=DECIMAL}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.sujianan.bean.system.Menu">
-    update T_MENU
-    set PID = #{pid,jdbcType=DECIMAL},
-      MENU_CODE = #{menuCode,jdbcType=VARCHAR},
-      MENU_NAME = #{menuName,jdbcType=VARCHAR},
-      MENU_PATH = #{menuPath,jdbcType=VARCHAR},
-      CREATE_USER = #{createUser,jdbcType=DECIMAL},
-      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      UPDATE_USER = #{updateUser,jdbcType=DECIMAL},
-      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
-    where ID = #{id,jdbcType=DECIMAL}
-  </update>
+	<resultMap id="BaseResultMap"
+		type="com.sujianan.bean.system.Menu">
+		<id column="ID" jdbcType="DECIMAL" property="id" />
+		<result column="PID" jdbcType="DECIMAL" property="pid" />
+		<result column="MENU_CODE" jdbcType="VARCHAR"
+			property="menuCode" />
+		<result column="MENU_NAME" jdbcType="VARCHAR"
+			property="menuName" />
+		<result column="MENU_TYPE" jdbcType="VARCHAR"
+			property="menuType" />
+		<result column="MENU_PATH" jdbcType="VARCHAR"
+			property="menuPath" />
+		<result column="MENU_FUNCTION" jdbcType="VARCHAR"
+			property="menuFunction" />
+		<result column="CREATE_USER" jdbcType="DECIMAL"
+			property="createUser" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP"
+			property="createTime" />
+		<result column="UPDATE_USER" jdbcType="DECIMAL"
+			property="updateUser" />
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP"
+			property="updateTime" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value"
+										item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, PID, MENU_CODE, MENU_NAME, MENU_TYPE, MENU_PATH, MENU_FUNCTION,
+		CREATE_USER, CREATE_TIME, UPDATE_USER,
+		UPDATE_TIME
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.sujianan.bean.system.MenuExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from T_MENU
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_MENU
+		where ID = #{id,jdbcType=DECIMAL}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from T_MENU
+		where ID = #{id,jdbcType=DECIMAL}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.sujianan.bean.system.MenuExample">
+		delete from T_MENU
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"
+		parameterType="com.sujianan.bean.system.Menu">
+		insert into T_MENU (ID, PID, MENU_CODE,
+		MENU_NAME, MENU_TYPE, MENU_PATH, MENU_FUNCTION CREATE_USER,
+		CREATE_TIME, UPDATE_USER, UPDATE_TIME
+		)
+		values (#{id,jdbcType=DECIMAL}, #{pid,jdbcType=DECIMAL},
+		#{menuCode,jdbcType=VARCHAR},
+		#{menuName,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, #{menuPath,jdbcType=VARCHAR},
+		#{menuFunction,jdbcType=VARCHAR}, #{createUser,jdbcType=DECIMAL},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateUser,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.sujianan.bean.system.Menu">
+		insert into T_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="pid != null">
+				PID,
+			</if>
+			<if test="menuCode != null">
+				MENU_CODE,
+			</if>
+			<if test="menuName != null">
+				MENU_NAME,
+			</if>
+			<if test="menuType != null">
+				MENU_TYPE,
+			</if>
+			<if test="menuPath != null">
+				MENU_PATH,
+			</if>
+			<if test="menuFunction != null">
+				MENU_FUNCTION,
+			</if>
+			<if test="createUser != null">
+				CREATE_USER,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=DECIMAL},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=DECIMAL},
+			</if>
+			<if test="menuCode != null">
+				#{menuCode,jdbcType=VARCHAR},
+			</if>
+			<if test="menuName != null">
+				#{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="menuPath != null">
+				#{menuPath,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=DECIMAL},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.sujianan.bean.system.MenuExample"
+		resultType="java.lang.Long">
+		select count(*) from T_MENU
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update T_MENU
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=DECIMAL},
+			</if>
+			<if test="record.pid != null">
+				PID = #{record.pid,jdbcType=DECIMAL},
+			</if>
+			<if test="record.menuCode != null">
+				MENU_CODE = #{record.menuCode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.menuName != null">
+				MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.menuType != null">
+				MENU_TYPE = #{record.menuType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.menuPath != null">
+				MENU_PATH = #{record.menuPath,jdbcType=VARCHAR},
+			</if>
+			<if test="record.menuFunction != null">
+				MENU_FUNCTION = #{record.menuFunction,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createUser != null">
+				CREATE_USER = #{record.createUser,jdbcType=DECIMAL},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateUser != null">
+				UPDATE_USER = #{record.updateUser,jdbcType=DECIMAL},
+			</if>
+			<if test="record.updateTime != null">
+				UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update T_MENU
+		set ID = #{record.id,jdbcType=DECIMAL},
+		PID = #{record.pid,jdbcType=DECIMAL},
+		MENU_CODE = #{record.menuCode,jdbcType=VARCHAR},
+		MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+		MENU_TYPE = #{record.menuType,jdbcType=VARCHAR},
+		MENU_PATH = #{record.menuPath,jdbcType=VARCHAR},
+		MENU_FUNCTION = #{record.menuFunction,jdbcType=VARCHAR},
+		CREATE_USER = #{record.createUser,jdbcType=DECIMAL},
+		CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+		UPDATE_USER = #{record.updateUser,jdbcType=DECIMAL},
+		UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.sujianan.bean.system.Menu">
+		update T_MENU
+		<set>
+			<if test="pid != null">
+				PID = #{pid,jdbcType=DECIMAL},
+			</if>
+			<if test="menuCode != null">
+				MENU_CODE = #{menuCode,jdbcType=VARCHAR},
+			</if>
+			<if test="menuName != null">
+				MENU_NAME = #{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="menuType != null">
+				MENU_TYPE = #{menuType,jdbcType=VARCHAR},
+			</if>
+			<if test="menuPath != null">
+				MENU_PATH = #{menuPath,jdbcType=VARCHAR},
+			</if>
+			<if test="menuFunction != null">
+				MENU_FUNCTION = #{menuFunction,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				CREATE_USER = #{createUser,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER = #{updateUser,jdbcType=DECIMAL},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.sujianan.bean.system.Menu">
+		update T_MENU
+		set PID = #{pid,jdbcType=DECIMAL},
+		MENU_CODE = #{menuCode,jdbcType=VARCHAR},
+		MENU_NAME = #{menuName,jdbcType=VARCHAR},
+		MENU_TYPE = #{menuTypepe,jdbcType=VARCHAR},
+		MENU_PATH = #{menuPath,jdbcType=VARCHAR},
+		MENU_FUNCTION = #{menuFunction,jdbcType=VARCHAR},
+		CREATE_USER = #{createUser,jdbcType=DECIMAL},
+		CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+		UPDATE_USER = #{updateUser,jdbcType=DECIMAL},
+		UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
 </mapper>
