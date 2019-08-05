@@ -59,7 +59,7 @@ function checkout(dom){
 }
 
 // 注册
-function register(){debugger;
+function register(){
 	var login_name = $("#loginName").val().trim();
 	var login_password = $("#loginPassword").val().trim();
 	var login_password_affirm = $("#loginPasswordAffirm").val().trim();
@@ -109,7 +109,7 @@ function register(){debugger;
 		url : "/user/register.go",
 		data : postData,
 		dataType : "json",
-		success : function(data) {debugger;
+		success : function(data) {
 			layer.msg(data.message);
 			if(data.status == 1){
 				goIndex();

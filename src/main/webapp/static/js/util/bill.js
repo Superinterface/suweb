@@ -1,13 +1,11 @@
+
+
 // 默认第一页
 var pageno = 1;
 // 默认一页显示10行数据 10,25,50,100,
 var pagesize = 10;
 // 页数
 var totalcount = 1;
-
-layui.use(['element','layer'],function(){
-	findAccountHistoryList();
-});
 
 // 上一页,下一页,页码数,触发方法
 function changePageData(param) {
@@ -23,9 +21,16 @@ function changePageData(param) {
 function commit() {
 	var budget_type = document.getElementById("budget_type");
 	var reason_type = document.getElementById("reason_type");
-	var money = parseFloat(document.getElementById("money").value);
+	var moneyStr = document.getElementById("money").value;
+	var money = (moneyStr == "" || moneyStr == undefined || parseFloat(moneyStr) == NaN) ? 0 : parseFloat(moneyStr);
 	var event_time = document.getElementById("event_time");
 	var comments = document.getElementById("comments");
+	
+	// 判空
+	if(money == 0 || event_time.value == ""){
+		layer.msg("参数缺失,请输入必须的参数(金额,时间).");
+		return ;
+	}
 	$.ajax({
 		type : "POST",
 		url : "/util/bill/commit.go",
@@ -43,48 +48,52 @@ function commit() {
 				comments.value = "";
 			}
 		}
+		,error : function (response) {
+			console.log(response);
+		}
+		
 	});
 
 }
 
 // 查询当前用户历史账单
 function findAccountHistoryList() {
-	var indexs = layer.load(0);
+	//var indexs = layer.load(0);
+	var str = '';
 	$.ajax({
 		type : "POST",
 		url : "/util/bill/findBillList.go",
 		data : '',
 		dataType : "json",
 		success : function(data) {
-			var tbody = document.getElementById("bill_tbody");
-			tbody.innerHTML = "";
+		console.log(data.obj);
 		if (data.status == 1) {
-			var list = data.obj;
-			if (list != undefined && list.length > 0) {
-				var tfoot = document.getElementById("bill_tfoot");
-				var str = "";
-			for (var i = 0; i < list.length; i++) {
-				str += "<tr>";
-				str += "<td>" + (i + 1) + "</td>"; // 序号
-				str += "<td>" + list[i].budgetType + "</td>"; // 收支类型
-				str += "<td>" + list[i].reasonType + "</td>"; // 原因类型
-				str += "<td>" + list[i].money + "</td>"; // 金额
-				str += "<td>" + timeToString(list[i].eventTime) .substring(0, 11) + "</td>";// 事件时间
-				str += "<td>" + list[i].comments + "</td>"; // 备注
-				str += "<td>"; // 操作
-				str += "<button class='btn btn-default' onclick='updateBillForId(" + list[i].id + ")'>修改</button>";
-				str += "<button class='btn btn-default' onclick='deleteBillForId(" + list[i].id + ")'>删除</button>";
-				str += "</td>";
-			}
-				tbody.innerHTML = str;
-			}
+			table.render({
+				elem : '#bill_list',
+				cols : [ [ // 标题栏
+//				  { fixed : 'left' 		, type  : 'checkbox'	}
+				, { field : 'id'		, title : '序号'		, sort : true}
+				, { field : 'budgetType', title : '收支类型'	, sort : true}
+				, { field : 'reasonType', title : '原因类型'	, sort : true}
+				, { field : 'money'		, title : '金额'		, sort : true}
+				, { field : 'eventTime'	, title : '事件时间'	, sort : true,templet : function(e){ return timeToString(e.eventTime)} }
+				, { field : 'comments'	, title : '备注'		}
+					] ] // timeToString(list[i].eventTime) .substring(0, 11)
+				,data 	: data.obj
+//				,toolbar: '#barOperation_1' 
+				,skin	: 'line' //表格风格 
+				,even	: true
+				,page	: true //是否显示分页
+				,limits	: [5, 7, 10]
+				,limit	: 10 //每页默认显示的数量
+			});
 		} else if (data.status == -1) {
 			layer.msg(data.message);
 		}
-		layer.close(indexs);
+		//layer.close(indexs);
 		}
 	,error : function (response){
-		layer.close(indexs);
+	//	layer.close(indexs);
 	}
 	});
 }

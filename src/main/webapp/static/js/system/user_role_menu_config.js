@@ -6,11 +6,11 @@ function getUserRoleMenuPowerForAjax(){
 		url : '/system/basic/getUserRoleMenuPower.go',
 		data : '',
 		dataType : 'json',
-		success : function(response) {debugger;
+		success : function(response) {
 			console.log(response);
 			layer.msg(response.message);
 		},
-		error : function(response) {debugger;
+		error : function(response) {
 			console.log(response);
 		}
 	});

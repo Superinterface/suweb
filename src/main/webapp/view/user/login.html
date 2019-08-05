@@ -20,7 +20,9 @@
 			</div>
 			<ul class="layui-nav layui-layout-left">
 				<li class="layui-nav-item">
-					<button type="button" class="layui-btn layui-btn-sm layui-btn-radius" onclick="showMenuOrHide();">菜单隐藏/显示</button>
+					<form class="layui-form" action="" lay-filter="">
+						<input type="checkbox" name="close" lay-skin="switch" lay-text="菜单开|菜单关" lay-filter="menu_form" >
+					</form>
 				</li>
 			</ul>
 			<ul class="layui-nav layui-layout-right" id="menu_top_right_ul">
@@ -33,12 +35,11 @@
 			</div>
 		</div>
 		<!-- 内容主体区域 -->
-		<div class="layui-body">
+		<div class="layui-body default-background">
 			<div style="padding: 15px;">
 				<form class="layui-form layui-form-pane" action="#">
 					<div class="layui-row">
-						<div
-							class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
 							<div class="layui-form-item">
 								<label class="layui-form-label">用户名</label>
 								<div class="layui-input-block">
@@ -60,7 +61,7 @@
 					</div>
 					<div class="layui-row">
 						<div
-							class="layui-col-xs2 layui-col-xs-offset3 layui-col-md2 layui-col-md-offset3">
+							class="layui-col-xs3 layui-col-xs-offset3 layui-col-md3 layui-col-md-offset3">
 							<div class="layui-form-item">
 								<label class="layui-form-label">验证码</label>
 								<div class="layui-input-block">
@@ -76,8 +77,7 @@
 					</div>
 				</form>
 				<div class="layui-row">
-					<div
-						class="layui-col-xs1 layui-col-xs-offset5 layui-col-md1 layui-col-md-offset5">
+					<div class="layui-col-xs1 layui-col-xs-offset5 layui-col-md1 layui-col-md-offset5">
 						<div class="layui-form-item">
 							<button class="layui-btn layui-btn-normal layui-btn-radius"
 								onclick="login();">登录</button>

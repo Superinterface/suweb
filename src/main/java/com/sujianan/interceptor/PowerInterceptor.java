@@ -36,10 +36,12 @@ public class PowerInterceptor implements HandlerInterceptor {
 			return false;
 		} else { // 校验权限
 			System.out.println("==========校验权限==========");
+			System.out.println("**********登陆人信息**********\n\t用户码\t: " + user.getUserCode() + "\n\t用户网名\t: " + user.getNetName());
 			String controllerPath = request.getRequestURI();
 			controllerPath = (controllerPath == null || "".equals(controllerPath)) ? request.getServletPath() : controllerPath;
-			System.out.println(controllerPath);
+			System.out.println("\t请求路径\t: " + controllerPath);
 			boolean powerFlag = powerservice.findControllerPowerForSessionUser(request, response, controllerPath);
+			System.out.println("\t有无权限\t: " + (powerFlag ? "有" : "无"));
 			if(!powerFlag)
 				NoLoginSetStatusAndText(request, response);
 			System.out.println("==========校验完毕==========");

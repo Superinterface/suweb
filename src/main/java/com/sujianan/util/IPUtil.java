@@ -4,6 +4,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ *	获取客户端的ipv4地址
+ * @author	github: SuperInteface
+ * @date	2019年7月26日
+ */
 public class IPUtil {
 	public static String getIpAddr(HttpServletRequest request) throws UnknownHostException {
 		String client_ip = request.getHeader("x-forwarded-for");

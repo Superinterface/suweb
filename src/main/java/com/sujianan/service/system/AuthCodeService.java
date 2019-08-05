@@ -111,7 +111,7 @@ public class AuthCodeService {
 			// rotate(graphics, -theta);
 		}
 
-		System.out.println("验证码：" + sb.toString());
+		System.out.println("\n\t==========验证码：" + sb.toString() + "==========");
 		return sb.toString();
 	}
 

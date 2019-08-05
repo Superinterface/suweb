@@ -930,3 +930,6 @@ body.slow-wind .tree{
     border-radius: 50%;
     box-shadow: 0 0 0 20px rgba(0,0,0,.1);
 }
+.default-background{
+	background-color: #e7ecfa;
+}

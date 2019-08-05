@@ -70,6 +70,7 @@
 		<url-pattern>*.gif</url-pattern>
 		<url-pattern>*.jpg</url-pattern>
 		<url-pattern>*.jpeg</url-pattern>
+		<url-pattern>*.mp4</url-pattern>
 		<url-pattern>*.ico</url-pattern>
 		<url-pattern>*.map</url-pattern>
 		<url-pattern>*.svg</url-pattern>

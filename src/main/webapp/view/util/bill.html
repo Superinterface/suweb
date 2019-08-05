@@ -8,6 +8,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		getMenuTreeLoadDom();
+		findAccountHistoryList();
+		laydate.render({ elem : '#event_time' }); 
 	});
 </script>
 <title>账本</title>
@@ -21,7 +23,9 @@
 			</div>
 			<ul class="layui-nav layui-layout-left">
 				<li class="layui-nav-item">
-					<button type="button" class="layui-btn layui-btn-sm layui-btn-radius" onclick="showMenuOrHide();">菜单隐藏/显示</button>
+					<form class="layui-form" action="" lay-filter="">
+						<input type="checkbox" name="close" lay-skin="switch" lay-text="菜单开|菜单关" lay-filter="menu_form" >
+					</form>
 				</li>
 			</ul>
 			<ul class="layui-nav layui-layout-right" id="menu_top_right_ul">
@@ -34,110 +38,105 @@
 			</div>
 		</div>
 		<!-- 内容主体区域 -->
-		<div class="layui-body">
+		<div class="layui-body default-background">
 			<div style="padding: 15px;">
-				<div class="bigDiv">
-				<div class="bigDiv_leftDiv">
-					<ul class="nav nav-tabs nav-stacked" role="tablist">
-						<li role="presentation" class="active"><a href="#show1"
-							class="glyphicon glyphicon-book" aria-controls="home" role="tab"
-							data-toggle="tab" onclick="findAccountHistoryList();">历史账单</a></li>
-						<li role="presentation"><a href="#show2"
-							class="glyphicon glyphicon-pencil" aria-controls="profile"
-							role="tab" data-toggle="tab">记一笔</a></li>
-						<li role="presentation"><a href="#show3"
-							class="glyphicon glyphicon-signal" aria-controls="messages"
-							role="tab" data-toggle="tab">报表</a></li>
-						<li role="presentation"><a href="#show4"
-							aria-controls="settings" role="tab" data-toggle="tab">设置</a></li>
-					</ul>
+				<div class="layui-tab" style="background-color: #ffffff">
+					<ul class="layui-tab-title">
+					    <li class="layui-this">历史账单</li>
+					    <li>记一笔</li>
+					    <li>复杂报表</li>
+					    <li>商品管理</li>
+					    <li>订单管理</li>
+				  	</ul>
+					<div class="layui-tab-content">
+					    <div class="layui-tab-item layui-show">
+					    	<table class="layui-hide" id="bill_list" lay-filter="bill_filter"></table>
+					    </div>
+					    <div class="layui-tab-item">
+					    	<form class="layui-form layui-form-pane" action="#">
+					    	
+								<div class="layui-row">
+									<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+										<div class="layui-form-item">
+											<label class="layui-form-label">收支类型</label>
+											<div class="layui-input-block">
+												<select id="budget_type">
+													<option value="budget_type_1">收入</option>
+													<option value="budget_type_2" selected>支出</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="layui-row">
+									<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+										<div class="layui-form-item">
+											<label class="layui-form-label">原因类型</label>
+											<div class="layui-input-block">
+												<select id="reason_type">
+													<option value="reason_type_0">工资奖金</option>
+													<option value="reason_type_1">吃喝玩乐</option>
+													<option value="reason_type_2">出行通信</option>
+													<option value="reason_type_3">人情世故</option>
+													<option value="reason_type_4">借钱还钱</option>
+													<option value="reason_type_5">投资</option>
+													<option value="reason_type_6">医疗健身</option>
+													<option value="reason_type_7">教育培训</option>
+													<option value="reason_type_other" selected>其他</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="layui-row">
+									<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+										<div class="layui-form-item">
+											<label class="layui-form-label">金额(元)</label>
+											<div class="layui-input-block">
+												<input type="number" id="money" class="layui-input">
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="layui-row">
+									<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+										<div class="layui-form-item">
+											<label class="layui-form-label">时间</label>
+											<div class="layui-input-block">
+												<input type="text" class="layui-input" id="event_time">
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="layui-row">
+									<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+										<div class="layui-form-item">
+											<label class="layui-form-label">备注</label>
+											<div class="layui-input-block">
+												 <textarea placeholder="请输入备注信息" class="layui-textarea" id="comments"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</form>
+							<div class="layui-row">
+								<div class="layui-col-xs1 layui-col-xs-offset5 layui-col-md1 layui-col-md-offset5">
+									<div class="layui-form-item">
+										<button class="layui-btn layui-btn-normal layui-btn-radius" onclick="commit();">提交</button>
+									</div>
+								</div>
+							</div>
+					    </div>
+					    <div class="layui-tab-item">内容3</div>
+					    <div class="layui-tab-item">内容4</div>
+					    <div class="layui-tab-item">内容5</div>
+				  	</div>
 				</div>
-
-				<div class="tab-content bigDiv_rightDiv">
-					<!-- 账单历史list -->
-					<div role="tabpanel" class="tab-pane active" id="show1">
-						<table class="table table-hover table-striped">
-							<thead>
-								<tr>
-									<th>序号</th>
-									<th>收支类型</th>
-									<th>原因类型</th>
-									<th>金额(人民币/元)</th>
-									<th>时间</th>
-									<th>备注</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody id="bill_tbody">
-							</tbody>
-							<tfoot id="bill_tfoot">
-							</tfoot>
-						</table>
-					</div>
-
-					<!-- 记一笔div -->
-					<div role="tabpanel" class="tab-pane" id="show2">
-						<form class="form-horizontal">
-							<div class="form-group">
-								<label class="col-sm-4 control-label">收支类型</label>
-								<div class="col-sm-2">
-									<select id="budget_type" class="form-control">
-										<option value="budget_type_1">收入</option>
-										<option value="budget_type_2" selected>支出</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label">原因类型</label>
-								<div class="col-sm-2">
-									<select id="reason_type" class="form-control">
-										<option value="reason_type_0">工资奖金</option>
-										<option value="reason_type_1">吃喝玩乐</option>
-										<option value="reason_type_2">出行通信</option>
-										<option value="reason_type_3">人情世故</option>
-										<option value="reason_type_4">借钱还钱</option>
-										<option value="reason_type_5">投资</option>
-										<option value="reason_type_6">医疗健身</option>
-										<option value="reason_type_7">教育培训</option>
-										<option value="reason_type_other" selected>其他</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label">金额(人民币/元)</label>
-								<div class="col-sm-4">
-									<input id="money" class="form-control" type="number">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label">时间</label>
-								<div class="col-sm-4">
-									<input id="event_time" class="form-control" type="date">
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="col-sm-4 control-label">备注</label>
-								<div class="col-sm-4">
-									<textarea id="comments" rows="" cols="" class="form-control"></textarea>
-								</div>
-							</div>
-							</br> </br> </br> </br> </br>
-							<div class="form-group">
-								<div class="col-sm-10" align="center">
-									<a id="commit" type="button" class="btn btn-default"
-										onclick="commit();" value="提交">提交</a>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div role="tabpanel" class="tab-pane" id="show3">报表</div>
-					<div role="tabpanel" class="tab-pane" id="show4">设置</div>
-				</div>
-			</div>
 			</div>
 		</div>
 		<!-- 底部固定区域 -->

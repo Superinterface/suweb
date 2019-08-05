@@ -1,5 +1,6 @@
 package com.sujianan.service.util;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class UtilService {
 
 	public HttpResponse<Object> billCommit(HttpServletRequest request, Bill bill) {
 		// 判空 
-		if(bill == null || "".equals(bill.getBudgetType()) || "".equals(bill.getReasonType()) || bill.getMoney() == null) 
+		if(bill == null || "".equals(bill.getBudgetType()) || "".equals(bill.getReasonType()) || bill.getMoney() == null || bill.getMoney().compareTo(new BigDecimal(0)) == 0) 
 			return new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_PARAM_ERROR, null);
 		boolean return_type = false;
 		try {

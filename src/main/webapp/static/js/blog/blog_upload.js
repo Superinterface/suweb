@@ -1,6 +1,5 @@
 // 获取省province数据,境内所有城市
 function getProvince() {
-	// select
 	var province = document.getElementById("province");
 	province.innerHTML = "";
 	$.ajax({
@@ -104,6 +103,7 @@ function getBlogTypeOne() {
 					oo.appendChild(op);
 				}
 			}
+			form.render('select');	
 		},
 		 error:function(XMLHttpRequest, textStatus, errorThrown){
              console.log(XMLHttpRequest);
@@ -113,8 +113,8 @@ function getBlogTypeOne() {
 	
 	});
 }
-// 获取博客2级类型code name
-function getBlogTypeTwo() {
+//获取博客2级类型code name
+form.on('select(blog_type_one)', function(data){
 	var oo = document.getElementById("blog_type_two");
 	var code = document.getElementById("blog_type_one");
 	oo.innerHTML = "";
@@ -137,9 +137,10 @@ function getBlogTypeTwo() {
 				other.innerHTML = "其他";
 				oo.appendChild(other);
 			}
+			form.render('select');
 		}
 	});
-}
+});
 // 上传博客
 function blogUpload() {
 	var formData = new FormData();

@@ -13,7 +13,7 @@ layui.use([ 'tree'], function() {
 });
 
 // 提交新增/修改/删除数据字典方法
-function commitAddOrUpdateOrDeleteDictionary (type) {debugger;
+function commitAddOrUpdateOrDeleteDictionary (type) {
 	
 	if(type == undefined) return;
 	if (_id == -1) { layer.msg('未选择任何数据,请选中一条数据重试!'); return; }

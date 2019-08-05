@@ -1,10 +1,10 @@
 // layui变量
-var layer, form, tree, table, element, util, $;
+var layer, laydate, form, tree, table, element, util, $;
 // 登录状态
 var login_status = false;
-;
-!function() { 
+;!function() {
 	layer = layui.layer;
+	laydate = layui.laydate;
 	form = layui.form;
 	tree = layui.tree;
 	table = layui.table;
@@ -26,12 +26,14 @@ function getMenuTreeLoadDom() {
 				$("#menu_left_nav_ul").html(obj.MenuLeft);
 				$("#menu_top_right_ul").html(obj.MenuTopOfRight);
 				element.render('nav');
+				menuShowOrHide();
 			}
 		},
 		error : function(response) {
 			console.log(response);
 		}
 	});
+	form.render();
 }
 
 // 显示关于信息
@@ -39,11 +41,21 @@ function showAbout(){
 	layer.open({
 		  type: 0,
 		  skin: '', //样式类名
-		  closeBtn: 1, //不显示关闭按钮
-		  anim: 2,
-		  shadeClose: true, //开启遮罩关闭
-		  anim: 4, //动画类型
-		  content: '建设初衷 :职业生涯的 "记事本",技能成长的 "试验田".</br></br>在这里你可以 :注册一个账号,记录你的消费支出与收入,查看博客列表和上传博客,以及后续其他功能. '
+		  closeBtn: 1 //不显示关闭按钮
+		  ,area: ['40em', '30em']
+		  ,shadeClose: true //开启遮罩关闭
+		  ,anim: 4 //动画类型
+		  ,content: 
+			  '<blockquote class="layui-elem-quote layui-quote-nm">'+
+			  '	<h3>个人信息:	</h3><hr></br>'+
+			  '	<p>网名		:	su</p><hr>'+
+			  '	<p>github	:	SuperInteface</p><hr>'+
+			  '	<p>爱好		:	平时喜欢研究网上有意思的技术以及解决方案,沉淀自己的技术,累了就会放空自己,音乐,电影,美食,发呆,上网冲浪.</p><hr>'+
+			  '	<p>建设初衷	:	职业生涯的 "记事本",技能成长的 "试验田".</p><hr>'+
+			  '	<h3>在这里你可以:	</h3><hr></br>'+
+			  '	<p>①注册一个账号记录你的消费支出与收入.</p><hr>' + 
+			  '	<p>②查看博客列表和上传博客,以及后续其他功能.</p><hr>'+
+			  '</blockquote>'
 		});
 }
 
@@ -92,9 +104,13 @@ function goIndex() {
 	}, 2000);
 }
 
-// 隐藏显示菜单
 var menuFlag = true;
-function showMenuOrHide(){
+// 监听指定开关隐藏显示菜单
+form.on('switch(menu_form)', function(data){
+	menuShowOrHide();
+});
+
+function menuShowOrHide(){
 	if (menuFlag){
 		// 左侧菜单左移
 		$("#menu_left").animate({left:'-200px'});

@@ -1,5 +1,11 @@
 package com.sujianan.util;
 
+/**
+ * 针对ajax请求封装的通用返回对象
+ * @author	github: SuperInteface
+ * @date	2019年7月26日
+ * @param <T>
+ */
 public class HttpResponse<T> {
 	private int status;
 	private String message;

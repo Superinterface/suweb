@@ -1,5 +1,5 @@
 // 提交基本信息修改
-function commitUpdateUserData() {debugger;
+function commitUpdateUserData() {
 
 	var netNameVal	= $("#net_name").val();
 	var genderVal	= $("#gender").val();
@@ -13,7 +13,7 @@ function commitUpdateUserData() {debugger;
 		data : "netName=" + netNameVal + "&gender=" + genderVal + "&phone="
 				+ phoneVal + "&email=" + emailVal + "&address=" + addressVal,
 		dataType : "json",
-		success : function(data) {debugger;
+		success : function(data) {
 			layer.msg(data.message);
 			if (data.status == 1)
 				$("input").val("");
@@ -22,7 +22,7 @@ function commitUpdateUserData() {debugger;
 
 }
 // 提交密码修改
-function commitpasswordUpdate() {debugger;
+function commitpasswordUpdate() {
 	$.ajax({
 		type : "POST",
 		url : "/user/updateUserPassowrd.go",
@@ -30,13 +30,13 @@ function commitpasswordUpdate() {debugger;
 				+ $('#loginPassword').val() + '&loginPasswordAffirm='
 				+ $('#loginPasswordAffirm').val(),
 		dataType : "json",
-		success : function(data) {debugger;
+		success : function(data) {
 			layer.msg(data.message);
 			if (data.status == 302)
 				goIndex();
 		},
 		error : function (xhr,status,error){
-			debugger;
+			
 			console.log(xhr);
 			console.log(status);
 			console.log(error);
@@ -68,7 +68,7 @@ function loadUserData() {
 			_form.render('select');
 		},
 		error : function (xhr,status,error){
-			debugger;
+			
 			console.log(xhr);
 			console.log(status);
 			console.log(error);

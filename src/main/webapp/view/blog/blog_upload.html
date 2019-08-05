@@ -21,7 +21,9 @@
 			</div>
 			<ul class="layui-nav layui-layout-left">
 				<li class="layui-nav-item">
-					<button type="button" class="layui-btn layui-btn-sm layui-btn-radius" onclick="showMenuOrHide();">菜单隐藏/显示</button>
+					<form class="layui-form" action="" lay-filter="">
+						<input type="checkbox" name="close" lay-skin="switch" lay-text="菜单开|菜单关" lay-filter="menu_form" >
+					</form>
 				</li>
 			</ul>
 			<ul class="layui-nav layui-layout-right" id="menu_top_right_ul">
@@ -34,48 +36,61 @@
 			</div>
 		</div>
 		<!-- 内容主体区域 -->
-		<div class="layui-body">
+		<div class="layui-body default-background">
 			<div style="padding: 15px;">
-				<table class="table table-hover " style="background-color: #ffffff;">
-					<thead id="blog_upload_thead">
-						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody id="blog_upload_tbady">
-						<tr>
-							<td colspan="1" rowspan="1">
-								<label class="control-label">博客类别</label>
-							</td>
-							<td colspan="3" rowspan="1">
-								<select id="blog_type_one" class="form-control" onchange="getBlogTypeTwo();"> </select>
-							</td>
-							<td colspan="2" rowspan="1">
-								<select id="blog_type_two" class="form-control"> </select>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="1" rowspan="1"><label class="control-label">文件选择</label></td>
-							<td colspan="5" rowspan="1"><input id="file" name="file" type="file" /></td>
-						</tr>
-						<tr>
-							<td colspan="1" rowspan="1"><label class="control-label">文章标题</label></td>
-							<td colspan="5" rowspan="1"><input id="blog_title" name="blog_title" class="form-control" type="text" /></td>
-						</tr>
-					</tbody>
-					<tfoot id="blog_upload_tfoot">
-						<tr>
-							<td colspan="6" rowspan="1" align="center">
-								<button type="button" class="btn btn-default" onclick="blogUpload();">上传</button>
-							</td>
-						</tr>
-					</tfoot>
-				</table>
+			
+				<form class="layui-form layui-form-pane" action="#">
+					
+					<div class="layui-row">
+						<div class="layui-col-xs3 layui-col-xs-offset3 layui-col-md3 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">博客类别</label>
+								<div class="layui-input-block">
+									<select id="blog_type_one" name="interest" lay-filter="blog_type_one" onchange="getBlogTypeTwo();">
+								    </select>
+								</div>
+							</div>
+						</div>
+						<div class="layui-col-xs3 layui-col-md3">
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<select id="blog_type_two" name="interest" lay-filter="">
+								    </select>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+							<label class="layui-form-label">文件选择</label>
+								<div class="layui-input-block">
+									<input id="file" name="file" type="file" />
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="layui-row">
+						<div class="layui-col-xs6 layui-col-xs-offset3 layui-col-md6 layui-col-md-offset3">
+							<div class="layui-form-item">
+								<label class="layui-form-label">文章标题</label>
+								<div class="layui-input-block">
+									<input id="blog_title" type="text" class="layui-input">
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+				<div class="layui-row">
+					<div class="layui-col-xs6 layui-col-xs-offset6 layui-col-md6 layui-col-md-offset6">
+						<div class="layui-form-item">
+							<button type="button" class="btn btn-default" onclick="blogUpload();">上传</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- 底部固定区域 -->
