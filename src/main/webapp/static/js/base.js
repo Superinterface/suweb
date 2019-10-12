@@ -26,7 +26,7 @@ function getMenuTreeLoadDom() {
 				$("#menu_left_nav_ul").html(obj.MenuLeft);
 				$("#menu_top_right_ul").html(obj.MenuTopOfRight);
 				element.render('nav');
-				menuShowOrHide();
+				//menuShowOrHide();
 			}
 		},
 		error : function(response) {
