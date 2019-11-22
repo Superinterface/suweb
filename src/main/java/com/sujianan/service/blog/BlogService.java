@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
@@ -38,9 +36,6 @@ public class BlogService {
 	@Autowired
 	BlogUploadUrlMapper bloguploadurlmapper;
 
-	private static String name = BlogService.class.getName();
-	private static Logger log = Logger.getLogger(name);
-	
 	public HttpResponse<Object> getBlogForPage(Page page, String type) {
 		page.initRownumRn(this.blogmapper);
 		List<Blog> lb = this.blogmapper.selectByPageNo(page, type);
