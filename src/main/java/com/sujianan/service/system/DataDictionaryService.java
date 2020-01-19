@@ -5,6 +5,7 @@ import com.sujianan.bean.frame.layui.JsonForLayuiData;
 import com.sujianan.bean.frame.layui.JsonForLayuiRoot;
 import com.sujianan.bean.system.DataDictionary;
 import com.sujianan.bean.user.User;
+import com.sujianan.dao.blog.BlogMapper;
 import com.sujianan.dao.system.DataDictionaryMapper;
 import com.sujianan.util.DefaultUtil;
 import com.sujianan.util.HttpResponse;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Service;
 public class DataDictionaryService {
 	@Autowired
 	DataDictionaryMapper datadictionarymapper;
+	@Autowired
+	BlogMapper blogMapper;
 
 	public HttpResponse<Object> getDataByCode(String code) {
 		List<DataDictionary> ddlist = this.datadictionarymapper.selectByCode(code);
@@ -94,10 +97,16 @@ public class DataDictionaryService {
 		boolean returnFalg = false;
 		try {
 			User user = DefaultUtil.getUserForRequest(request);
-			dd.setDataLevel((short) (datadictionarymapper.selectByPrimaryKey(dd.getPid()).getDataLevel() + 1));
+			DataDictionary pdd = datadictionarymapper.selectByPrimaryKey(dd.getPid());
+			if(null == pdd) return new HttpResponse<Object>(404, "错误的数据", null);
+			dd.setDataLevel((short) (pdd.getDataLevel() + 1));
 			dd.setCreateTime(new Date());
 			dd.setCreateUser(Integer.toString(user.getId()));
 			datadictionarymapper.insertSelective(dd);
+			/* 针对博客数据字典进行特殊逻辑处理,因为上传博客需要上传至对应文件夹内,而对应文件夹是根据数据库的表来进行创建的,
+			故,当前端能选择到当前这个博客类型的时候,则数据库内必须已经有该类型的文件夹记录才足以进行博客上传功能.
+			判断是否是博客数据字典增改,如果是,则更新对应博客数据库表记录表*/
+			
 			returnFalg = true;
 		} catch (Exception e) {
 			e.printStackTrace();
