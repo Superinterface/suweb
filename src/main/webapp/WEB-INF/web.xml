@@ -6,11 +6,9 @@
 	<display-name>suweb</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file> 
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<!-- <welcome-file>index.htm</welcome-file> <welcome-file>index.jsp</welcome-file> 
+			<welcome-file>default.html</welcome-file> <welcome-file>default.htm</welcome-file> 
+			<welcome-file>default.jsp</welcome-file> -->
 	</welcome-file-list>
 
 	<!-- Spring相关配置文件 -->
@@ -81,8 +79,8 @@
 		<url-pattern>*.woff</url-pattern>
 		<url-pattern>*.woff2</url-pattern>
 		<url-pattern>*.txt</url-pattern>
-		<url-pattern>*.pdf</url-pattern>
 	</servlet-mapping>
+
 
 	<error-page>
 		<error-code>401</error-code>

@@ -44,7 +44,7 @@ public class PowerInterceptor implements HandlerInterceptor {
 			System.out.println("\t有无权限\t: " + (powerFlag ? "有" : "无"));
 			if(!powerFlag)
 				NoLoginSetStatusAndText(request, response);
-			System.out.println("==========鉴权完毕==========");
+			System.out.println("==========校验完毕==========");
 			return powerFlag;
 		}
 	}

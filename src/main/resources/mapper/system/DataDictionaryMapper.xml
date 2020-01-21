@@ -341,11 +341,7 @@
 		from t_data_dictionary 
 		where pid = #{pid, jdbcType=INTEGER} 
 	</select>
-	<!-- 递归查询上级数据字典,看是否包含 data_code = "blog_type"类型的数据字典数据 -->
-	<select id="findUperDataDictionary" resultType="com.sujianan.bean.system.DataDictionary" parameterType="java.lang.String">
-		select tdd.ID, tdd.PID, tdd.DATA_CODE, tdd.DATA_NAME, tdd.DATA_LEVEL from T_DATA_DICTIONARY tdd where 1=1 
-		start with tdd.data_code = #{code}
-		connect by prior tdd.pid = tdd.id
-	</select>
-	
+
+
+
 </mapper>
