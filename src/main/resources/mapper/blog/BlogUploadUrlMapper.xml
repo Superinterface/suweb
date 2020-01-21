@@ -114,11 +114,14 @@
 			<include refid="Example_Where_Clause" />
 		</if>
 	</delete>
+	<delete id="deleteByCode" parameterType="java.lang.String">
+		delete from T_BLOG_UPLOAD_URL where DATA_CODE = #{code}
+	</delete>
 	<insert id="insert"
 		parameterType="com.sujianan.bean.blog.BlogUploadUrl">
 		insert into T_BLOG_UPLOAD_URL (ID, DATA_CODE, DIRECTORY
 		)
-		values (#{id,jdbcType=DECIMAL}, #{dataCode,jdbcType=VARCHAR},
+		values (SEQUENCE_T_BLOG_UPLOAD_URL_ID.NEXTVAL, #{dataCode,jdbcType=VARCHAR},
 		#{directory,jdbcType=VARCHAR}
 		)
 	</insert>
@@ -217,6 +220,14 @@
 		(select DIRECTORY
 		from t_blog_upload_url
 		where DATA_CODE = #{param2} ) t2
-
 	</select>
+	<!-- 根据一个code找出一条记录 -->
+	<select id="selectByDataCode1" resultType="com.sujianan.bean.blog.BlogUploadUrl">
+		select ID,DATA_CODE,DIRECTORY
+			from T_BLOG_UPLOAD_URL 
+		where data_code = #{code}
+	</select>
+	
+	
+	
 </mapper>

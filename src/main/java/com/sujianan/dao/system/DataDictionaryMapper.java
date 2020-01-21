@@ -39,5 +39,7 @@ public interface DataDictionaryMapper {
 	DataDictionary findDataById(Integer id);
 	// 查找pid为参数id的所有数据
 	List<DataDictionary> selectByPid(Integer pid);
+	// 递归查找上级数据字典 树结构
+	List<DataDictionary> findUperDataDictionary(String code);
 	
 }

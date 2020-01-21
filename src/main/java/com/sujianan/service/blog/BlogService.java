@@ -57,7 +57,8 @@ public class BlogService {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		// 设置上传文件最大大小
 		upload.setSizeMax(10485760L);
-		String pa = request.getSession().getServletContext().getRealPath("/").replace("\\", "/") + "view/blog";
+		StringBuffer pa = new StringBuffer();
+		pa.append(request.getSession().getServletContext().getRealPath("/").replace("\\", "/")).append("view/blog");
 		
 		String blogTitle = null;
 		String fileName = null;
@@ -66,13 +67,13 @@ public class BlogService {
 		InputStream in = null;
 		FileOutputStream out = null;
 
-		HttpResponse<Object> var22;
+		HttpResponse<Object> res;
 		try {
 			List<FileItem> items = upload.parseRequest(request);
-			Iterator var16 = items.iterator();
+			Iterator itrt = items.iterator();
 
-			while (var16.hasNext()) {
-				FileItem item = (FileItem) var16.next();
+			while (itrt.hasNext()) {
+				FileItem item = (FileItem) itrt.next();
 				if (item.isFormField()) {
 					String name = item.getFieldName();
 					String value = item.getString("utf-8");
@@ -85,15 +86,14 @@ public class BlogService {
 				}
 			}
 
-			String childDir = "other".equals(code1) ? "/other"
-					: this.bloguploadurlmapper.selectByDataCode(code1, code2);
-			String filepath = pa + childDir + "/";
-			FileUtil.filePathCreate(filepath, (String) null);
-			new File(filepath);
-			filepath = filepath + System.currentTimeMillis() + '.' + fileName.split("\\.")[1];
+			String childDir = "other".equals(code1) ? "/other" : this.bloguploadurlmapper.selectByDataCode(code1, code2);
+			StringBuffer filepath = new StringBuffer(pa.append(childDir).append("/").toString());
+			FileUtil.filePathCreate(filepath.toString(), null);
+			new File(filepath.toString());
+			filepath.append(System.currentTimeMillis()).append(fileName.split("\\.")[1]);
 			byte[] buffer = new byte[1024];
 			int len = -1;
-			out = new FileOutputStream(filepath);
+			out = new FileOutputStream(filepath.toString());
 
 			while ((len = in.read(buffer)) != -1) {
 				out.write(buffer, 0, len);
@@ -104,30 +104,23 @@ public class BlogService {
 			if (u.getLoginName() == null) {
 				u.setLoginName("佚名");
 			}
-			Blog blog = new Blog((String) null, code2, blogTitle, filepath.substring(filepath.indexOf("/view")),
+			Blog blog = new Blog(null, code2, blogTitle, filepath.substring(filepath.indexOf("/view")),
 					u.getLoginName(), u.getLoginName(), new Date(), (String) null, (Date) null);
 			this.blogmapper.insert(blog);
 			return new HttpResponse<Object>(RST.CODE_SUCCESS, "博客上传成功~", (Object) null);
-		} catch (Exception var30) {
-			var30.printStackTrace();
-			var22 = new HttpResponse<Object>(RST.CODE_ERROR, "博客上传失败~", (Object) null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res = new HttpResponse<Object>(RST.CODE_ERROR, "博客上传失败~", (Object) null);
 		} finally {
 			try {
-				if (out != null) {
-					out.close();
-				}
-
-				if (in != null) {
-					in.close();
-				}
-			} catch (IOException var29) {
-				var29.printStackTrace();
+				if (out != null) out.close();
+				if (in != null)  in.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
 				return new HttpResponse<Object>(-1, "博客上传失败~", (Object) null);
 			}
-
 		}
-
-		return var22;
+		return res;
 	}
 
 	// 查询博客列表从博客条件
@@ -143,4 +136,6 @@ public class BlogService {
 		}
 		return new HttpResponse<Object>(RST.CODE_ERROR, RST.TEXT_ERROR, null);
 	}
+
+	
 }
