@@ -27,14 +27,14 @@ import com.sujianan.util.HttpResponse;
 public class AuthCodeService {
 
 	/* 宽度 */
-	private static final int WIDTH = 180;
+	private static final int WIDTH = 140;
 	/* 高度 */
 	private static final int HEIGHT = 30;
 	/* 生成验证码的个数 */
 	private static final int COUNT = 6;
 	/* 干扰线条数 */
 	private static final int LINE_ROW = 4;
-	/* 输出的基本码表,如果使用中文,则使用utf-8的码表,类似 \ue234 ,而且应该使用常用字,避免出现偏僻字 */
+	/* 输出的基本码表，如果使用中文，则使用utf-8的码表，类似 \ue234 ，而且应该使用常用字，避免出现偏僻字 */
 	// 去除 l 1 避免混淆
 	private static final char[] BASECODE = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o',
 			'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -98,8 +98,8 @@ public class AuthCodeService {
 			sb.append(ch);
 
 			// 设置位置
-			int x = i * 20 + random.nextInt(12) + 20;
-			int y = random.nextInt(HEIGHT / 3) + 15;
+			int x = i * 20 + random.nextInt(12) + 10;
+			int y = random.nextInt(HEIGHT / 3) + 12;
 
 			// 旋转字体
 			double theta = Math.PI / 180 * random.nextInt(20);

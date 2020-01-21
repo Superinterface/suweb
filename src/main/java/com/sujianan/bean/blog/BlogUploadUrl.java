@@ -6,15 +6,6 @@ public class BlogUploadUrl {
     private String dataCode;
 
     private String directory;
-    
-    public BlogUploadUrl() {
-    	
-    }
-    
-    public BlogUploadUrl(String dataCode, String directory) {
-    	this.dataCode = dataCode;
-    	this.directory = directory;
-    }
 
     public Integer getId() {
         return id;

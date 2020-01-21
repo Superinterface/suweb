@@ -11,8 +11,6 @@ public interface BlogUploadUrlMapper {
     int deleteByExample(BlogUploadUrlExample example);
 
     int deleteByPrimaryKey(Integer id);
-    
-    int deleteByCode(String code);
 
     int insert(BlogUploadUrl record);
 
@@ -30,7 +28,5 @@ public interface BlogUploadUrlMapper {
 
     int updateByPrimaryKey(BlogUploadUrl record);
 
-    BlogUploadUrl selectByDataCode1(String code);
-    
 	String selectByDataCode(String code1, String code2);
 }
