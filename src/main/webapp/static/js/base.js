@@ -47,9 +47,9 @@ function showAbout(){
 		  ,anim: 4 //动画类型
 		  ,content: 
 			  '<blockquote class="layui-elem-quote layui-quote-nm">'+
-			  '	<h3>个人信息:	</h3><hr></br>'+
+			  '	<h3>网站作者信息:	</h3><hr></br>'+
 			  '	<p>网名		:	su</p><hr>'+
-			  '	<p>github	:	SuperInteface</p><hr>'+
+			  '	<p>github	:	SuperInterface</p><hr>'+
 			  '	<p>爱好		:	平时喜欢研究网上有意思的技术以及解决方案,沉淀自己的技术,累了就会放空自己,音乐,电影,美食,发呆,上网冲浪.</p><hr>'+
 			  '	<p>建设初衷	:	职业生涯的 "记事本",技能成长的 "试验田".</p><hr>'+
 			  '	<h3>在这里你可以:	</h3><hr></br>'+
