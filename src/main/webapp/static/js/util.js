@@ -6,7 +6,7 @@ function timeToString(time = +new Date()){
 }
 
 // 鼠标点击特效,借鉴自 https://blog.csdn.net/Blog_7Core_CN/article/details/83472358
-/* 鼠标点击特效 - 7Core.CN */
+/* 鼠标点击特效 - 7Core.CN 
 	var a_idx = 0;
 jQuery(document).ready( 
 		function($) {
@@ -38,3 +38,4 @@ jQuery(document).ready(
 						});
 					});
 		});
+*/
